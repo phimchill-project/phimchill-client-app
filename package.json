@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.0",
+    "clsx": "^2.0.0",
     "fslightbox-react": "^1.7.6",
     "gsap": "^3.12.2",
     "react": "^18.2.0",
@@ -20,6 +21,7 @@
     "react-slider-swiper": "^2.0.6",
     "react-transition-group": "^4.4.5",
     "redux": "^4.2.1",
+    "sass": "^1.69.5",
     "swiper": "^6.8.4",
     "web-vitals": "^2.1.4"
   },
