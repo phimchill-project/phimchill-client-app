@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import authApi from "../../../api/authApi/exportAuthApi";
+import {get} from "axios";
+import config from "../../../config";
 
 
 
 function Login(){
-    const [show, setShow] = useState(false);
+    let navigate = useNavigate();
 
     const [Email, setEmail] = useState("");
     const [Pass, setPass] = useState("");
@@ -34,7 +36,10 @@ function Login(){
             email: Email,
             password : Pass,
         });
-        console.log(data);
+        console.log(data.data);
+        if(data.data.statuscode === 200){
+            navigate(config.routes.home);
+        }
     }
 
 
