@@ -1,24 +1,45 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import authApi from "../../api/authApi/exportAuthApi";
+
+
 
 function Login(){
     const [show, setShow] = useState(false);
+
+    const [Email, setEmail] = useState("");
+    const [Pass, setPass] = useState("");
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorPass, setErrorPass] = useState(false);
+    const [focusEmail, setFocusEmail] = useState(false);
+    const [focusPass, setFocusPass] = useState(false);
+
+    useEffect(() => {
+        if (focusEmail){
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Z|a-z]{2,}$/;
+            setErrorEmail(!regex.test(Email));
+        }
+    }, [focusEmail, Email]);
+
+    useEffect(() => {
+        if (focusPass){
+            const regex = /^(?=.*[A-Z])(?=.*\W).{8,}$/;
+            setErrorPass(!regex.test(Pass));
+        }
+    }, [focusPass, Pass]);
+
+    const LoginButton = async () => {
+        const data = await authApi.Login({
+            email: Email,
+            password : Pass,
+        });
+        console.log(data);
+    }
+
+
     return (
         <>
-            <div className={`rtl-box ${show===true?'show':''}`} >
-                <button type="button" className="btn btn-light rtl-btn">
-                    <svg onClick={()=>setShow(!show)} xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 20 20" fill="white">
-                        <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                    </svg>
-                </button>
-                <div className="rtl-panel">
-                    <ul className="modes">
-                        <li className="dir-btn" data-mode="rtl" data-active="false"    data-value="ltr"><Link to="#">LTR</Link></li>
-                        <li className="dir-btn" data-mode="rtl" data-active="true"   data-value="rtl"><Link to="#">RTL</Link></li>
-                    </ul>
-                </div>
-            </div>
             <section className="sign-in-page">
                 <Container>
                     <Row className="justify-content-center align-items-center height-self-center">
@@ -29,15 +50,35 @@ function Login(){
                                         <h3 className="mb-3 text-center">Sign in</h3>
                                         <Form className="mt-4">
                                             <Form.Group>
-                                                <Form.Control type="email" className="form-control mb-0" id="exampleInputEmail1" placeholder="Enter email" autoComplete="off" required/>
+                                                <Form.Control type="email"
+                                                              value={Email}
+                                                              className="form-control mb-0" id="exampleInputEmail1"
+                                                              placeholder="Enter email" autoComplete="off"
+                                                              onChange={(event) => {
+                                                                  setEmail(event.target.value);
+                                                              }}
+                                                              onBlur={() => setFocusEmail(true)}
+                                                              style={{ borderColor: errorEmail ? '#e87c03' : '' }}
+                                                              required />
                                             </Form.Group>
+                                            <div style={{color: '#e87c03'}} hidden={!errorEmail}>Vui lòng nhập Email chính xác.</div>
                                             <br/>
                                             <Form.Group>
-                                                <Form.Control type="password" className="form-control mb-0" id="exampleInputPassword2" placeholder="Password" required/>
+                                                <Form.Control type="password"
+                                                              value={Pass}
+                                                              className="form-control mb-0" id="exampleInputPassword2"
+                                                              placeholder="Password"
+                                                              onChange={(event) => {
+                                                                  setPass(event.target.value);
+                                                              }}
+                                                              onBlur={() => setFocusPass(true)}
+                                                              style={{ borderColor: errorPass ? '#e87c03' : '' }}
+                                                              required/>
                                             </Form.Group>
+                                            <div style={{color: '#e87c03'}} hidden={!errorPass}>Mật khẩu của bạn phải chứa từ 8 ký tự, có ít nhất 1 ký tự hoa, 1 ký tự đặc biệt.</div>
                                             <br/>
                                             <div className="sign-info">
-                                                <Button className="btn btn-hover btn-primary1" >Sign in</Button>
+                                                <Button onClick={LoginButton} className="btn btn-hover btn-primary1" >Sign in</Button>
                                                 <div className="custom-control custom-checkbox d-inline-block">
                                                     <input type="checkbox" className="custom-control-input" id="customCheck"/>
                                                     <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
@@ -49,7 +90,7 @@ function Login(){
                                 <div className="mt-3">
                                     <div className="d-flex justify-content-center links">
                                         Don't have an account?
-                                        <Link to="/extra-pages/sign-up" className="text-primary ml-2">Sign Up</Link>
+                                        <Link to="/register" className="text-primary ml-2">Sign Up</Link>
                                     </div>
                                     <div className="d-flex justify-content-center links">
                                         <Link to="/extra-pages/recover-pswd" className="f-link">
