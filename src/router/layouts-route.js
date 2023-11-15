@@ -16,7 +16,6 @@ const LayoutsRoute = props => {
                         <Page />
                     </Layout>} />
             })}
-            {/*<Route path="/" component={Layout1} />*/}
         </Routes>
     )
 }

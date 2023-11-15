@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-//img
-import img1 from '../../assets/images/upcoming/01.jpg'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Dropdown, Row, Col, Container, Button } from 'react-bootstrap'
+import { Swiper , SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperComponent } from 'swiper/react';
+// import SwiperCore from 'swiper';
+import { Navigation } from 'swiper';
+import SwiperCore from 'swiper'
+import 'swiper/swiper-bundle.css';
 import axios from 'axios';
+import img1 from '../../assets/images/upcoming/01.jpg'
+
+SwiperCore.use([Navigation]);
+
 const ShowList = () => {
     const [list, setList] = useState();
     const fetchApi = async () => {
