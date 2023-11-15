@@ -1,14 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import authApi from "../../../api/authApi/exportAuthApi";
-import {get} from "axios";
 import config from "../../../config";
-
+import styles from './Login.module.scss';
+import clsx from "clsx";
 
 
 function Login(){
     let navigate = useNavigate();
+
+
+function Login(){
 
     const [Email, setEmail] = useState("");
     const [Pass, setPass] = useState("");
@@ -16,6 +19,8 @@ function Login(){
     const [errorPass, setErrorPass] = useState(false);
     const [focusEmail, setFocusEmail] = useState(false);
     const [focusPass, setFocusPass] = useState(false);
+    const [focusPassNow, setFocusPassNow] = useState(false);
+    const [typePass, setTypePass] = useState(true);
 
     useEffect(() => {
         if (focusEmail){
@@ -42,6 +47,10 @@ function Login(){
         }
     }
 
+    const handleBlurPass = () => {
+        setFocusPass(true)
+        setFocusPassNow(false)
+    }
 
     return (
         <>
@@ -57,7 +66,7 @@ function Login(){
                                             <Form.Group>
                                                 <Form.Control type="email"
                                                               value={Email}
-                                                              className="form-control mb-0" id="exampleInputEmail1"
+                                                              className="form-control mb-0"
                                                               placeholder="Enter email" autoComplete="off"
                                                               onChange={(event) => {
                                                                   setEmail(event.target.value);
@@ -68,18 +77,29 @@ function Login(){
                                             </Form.Group>
                                             <div style={{color: '#e87c03'}} hidden={!errorEmail}>Vui lòng nhập Email chính xác.</div>
                                             <br/>
-                                            <Form.Group>
-                                                <Form.Control type="password"
-                                                              value={Pass}
-                                                              className="form-control mb-0" id="exampleInputPassword2"
-                                                              placeholder="Password"
-                                                              onChange={(event) => {
-                                                                  setPass(event.target.value);
-                                                              }}
-                                                              onBlur={() => setFocusPass(true)}
-                                                              style={{ borderColor: errorPass ? '#e87c03' : '' }}
-                                                              required/>
-                                            </Form.Group>
+                                            <div className={clsx("d-flex", styles.div_pass, {[styles.div_pass_focus] : focusPassNow, [styles.div_pass_error] : errorPass})}>
+                                                <Form.Group className="flex-grow-1" style={{border: 'none'}}>
+                                                    <Form.Control type={typePass ? 'password' : 'text'}
+                                                                  value={Pass}
+                                                                  className={clsx("form-control mb-0", styles.pass)}
+                                                                  placeholder="Password"
+                                                                  onChange={(event) => {
+                                                                      setPass(event.target.value);
+                                                                  }}
+                                                                  onFocus={() => setFocusPassNow(true)}
+                                                                  onBlur={handleBlurPass}
+                                                                  required/>
+                                                </Form.Group>
+                                                <Button hidden={!focusPassNow} className={clsx(styles.btn_pass)}
+                                                        onMouseDown={(event) => {
+                                                            event.preventDefault();
+                                                            setTypePass(!typePass);
+                                                        }}
+                                                        onMouseUp={(event) => {
+                                                            event.preventDefault();
+                                                        }}
+                                                >{typePass ? 'Hide' : 'Show'}</Button>
+                                            </div>
                                             <div style={{color: '#e87c03'}} hidden={!errorPass}>Mật khẩu của bạn phải chứa từ 8 ký tự, có ít nhất 1 ký tự hoa, 1 ký tự đặc biệt.</div>
                                             <br/>
                                             <div className="sign-info">

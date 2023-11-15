@@ -1,0 +1,23 @@
+
+.btn_pass {
+  border: none !important;
+  background: none !important;
+}
+
+.pass {
+  border: none !important;
+  background: none !important;
+}
+
+.div_pass {
+  border: 1px solid #404043;
+}
+
+.div_pass_focus {
+  border-color: red;
+  background: transparent;
+}
+
+.div_pass_error {
+  border-color: rgb(232, 124, 3);
+}

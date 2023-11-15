@@ -240,8 +240,38 @@ const HeaderStyle1 = (props) => {
                           <Link to="/">Home</Link>
                         </li>
                         <li className="menu-item">
-                          <Link to="/movie-category">Movies</Link>
+                          <Link to="#">Movies</Link>
+                          <ul className="sub-menu">
+                            <li className="menu-item">
+                              <Link to="/about-us">About Us</Link>
+                            </li>
+                            <li className="menu-item ">
+                              <Link to="/contact">Contact</Link>
+                            </li>
+                            <li className="menu-item">
+                              <Link to="/faq">FAQ</Link>
+                            </li>
+                            <li className="menu-item">
+                              <Link to="/privacy-policy">Privacy-Policy</Link>
+                            </li>
+                            <li className="menu-item">
+                              <Link to="#">Pricing</Link>
+                              <ul className="sub-menu">
+                                <li className="menu-item">
+                                  <Link to="/pricing-plan-1">
+                                    Pricing Plan 1
+                                  </Link>
+                                </li>
+                                <li className="menu-item">
+                                  <Link to="/pricing-plan-2">
+                                    Pricing Plan 2
+                                  </Link>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
                         </li>
+
                         <li className="menu-item">
                           <Link to="/show-category">Tv Shows</Link>
                         </li>
