@@ -36,15 +36,15 @@ const DefaultLayout = ({children}) => {
             <div className="wraper">
 
                 <div className="content-page" id="content-page">
-                    {/*<TransitionGroup>*/}
-                    {/*    <CSSTransition*/}
-                    {/*        // key={location.key}*/}
-                    {/*        classNames="fade"*/}
-                    {/*        timeout={300}*/}
-                    {/*    >*/}
-                    {/*        {children}*/}
-                    {/*    </CSSTransition>*/}
-                    {/*</TransitionGroup>*/}
+                    <TransitionGroup>
+                       <CSSTransition
+                            //    key={location.key}
+                           classNames="fade"
+                           timeout={300}
+                       >
+                           {children}
+                       </CSSTransition>
+                    </TransitionGroup>
                 </div>
             </div>
             <br/>
