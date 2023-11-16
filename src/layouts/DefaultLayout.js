@@ -42,7 +42,7 @@ const DefaultLayout = ({children}) => {
                     {/*        classNames="fade"*/}
                     {/*        timeout={300}*/}
                     {/*    >*/}
-                    {/*        {children}*/}
+                           {children}
                     {/*    </CSSTransition>*/}
                     {/*</TransitionGroup>*/}
                 </div>
