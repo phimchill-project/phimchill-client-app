@@ -17,7 +17,7 @@ const ShowList = () => {
     const fetchApi = async () => {
         let result = null;
         try {
-            result = await axios.get("https://6550f0bc7d203ab6626e5db1.mockapi.io/movie");
+            result = await axios.get("http://localhost:8080/api/movies");
             console.log(result);
         } catch (e) {
             console.log("Error get list film");
@@ -53,7 +53,7 @@ const ShowList = () => {
                                             <Link to={`/movie/${movie.id}`}>{movie.name}</Link>
                                         </h6>
                                         <div className="movie-time d-flex align-items-center my-2">
-                                            <span className="text-white">{movie.number} minutes</span>
+                                            <span className="text-white">{movie.duration} minutes</span>
                                         </div>
                                         <div className="hover-buttons">
                                             <Link
