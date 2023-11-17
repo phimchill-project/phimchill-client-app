@@ -2,17 +2,12 @@ import React, {useEffect, useRef, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import authApi from "../../../api/authApi/exportAuthApi";
-import config from "../../../config";
 import styles from './Login.module.scss';
 import clsx from "clsx";
-
+import config from "../../../config";
 
 function Login(){
     let navigate = useNavigate();
-
-
-function Login(){
-
     const [Email, setEmail] = useState("");
     const [Pass, setPass] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);
@@ -42,10 +37,12 @@ function Login(){
             password : Pass,
         });
         console.log(data.data);
-        if(data.data.statuscode === 200){
-            navigate(config.routes.home);
+        if(data.data.statusCode === 200){
+             localStorage.setItem("token",data.data.data.token)
+            navigate("/");
         }
     }
+
 
     const handleBlurPass = () => {
         setFocusPass(true)
