@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom'
-// Partials
 import HeaderStyle1 from '../components/partials/backend/headerstyle/headerstyle1';
 import FooterStyle from '../components/partials/backend/footerstyle/footerstyle'
-// Router Component
 import Layout1Route from '../router/layout1-route'
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
@@ -32,9 +30,9 @@ const DefaultLayout = ({children}) => {
                 <Link className="top" to="#" id="top"> <i className="fa fa-angle-up"></i></Link>
             </div>
             <div className="wraper">
-
                 <div className="content-page" id="content-page">
                     <TransitionGroup>
+<<<<<<< HEAD
                         <CSSTransition
                             // key={location.key}
                             classNames="fade"
@@ -42,14 +40,20 @@ const DefaultLayout = ({children}) => {
                         >
                             {children}
                         </CSSTransition>
+=======
+                       <CSSTransition
+                            //    key={location.key}
+                           classNames="fade"
+                           timeout={300}
+                       >
+                           {children}
+                       </CSSTransition>
+>>>>>>> 2a82918a9e52390cbb5d9ac251589cd35c831251
                     </TransitionGroup>
                 </div>
             </div>
             <br/>
-
-
             <FooterStyle/>
-
         </>
     )
 }
