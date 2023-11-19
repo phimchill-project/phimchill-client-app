@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import authApi from "../../../api/authApi/exportAuthApi";
 import styles from './Login.module.scss';
 import clsx from "clsx";
+import config from "../../../config";
 
 function Login(){
-
+    let navigate = useNavigate();
     const [Email, setEmail] = useState("");
     const [Pass, setPass] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);
@@ -35,8 +36,13 @@ function Login(){
             email: Email,
             password : Pass,
         });
-        console.log(data);
+        console.log(data.data);
+        if(data.data.statusCode === 200){
+             localStorage.setItem("token",data.data.data.token)
+            navigate("/");
+        }
     }
+
 
     const handleBlurPass = () => {
         setFocusPass(true)
