@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const AUTH_API = "http://localhost:8080/api/auth/";
 
 export const Login = async (user) => {
@@ -38,7 +39,6 @@ export const register = async (user) => {
 }
 
 export const isEmailExist = async (email) => {
-    console.log(email)
     let result = null;
     try {
         result = await axios.post(`${AUTH_API}email-not-existion`,
@@ -54,3 +54,4 @@ export const isEmailExist = async (email) => {
     }
     return result?.data;
 }
+

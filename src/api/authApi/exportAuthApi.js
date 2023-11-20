@@ -2,6 +2,6 @@ import {Login, register, isEmailExist} from "./authApi"
 const authApi = {
     Login,
     register,
-    isEmailExist
+    isEmailExist,
 }
 export default authApi;

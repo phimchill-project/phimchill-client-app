@@ -6,63 +6,65 @@ import FsLightbox from 'fslightbox-react';
 import Select from 'react-select'
 
 // img
-import logo from './../../assets/images/logo.png'
-import icon from './../../assets/video/trailer.mp4'
+import logo from '../../../assets/images/logo.png'
+import icon from '../../../assets/video/trailer.mp4'
 
 // favorite img
-import fav1 from './../../assets/images/favorite/01.jpg'
-import fav2 from './../../assets/images/favorite/02.jpg'
-import fav3 from './../../assets/images/favorite/03.jpg'
-import fav4 from './../../assets/images/favorite/04.png'
-import fav5 from './../../assets/images/favorite/05.jpg'
+import fav1 from '../../../assets/images/favorite/01.jpg'
+import fav2 from '../../../assets/images/favorite/02.jpg'
+import fav3 from '../../../assets/images/favorite/03.jpg'
+import fav4 from '../../../assets/images/favorite/04.png'
+import fav5 from '../../../assets/images/favorite/05.jpg'
 
 // upcoming img
-import upcoming1 from './../../assets/images/upcoming/01.jpg'
-import upcoming2 from './../../assets/images/upcoming/02.jpg'
-import upcoming3 from './../../assets/images/upcoming/03.jpg'
-import upcoming4 from './../../assets/images/upcoming/04.jpg'
-import upcoming5 from './../../assets/images/upcoming/05.jpg'
+import upcoming1 from '../../../assets/images/upcoming/01.jpg'
+import upcoming2 from '../../../assets/images/upcoming/02.jpg'
+import upcoming3 from '../../../assets/images/upcoming/03.jpg'
+import upcoming4 from '../../../assets/images/upcoming/04.jpg'
+import upcoming5 from '../../../assets/images/upcoming/05.jpg'
 
 
 // suggested
-import suggested1 from './../../assets/images/suggested/01.jpg'
-import suggested2 from './../../assets/images/suggested/02.jpg'
-import suggested3 from './../../assets/images/suggested/03.jpg'
-import suggested4 from './../../assets/images/suggested/04.jpg'
-import suggested5 from './../../assets/images/suggested/05.jpg'
+import suggested1 from '../../../assets/images/suggested/01.jpg'
+import suggested2 from '../../../assets/images/suggested/02.jpg'
+import suggested3 from '../../../assets/images/suggested/03.jpg'
+import suggested4 from '../../../assets/images/suggested/04.jpg'
+import suggested5 from '../../../assets/images/suggested/05.jpg'
 
 // parallax
-import parallax3 from './../../assets/images/parallax/p1.jpg'
-import parallax4 from './../../assets/images/parallax/parallax-logo.png'
+import parallax3 from '../../../assets/images/parallax/p1.jpg'
+import parallax4 from '../../../assets/images/parallax/parallax-logo.png'
 
 // trending
-import trending1 from './../../assets/images/trending/01.jpg'
-import trending2 from './../../assets/images/trending/02.jpg'
-import trending3 from './../../assets/images/trending/03.jpg'
-import trending4 from './../../assets/images/trending/04.jpg'
-import trending5 from './../../assets/images/trending/05.jpg'
-import trending6 from './../../assets/images/trending/06.jpg'
-import trendinglabel from './../../assets/images/trending/trending-label.png'
+import trending1 from '../../../assets/images/trending/01.jpg'
+import trending2 from '../../../assets/images/trending/02.jpg'
+import trending3 from '../../../assets/images/trending/03.jpg'
+import trending4 from '../../../assets/images/trending/04.jpg'
+import trending5 from '../../../assets/images/trending/05.jpg'
+import trending6 from '../../../assets/images/trending/06.jpg'
+import trendinglabel from '../../../assets/images/trending/trending-label.png'
 
 // episodes
-import episodes1 from './../../assets/images/episodes/01.jpg'
-import episodes2 from './../../assets/images/episodes/02.jpg'
-import episodes3 from './../../assets/images/episodes/03.jpg'
-import episodes4 from './../../assets/images/episodes/04.jpg'
-import episodes5 from './../../assets/images/episodes/05.jpg'
+import episodes1 from '../../../assets/images/episodes/01.jpg'
+import episodes2 from '../../../assets/images/episodes/02.jpg'
+import episodes3 from '../../../assets/images/episodes/03.jpg'
+import episodes4 from '../../../assets/images/episodes/04.jpg'
+import episodes5 from '../../../assets/images/episodes/05.jpg'
 
 // tvthrillers
-import tvthrillers1 from './../../assets/images/tvthrillers/01.jpg'
-import tvthrillers2 from './../../assets/images/tvthrillers/02.jpg'
-import tvthrillers3 from './../../assets/images/tvthrillers/03.jpg'
-import tvthrillers4 from './../../assets/images/tvthrillers/04.jpg'
-import tvthrillers5 from './../../assets/images/tvthrillers/05.jpg'
+import tvthrillers1 from '../../../assets/images/tvthrillers/01.jpg'
+import tvthrillers2 from '../../../assets/images/tvthrillers/02.jpg'
+import tvthrillers3 from '../../../assets/images/tvthrillers/03.jpg'
+import tvthrillers4 from '../../../assets/images/tvthrillers/04.jpg'
+import tvthrillers5 from '../../../assets/images/tvthrillers/05.jpg'
 
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { EffectFade,Navigation,Thumbs,Pagination } from 'swiper';
 import 'swiper/swiper-bundle.css';
 SwiperCore.use([EffectFade,Navigation,Thumbs,Pagination]);
+
+const firebase = "https://firebasestorage.googleapis.com/v0/b/phim-chill.appspot.com/o/images-movie%2Fcategory.png8f5de12e-b64c-4043-b0fc-2dfaa493c765?alt=media&token=3251e5e1-e7c7-4b72-b158-b6a6fd1c42dd";
 
 const gsapAnimate = {
    getData: (elem) => {
@@ -175,6 +177,7 @@ const Homepage =()=>{
 
    return(
       <>
+         <img src={firebase} />
          <FsLightbox
                toggler={toggler1}
                sources={[
@@ -296,7 +299,7 @@ const Homepage =()=>{
                            <Col xl="6" lg="12" md="12">
                               <Link to="#">
                                  <div className="channel-logo">
-                                    <img src={logo} className="c-logo" alt="streamit"/>
+                                    <img src={firebase} className="c-logo" alt="streamit"/>
                                  </div>
                               </Link>
                               <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">sail coaster</h1>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import authApi from "../../../api/authApi/exportAuthApi";
+import authApi from "../../../../api/authApi/exportAuthApi";
 
 function Register() {
     const [user, setUser] = useState(null);
@@ -171,8 +171,7 @@ function Register() {
         } else {
             alert("Register Fail. Back to register again in 3s");
             setTimeout(() => {
-                // eslint-disable-next-line no-restricted-globals
-                history.go(0)
+                navigate('/register')
             }, 3000);
         }
     }
