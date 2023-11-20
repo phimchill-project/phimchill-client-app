@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 //select
 import Select from 'react-select';
 
-import user from '../../assets/images/user/user.jpg'
+import user from '../../../assets/images/user/user.jpg'
 
 const UserSetting = () => {
     const [date, setDate] = useState(new Date());

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import authApi from "../../../api/authApi/exportAuthApi";
+import authApi from "../../../../api/authApi/exportAuthApi";
 
 function SignUp() {
     const [user, setUser] = useState(null);
