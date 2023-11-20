@@ -240,10 +240,10 @@ const HeaderStyle1 = (props) => {
                           <Link to="/">Home</Link>
                         </li>
                         <li className="menu-item">
-                          <Link to="/movie-category">Movies</Link>
+                          <Link to="/movie">Movies</Link>
                         </li>
                         <li className="menu-item">
-                          <Link to="/show-category">Tv Shows</Link>
+                          <Link to="/tvseries">Tv Shows</Link>
                         </li>
                         <li className="menu-item">
                           <Link to="#">Blog</Link>
