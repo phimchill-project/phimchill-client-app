@@ -3,7 +3,7 @@ const routes = {
     register : "/register",
     home:"/",
     userdetail:"/user",
-    UserProfile :"/usersetting"
+    UserProfile :"/usersetting",
     show:"/show"
 }
 export default routes;
