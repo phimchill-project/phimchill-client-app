@@ -240,7 +240,7 @@ const HeaderStyle1 = (props) => {
                           <Link to="/">Home</Link>
                         </li>
                         <li className="menu-item">
-                          <Link to="#">Movies</Link>
+                          <Link to="/movie">Movies</Link>
                           <ul className="sub-menu">
                             <li className="menu-item">
                               <Link to="/about-us">About Us</Link>
@@ -445,7 +445,7 @@ const HeaderStyle1 = (props) => {
                           <Card className="shadow-none m-0">
                             <Card.Body className="p-0 pl-3 pr-3 ">
                               <Link
-                                to="/manage-profile"
+                                to="/usersetting"
                                 className="iq-sub-card setting-dropdown"
                               >
                                 <div className="media align-items-center">
@@ -458,7 +458,7 @@ const HeaderStyle1 = (props) => {
                                 </div>
                               </Link>
                               <Link
-                                to="/setting"
+                                to="/user"
                                 className="iq-sub-card setting-dropdown"
                               >
                                 <div className="media align-items-center">

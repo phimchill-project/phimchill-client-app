@@ -32,7 +32,6 @@ const DefaultLayout = ({children}) => {
             <div className="wraper">
                 <div className="content-page" id="content-page">
                     <TransitionGroup>
-<<<<<<< HEAD
                         <CSSTransition
                             // key={location.key}
                             classNames="fade"
@@ -40,15 +39,6 @@ const DefaultLayout = ({children}) => {
                         >
                             {children}
                         </CSSTransition>
-=======
-                       <CSSTransition
-                            //    key={location.key}
-                           classNames="fade"
-                           timeout={300}
-                       >
-                           {children}
-                       </CSSTransition>
->>>>>>> 2a82918a9e52390cbb5d9ac251589cd35c831251
                     </TransitionGroup>
                 </div>
             </div>

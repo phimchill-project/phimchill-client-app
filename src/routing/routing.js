@@ -6,6 +6,7 @@ import home from "../views/home/home";
 import UserProfile from '../views/user/userprofile';
 import UserSetting from '../views/user/usersetting';
 import ShowList from '../components/common/ShowList';
+import MoviePage from "../views/pages/MoviePage";
 const publicRoutes = [
     { path: config.routes.login, component: Login, layout: null},
     { path: config.routes.register, component: SignUp, layout: null},
@@ -13,6 +14,7 @@ const publicRoutes = [
     { path: config.routes.userdetail, component: UserProfile, layout: Layouts.DefaultLayout},
     { path: config.routes.UserProfile, component: UserSetting, layout: Layouts.DefaultLayout},
     { path: config.routes.show, component: ShowList, layout: Layouts.DefaultLayout},
+    { path: config.routes.moviePage, component: MoviePage, layout: Layouts.DefaultLayout},
 ]
 const privateRoutes = [
 ]

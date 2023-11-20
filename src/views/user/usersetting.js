@@ -19,7 +19,7 @@ const UserSetting = () => {
     //     { value: 'S' },
     //     { value: 'M' },
     //     { value: 'F' }
-    //   ] 
+    //   ]
     const options1 = [
         {
             value: 1,
@@ -66,7 +66,7 @@ const UserSetting = () => {
     // handle onChange event of the dropdown
     const handleChange = (e) => {
         setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
-    }      
+    }
     return (
         <>
             <section className="m-profile manage-p">
@@ -100,7 +100,7 @@ const UserSetting = () => {
                                                 <Form.Group className="form-group d-flex flex-md-row flex-column">
                                                     <div className="iq-custom-select mr-2 mb-2">
                                                         <Select className="iq-size" id="f1" options={options1} />
-                                                    </div>        
+                                                    </div>
                                                     <div className="w-50 form1">
                                                         <Select
                                                             className="bgcollor "
@@ -124,7 +124,7 @@ const UserSetting = () => {
                             </div>
                         </Col>
                     </Row>
-                </Container>          
+                </Container>
             </section>
         </>
     )
