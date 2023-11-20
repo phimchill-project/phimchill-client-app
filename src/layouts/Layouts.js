@@ -1,6 +1,7 @@
 import DefaultLayout from "./DefaultLayout";
-
+import DashBoardLayout from "./DashBoardLayout";
 const Layouts = {
-    DefaultLayout
+    DefaultLayout,
+    DashBoardLayout
 }
 export default Layouts;

@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Container,Row,Col} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import {Link, useNavigate, useParams} from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 
 //images
@@ -17,18 +16,45 @@ import upcoming2 from '../../../assets/images/upcoming/02.jpg'
 import upcoming3 from '../../../assets/images/upcoming/03.jpg'
 import upcoming4 from '../../../assets/images/upcoming/04.jpg'
 import upcoming5 from '../../../assets/images/upcoming/05.jpg'
-import video from '../../../assets/video/sample-video.mp4'
-
-// install Swiper modules
-SwiperCore.use([Navigation]);
+import movieApi from "../../../api/movie/exportMovieApi";
 
 const MovieDetails = () => {
+
+    let navigate = useNavigate();
+    let { name } = useParams();
+    const [movie, setMovie] = useState({
+        "data": {
+            "name": null,
+            "description": null,
+            "year": null,
+            "duration": null,
+            "imdb": null,
+            "image": null,
+            "trailer": null,
+            "url": null,
+            "categoryList": null
+        },
+        "statusCode": 0,
+        "message": null
+    });
+
+    useEffect(() => {
+        findByName();
+    }, []);
+
+    const findByName = async () => {
+        const data = await movieApi.findByName(name);
+        if (data.statusCode === 404){
+            navigate("/");
+        }
+        setMovie(data);
+    };
 
     return (
         <> 
              <div className="video-container iq-main-slider">
                 <video className="video d-block" controls loop>
-                    <source src={video}/>
+                    <source src="https://firebasestorage.googleapis.com/v0/b/phim-chill.appspot.com/o/videos-movie%2FSpider-Man%20No%20Way%20Home.mp4?alt=media&token=4fed2030-a19d-4fdd-98d4-c5fd6df1865d"/>
                 </video>
                 </div>
                 <div className="main-content movi">
@@ -36,27 +62,38 @@ const MovieDetails = () => {
                         <Row>
                             <Col lg="12">
                                 <div className="trending-info g-border">
-                                    <h1 className="trending-text big-title text-uppercase mt-0">The Illusion</h1>
+                                    <h1 className="trending-text big-title text-uppercase mt-0 fadeInLeft animated d-inline-block" data-animation-in="fadeInLeft" data-delay-in="0.6">{movie.data.name}</h1>
+                                    <div className="slider-ratting d-flex align-items-center ms-lg-3 ms-0" style={{ fontSize: '1.5em' }}>
+                                        <ul className="ratting-start p-0 m-0 list-inline text-warning d-flex align-items-center justify-content-left">
+                                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i className="fa fa-star-o" aria-hidden="true"></i></li>
+                                        </ul>
+                                        <span className="text-white ms-2">{movie.data.imdb} IMDB</span>
+                                    </div>
                                     <ul className="p-0 list-inline d-flex align-items-center movie-content">
-                                        <li className="text-white">Action</li>
-                                        <li className="text-white">Drama</li>
-                                        <li className="text-white">Thriller</li>
+                                        <li className="trending-list">
+                                            <a className="text-primary" href="/">Action</a>
+                                        </li>
+                                        <li className="trending-list">
+                                            <a className="text-primary" href="/">Drama</a>
+                                        </li>
+                                        <li className="trending-list">
+                                            <a className="text-primary" href="/">Thriller</a>
+                                        </li>
                                     </ul>
                                     <div className="d-flex align-items-center text-white text-detail">
                                         <span className="badge badge-secondary p-3">13+</span>
-                                        <span className="ml-3">3h 15m</span>
+                                        <span className="ml-3">{movie.data.duration} minutes</span>
                                         <span className="trending-year">2020</span>
                                     </div>
                                     <div className="d-flex align-items-center series mb-4">
                                         <Link to="#"><img src={trending} className="img-fluid" alt=""/></Link>
                                         <span className="text-gold ml-3">#2 in Series Today</span>
                                     </div>
-                                    <p className="trending-dec w-100 mb-0">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                                        survived not only five centuries.
-                                    </p>
+                                    <p className="trending-dec w-100 mb-0">{movie.data.description}</p>
                                     <ul className="list-inline p-0 mt-4 share-icons music-play-lists">
                                         <li>
                                             <span><i className="ri-add-line"></i></span>
