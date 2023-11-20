@@ -1,34 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Row, Col, Container, Button } from 'react-bootstrap'
-import { Swiper , SwiperSlide } from 'swiper/react';
-import { Swiper as SwiperComponent } from 'swiper/react';
-// import SwiperCore from 'swiper';
-import { Navigation } from 'swiper';
-import SwiperCore from 'swiper'
-import 'swiper/swiper-bundle.css';
 import axios from 'axios';
 import img1 from '../../assets/images/upcoming/01.jpg'
 
-SwiperCore.use([Navigation]);
-
 const ShowList = () => {
-    const [list, setList] = useState();
-    const fetchApi = async () => {
-        let result = null;
-        try {
-            result = await axios.get("http://localhost:8080/api/movies");
-            console.log(result);
-        } catch (e) {
-            console.log("Error get list film");
-        }
-        if (result != null) {
-            setList(result.data);
-        }
-    }
-    useEffect(() => {
-        fetchApi();
-    }, [])
+    const [list, setList] = useState([{
+        "name": "Marvin, Goyette and Kautzer",
+        "number": "2",
+        "id": "1"
+       },
+       {
+        "name": "Farrell, Boehm and Marquardt",
+        "number": "8",
+        "id": "2"
+       },
+       {
+        "name": "Fritsch Group",
+        "number": "1",
+        "id": "3"
+       },
+       {
+        "name": "Schmeler and Sons",
+        "number": "4",
+        "id": "4"
+       },
+       {
+        "name": "Becker - Kling",
+        "number": "1",
+        "id": "5"
+       },
+       {
+        "name": "Pacocha - Schulist",
+        "number": "4",
+        "id": "6"
+       },
+       {
+        "name": "Crist, Becker and Hahn",
+        "number": "6",
+        "id": "7"
+       }]);
+    // const navigate = useNavigate();
+    // const fetchApi = async () => {
+    //     let result = null;
+    //     try {
+    //         result = await axios.get("http://localhost:8080/api/movies");
+    //         console.log(result);
+    //     } catch (e) {
+    //         console.log("Error get list film");
+    //     }
+    //     if (result != null) {
+    //         setList(result.data);
+    //     }
+    // }
+    // useEffect(() => {
+    //     fetchApi();
+    // }, [])
     return (
         <>
             <main id="main" className="site-main">
