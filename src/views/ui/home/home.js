@@ -64,8 +64,6 @@ import SwiperCore, { EffectFade,Navigation,Thumbs,Pagination } from 'swiper';
 import 'swiper/swiper-bundle.css';
 SwiperCore.use([EffectFade,Navigation,Thumbs,Pagination]);
 
-const firebase = "https://firebasestorage.googleapis.com/v0/b/phim-chill.appspot.com/o/images-movie%2Fcategory.png8f5de12e-b64c-4043-b0fc-2dfaa493c765?alt=media&token=3251e5e1-e7c7-4b72-b158-b6a6fd1c42dd";
-
 const gsapAnimate = {
    getData: (elem) => {
       const option = {
@@ -177,7 +175,6 @@ const Homepage =()=>{
 
    return(
       <>
-         <img src={firebase} />
          <FsLightbox
                toggler={toggler1}
                sources={[
@@ -299,7 +296,7 @@ const Homepage =()=>{
                            <Col xl="6" lg="12" md="12">
                               <Link to="#">
                                  <div className="channel-logo">
-                                    <img src={firebase} className="c-logo" alt="streamit"/>
+                                    <img src={logo} className="c-logo" alt="streamit"/>
                                  </div>
                               </Link>
                               <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">sail coaster</h1>

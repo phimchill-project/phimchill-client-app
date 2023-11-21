@@ -8,16 +8,21 @@ import UserSetting from '../views/ui/pages/user/usersetting';
 import ShowList from '../components/common/ShowList';
 import MoviePage from '../views/ui/pages/MoviePage';
 import AddMovie from '../views/dashboard/movie/AddMovie';
+import Home from "../views/ui/home/home";
+import MovieDetails from "../views/ui/movie/movie-details";
+import TvshowDetails from "../views/ui/tvshow/tvshow-details";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
     { path: routes.register, component: Register, layout: null },
-    { path: routes.home, component: home, layout: Layouts.DefaultLayout },
+    { path: routes.home, component: Home, layout: Layouts.DefaultLayout },
     { path: routes.userdetail, component: UserProfile, layout: Layouts.DefaultLayout },
     { path: routes.UserProfile, component: UserSetting, layout: Layouts.DefaultLayout },
     { path: routes.show, component: ShowList, layout: Layouts.DefaultLayout },
     { path: routes.movie, component: MoviePage, layout: Layouts.DefaultLayout },
-    { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout }
+    { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
+    { path: routes.movieDetails, component: MovieDetails, layout: Layouts.DefaultLayout},
+    { path: routes.tvshowDetails, component: TvshowDetails, layout: Layouts.DefaultLayout}
 ]
 const privateRoutes = [
 ]
