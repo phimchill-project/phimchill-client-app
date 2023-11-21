@@ -241,10 +241,7 @@ const HeaderStyle1 = (props) => {
                         </li>
                         <li className="menu-item">
                           <Link to="/movie">Movies</Link>
-<<<<<<< HEAD
-=======
                           <Link to="#">Movies</Link>
->>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3
                           <ul className="sub-menu">
                             <li className="menu-item">
                               <Link to="/about-us">About Us</Link>

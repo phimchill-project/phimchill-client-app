@@ -9,14 +9,6 @@ import user from '../../../assets/images/user/user.jpg'
 const UserSetting = () => {
     const [date, setDate] = useState(new Date());
     const handleChange3 = date => setDate(date);
-<<<<<<< HEAD:src/views/user/usersetting.js
-    // const states = [
-    //     { value: 'S' },
-    //     { value: 'M' },
-    //     { value: 'F' }
-    //   ]
-=======
->>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/user/usersetting.js
     const options1 = [
         {
             value: 1,
