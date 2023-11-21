@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
-import authApi from "../../../api/authApi/exportAuthApi";
+import authApi from "../../../../api/authApi/exportAuthApi";
 import styles from './Login.module.scss';
 import clsx from "clsx";
-import config from "../../../config";
 
 function Login(){
     let navigate = useNavigate();

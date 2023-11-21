@@ -14,7 +14,6 @@ export const Login = async (user) => {
         console.log("Find books API error: " + e);
     }
     console.log(result);
-    return result;
 };
 
 export const register = async (user) => {

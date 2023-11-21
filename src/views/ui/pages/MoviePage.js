@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/views/pages/MoviePage.js
 import React, {useState} from 'react'
+=======
+import React from 'react'
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
 import { Link } from 'react-router-dom'
 import { Dropdown, Row, Col, Container, Button } from 'react-bootstrap'
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,6 +10,7 @@ import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 
 //img
+<<<<<<< HEAD:src/views/pages/MoviePage.js
 import banner from '../../assets/images/movie-banner/1.jpg'
 import banner2 from '../../assets/images/movie-banner/2.jpg'
 import banner3 from '../../assets/images/movie-banner/3.jpg'
@@ -24,10 +29,31 @@ import movie7 from '../../assets/images/movies/07.jpg'
 import movie8 from '../../assets/images/movies/08.jpg'
 import movie9 from '../../assets/images/movies/09.jpg'
 import movie10 from '../../assets/images/movies/10.jpg'
+=======
+import banner from '../../../assets/images/movie-banner/1.jpg'
+import banner2 from '../../../assets/images/movie-banner/2.jpg'
+import banner3 from '../../../assets/images/movie-banner/3.jpg'
+import img1 from '../../../assets/images/upcoming/01.jpg'
+import img2 from '../../../assets/images/upcoming/02.jpg'
+import img3 from '../../../assets/images/upcoming/03.jpg'
+import img4 from '../../../assets/images/upcoming/04.jpg'
+import img5 from '../../../assets/images/upcoming/05.jpg'
+import movie1 from '../../../assets/images/movies/01.jpg'
+import movie2 from '../../../assets/images/movies/02.jpg'
+import movie3 from '../../../assets/images/movies/03.jpg'
+import movie4 from '../../../assets/images/movies/04.jpg'
+import movie5 from '../../../assets/images/movies/05.jpg'
+import movie6 from '../../../assets/images/movies/06.jpg'
+import movie7 from '../../../assets/images/movies/07.jpg'
+import movie8 from '../../../assets/images/movies/08.jpg'
+import movie9 from '../../../assets/images/movies/09.jpg'
+import movie10 from '../../../assets/images/movies/10.jpg'
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
+<<<<<<< HEAD:src/views/pages/MoviePage.js
 const MoviePage = () => {
     const [blockbusterList, setBlockbusterList] = useState([]);
     return (
@@ -35,6 +61,14 @@ const MoviePage = () => {
             <section id="movieshow" className="iq-main-slider p-0">
                 <div id="prev" className="swiper-button swiper-button-prev"><i className= "ri-arrow-left-s-line"></i></div>
                 <div id="next" className="swiper-button swiper-button-next"><i className= "ri-arrow-right-s-line"></i></div>
+=======
+const MoviePage = () => { 
+    return (
+        <div> 
+            <section id="movieshow" className="iq-main-slider p-0">
+                <div id="prev" className="swiper-button swiper-button-prev"><i className= "ri-arrow-left-s-line"></i></div>
+                <div id="next" className="swiper-button swiper-button-next"><i className= "ri-arrow-right-s-line"></i></div>         
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                 <Swiper
                     slidesPerView={2}
                     spaceBetween={0}
@@ -86,7 +120,11 @@ const MoviePage = () => {
                                 </div>
                             </div>
                         </Link>
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                     </SwiperSlide>
+=======
+                    </SwiperSlide>         
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                 </Swiper>
                 <Dropdown className="genres-box">
                     <Dropdown.Toggle as={Button} variant="secondary">
@@ -114,12 +152,21 @@ const MoviePage = () => {
                         <Row>
                             <Col sm="12" className="overflow-hidden">
                                 <div className="d-flex align-items-center justify-content-between">
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                                     <h4 className="main-title">Blockbusters</h4>
                                 </div>
                                 <div id="favorites-contens">
                                     <div id="prev1" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
                                     <div id="next1" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
                                     <Swiper
+=======
+                                    <h4 className="main-title">Bollywood Blockbusters</h4>
+                                </div>
+                                <div id="favorites-contens">
+                                    <div id="prev1" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div> 
+                                    <div id="next1" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
+                                    <Swiper 
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                         spaceBetween={20}
                                         navigation={{
                                             nextEl: '#prev1',
@@ -133,6 +180,7 @@ const MoviePage = () => {
                                             1400: { slidesPerView: 4 },
                                         }}
                                         className="favorites-slider list-inline  row p-0 m-0 iq-rtl-direction">
+<<<<<<< HEAD:src/views/pages/MoviePage.js
 
                                         { blockbusterList.map( (movie, index) => (
                                             <SwiperSlide className="slide-item" key={index}>
@@ -182,6 +230,225 @@ const MoviePage = () => {
                                                 </div>
                                             </SwiperSlide>
                                         ))}
+=======
+                                        <SwiperSlide className="slide-item">
+                                            <div className="block-images1 block-images position-relative">
+                                                <div className="img-box">
+                                                    <img src={img1} className="img-fluid" alt=""/>
+                                                </div>
+                                                <div className="block-description">
+                                                    <h6 className="iq-title"><Link to="/show-details">The Last Breath</Link></h6>
+                                                    <div className="movie-time d-flex align-items-center my-2">
+                                                        <div className="badge badge-secondary p-1 mr-2">5+</div>
+                                                        <span className="text-white">2h 30m</span>
+                                                    </div>
+                                                    <div className="hover-buttons">
+                                                        <Link to="/show-details" role="button" className="btn btn-hover">
+                                                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                            Play Now
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                                <div className="block-social-info">
+                                                    <ul className="list-inline p-0 m-0 music-play-lists">
+                                                        <li className="share">
+                                                            <span>
+                                                                <i className="ri-share-fill"></i>
+                                                            </span>
+                                                            <div className="share-box">
+                                                                <div className="d-flex align-items-center">
+                                                                    <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
+                                                                    <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
+                                                                    <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span><i className="ri-heart-fill"></i></span>
+                                                            <span className="count-box">19+</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <i className="ri-add-line"></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide className="slide-item">
+                                            <div className="block-images position-relative">
+                                                <div className="img-box">
+                                                    <img src={img2} className="img-fluid" alt=""/>
+                                                </div>
+                                                <div className="block-description">
+                                                    <h6 className="iq-title"><Link to="/show-details">Last Night</Link></h6>
+                                                    <div className="movie-time d-flex align-items-center my-2">
+                                                        <div className="badge badge-secondary p-1 mr-2">22+</div>
+                                                        <span className="text-white">2h 15m</span>
+                                                    </div>
+                                                    <div className="hover-buttons">
+                                                        <Link to="/show-details" role="button" className="btn btn-hover">
+                                                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                            Play Now
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                                <div className="block-social-info">
+                                                    <ul className="list-inline p-0 m-0 music-play-lists">
+                                                        <li className="share">
+                                                            <span><i className="ri-share-fill"></i></span>
+                                                            <div className="share-box">
+                                                                <div className="d-flex align-items-center">
+                                                                    <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
+                                                                    <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
+                                                                    <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span><i className="ri-heart-fill"></i></span>
+                                                            <span className="count-box">19+</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <i className="ri-add-line"></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide className="slide-item">
+                                            <div className="block-images position-relative">
+                                                <div className="img-box">
+                                                    <img src={img3} className="img-fluid" alt=""/>
+                                                </div>
+                                                <div className="block-description">
+                                                    <h6 className="iq-title"><Link to="/show-details">1980</Link></h6>
+                                                    <div className="movie-time d-flex align-items-center my-2">
+                                                        <div className="badge badge-secondary p-1 mr-2">25+</div>
+                                                        <span className="text-white">3h</span>
+                                                    </div>
+                                                    <div className="hover-buttons">
+                                                    <Link to="/show-details" role="button" className="btn btn-hover">
+                                                        <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                        Play Now
+                                                    </Link>
+                                                    </div>
+                                                </div>
+                                                <div className="block-social-info">
+                                                    <ul className="list-inline p-0 m-0 music-play-lists">
+                                                        <li className="share">
+                                                            <span><i className="ri-share-fill"></i></span>
+                                                            <div className="share-box">
+                                                                <div className="d-flex align-items-center">
+                                                                    <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
+                                                                    <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
+                                                                    <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span><i className="ri-heart-fill"></i></span>
+                                                            <span className="count-box">19+</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <i className="ri-add-line"></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide className="slide-item">
+                                            <div className="block-images position-relative">
+                                                <div className="img-box">
+                                                    <img src={img4} className="img-fluid" alt=""/>
+                                                </div>
+                                                <div className="block-description">
+                                                    <h6 className="iq-title"><Link to="/show-details">Looters</Link></h6>
+                                                    <div className="movie-time d-flex align-items-center my-2">
+                                                        <div className="badge badge-secondary p-1 mr-2">11+</div>
+                                                        <span className="text-white">2h 45m</span>
+                                                    </div>
+                                                    <div className="hover-buttons">
+                                                    <Link to="/show-details" role="button" className="btn btn-hover">
+                                                        <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                        Play Now
+                                                    </Link>
+                                                    </div>
+                                                </div>
+                                                <div className="block-social-info">
+                                                    <ul className="list-inline p-0 m-0 music-play-lists">
+                                                        <li className="share">
+                                                            <span><i className="ri-share-fill"></i></span>
+                                                            <div className="share-box">
+                                                                <div className="d-flex align-items-center">
+                                                                    <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
+                                                                    <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
+                                                                    <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span><i className="ri-heart-fill"></i></span>
+                                                            <span className="count-box">19+</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <i className="ri-add-line"></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide className="slide-item">
+                                            <div className="block-images position-relative">
+                                                <div className="img-box">
+                                                    <img src={img5} className="img-fluid" alt=""/>
+                                                </div>
+                                                <div className="block-description">
+                                                    <h6 className="iq-title"><Link to="/show-details">Vugotronic</Link></h6>
+                                                    <div className="movie-time d-flex align-items-center my-2">
+                                                        <div className="badge badge-secondary p-1 mr-2">9+</div>
+                                                        <span className="text-white">2h 30m</span>
+                                                    </div>
+                                                    <div className="hover-buttons">
+                                                    <Link to="/show-details" role="button" className="btn btn-hover">
+                                                        <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                        Play Now
+                                                    </Link>
+                                                    </div>
+                                                </div>
+                                                <div className="block-social-info">
+                                                    <ul className="list-inline p-0 m-0 music-play-lists">
+                                                        <li className="share">
+                                                            <span><i className="ri-share-fill"></i></span>
+                                                            <div className="share-box">
+                                                                <div className="d-flex align-items-center">
+                                                                    <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
+                                                                    <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
+                                                                    <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <span><i className="ri-heart-fill"></i></span>
+                                                            <span className="count-box">19+</span>
+                                                        </li>
+                                                        <li>
+                                                            <span>
+                                                                <i className="ri-add-line"></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                     </Swiper>
                                 </div>
                             </Col>
@@ -196,9 +463,15 @@ const MoviePage = () => {
                                     <h4 className="main-title">Best Bengali Movies</h4>
                                 </div>
                                 <div id="upcoming-contens">
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                                     <div id="prev2" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
                                     <div id="next2" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
                                     <Swiper
+=======
+                                    <div id="prev2" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div> 
+                                    <div id="next2" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
+                                    <Swiper 
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                         slidesPerView={4}
                                         spaceBetween={20}
                                         navigation={{
@@ -442,7 +715,11 @@ const MoviePage = () => {
                                     <h4 className="main-title">Movies We Recommend</h4>
                                 </div>
                                 <div id="suggestede-contens">
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                                     <div id="prev3" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
+=======
+                                    <div id="prev3" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div> 
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                     <div id="next3" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
                                     <Swiper
                                         slidesPerView={4}
@@ -450,13 +727,21 @@ const MoviePage = () => {
                                         navigation={{
                                             prevEl: '#prev3',
                                             nextEl: '#next3'
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                                         }}
+=======
+                                        }} 
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                         loop={true}
                                         breakpoints={{
                                             320: { slidesPerView: 1 },
                                             550: { slidesPerView: 2 },
                                             991: { slidesPerView: 3 },
+<<<<<<< HEAD:src/views/pages/MoviePage.js
                                             1400: { slidesPerView: 4 },
+=======
+                                            1400: { slidesPerView: 4 },     
+>>>>>>> 7f72c9ed9c4828b8eb0524d16473561d9b2ebaa3:src/views/ui/pages/MoviePage.js
                                         }}
                                         className="list-inline favorites-slider row p-0 m-0 iq-rtl-direction">
                                         <SwiperSlide className="slide-item">
