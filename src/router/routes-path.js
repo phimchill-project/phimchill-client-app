@@ -6,6 +6,8 @@ const routes = {
     UserProfile :"/usersetting",
     show : "/show",
     movie : "/movie",
-    addMovie : "/add-movie"
+    addMovie : "/add-movie",
+    movieDetails: "/movie-details/:name",
+    tvshowDetails: "/tvshow-details/:name"
 }
 export default routes;
