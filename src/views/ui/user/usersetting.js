@@ -1,25 +1,14 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import { Col, Row, Container, Form } from 'react-bootstrap'
-// import Choices from 'react-choices'
-
-// Datepicker
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-//select
 import Select from 'react-select';
-
-import user from '../../assets/images/user/user.jpg'
+import user from '../../../assets/images/user/user.jpg'
 
 const UserSetting = () => {
     const [date, setDate] = useState(new Date());
     const handleChange3 = date => setDate(date);
-    // const states = [
-    //     { value: 'S' },
-    //     { value: 'M' },
-    //     { value: 'F' }
-    //   ] 
     const options1 = [
         {
             value: 1,

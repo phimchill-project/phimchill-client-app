@@ -13,8 +13,7 @@ export const Login = async (user) => {
     } catch (e) {
         console.log("Find books API error: " + e);
     }
-    console.log(result);
-    return result;
+    return result.data
 };
 
 export const register = async (user) => {

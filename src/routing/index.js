@@ -1,1 +1,0 @@
-export { publicRoutes, privateRoutes } from './routing'

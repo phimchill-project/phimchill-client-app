@@ -1,12 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import user from "../../assets/images/user/user.jpg";
+import user from "../../../assets/images/user/user.jpg";
 import { useState } from "react";
 import axios from "axios";
 
 const UserProfile = () => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [password, setPassword] = useState('**********');
   const [newPassword, setNewPassword] = useState('');
@@ -41,17 +40,29 @@ const UserProfile = () => {
     };
 
     const handleSaveEmail = () => {
-      axios.put(`/api/users/edit-email`, { newEmail })
-      .then(response => {
+      const token = localStorage.getItem("token");
+    
+      axios.put(
+        `/api/users/edit-email`,
+        { newEmail },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+        .then(response => {
           console.log('Email updated successfully:', response.data);
           setEmail(newEmail);
           setIsEditingEmail(false);
           setNewEmail('');
-      })
-      .catch(error => {
+        })
+        .catch(error => {
           console.error('Error updating email:', error);
-      });
+        });
     };
+    
+    
   return (
     <>
       <section className="m-profile setting-wrapper">
