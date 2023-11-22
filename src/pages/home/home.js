@@ -101,7 +101,7 @@ const HomePage = () => {
     const [toggler2, setToggler2] = useState(false);
     const [toggler3, setToggler3] = useState(false);
     const testimg = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZw7Qnkg8g59LQwpHB8Qsdrtyts39HNjPulbG2E8QP3Q&s"
-    const upcoming= "https://img.phimmoichillg.net/images/info/the-puppetman.jpg"
+    const upcoming= "https://nguoinoitieng.tv/images/nnt/103/0/bgy1.jpg"
 
     const dispatch = useDispatch();
     const moviesByImdb = useSelector(selectMovies);
