@@ -1,17 +1,17 @@
 import { Route, Routes } from 'react-router-dom'
-import { publicRoutes } from "../src/router/routing";
+import { publicRoutes } from "./router/routing";
 import { Fragment } from "react";
 
-//scss files
-import './assets/css/bootstrap.min.css'
-import './assets/css/typography.css'
-import './assets/css/style.css';
-import './assets/css/responsive.css'
 
 // import './assets/dashboard/css/bootstrap.min.css'
 // import './assets/dashboard/css/typography.css'
 // import './assets/dashboard/css/style.css';
-// import './assets/dashboard/css/responsive.css'
+// import './assets/dashboard/css/responsive.css'  
+//scss files
+import './assets/ui/css/bootstrap.min.css'
+import './assets/ui/css/typography.css'
+import './assets/ui/css/style.css'
+import './assets/ui/css/responsive.css'
 
 
 function App() {
@@ -27,7 +27,8 @@ function App() {
           return <Route key={index} path={route.path} element={
             <Layout>
               <Page />
-            </Layout>} />
+            </Layout>
+          } />
         })}
       </Routes>
     </div>
