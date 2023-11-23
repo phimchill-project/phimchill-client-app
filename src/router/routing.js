@@ -2,7 +2,6 @@ import routes from './routes-path'
 import Login from "../views/ui/pages/auth/login";
 import Register from '../views/ui/pages/auth/Register';
 import Layouts from "../layouts/Layouts";
-import home from "../views/ui/home/home";
 import UserProfile from '../views/ui/pages/user/userprofile';
 import UserSetting from '../views/ui/pages/user/usersetting';
 import ShowList from '../components/common/ShowList';
@@ -11,6 +10,7 @@ import AddMovie from '../views/dashboard/movie/AddMovie';
 import Home from "../views/ui/home/home";
 import MovieDetails from "../views/ui/movie/movie-details";
 import TvshowDetails from "../views/ui/tvshow/tvshow-details";
+import Error404 from "../views/ui/error/error404";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -22,7 +22,8 @@ const publicRoutes = [
     { path: routes.movie, component: MoviePage, layout: Layouts.DefaultLayout },
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.movieDetails, component: MovieDetails, layout: Layouts.DefaultLayout},
-    { path: routes.tvshowDetails, component: TvshowDetails, layout: Layouts.DefaultLayout}
+    { path: routes.tvshowDetails, component: TvshowDetails, layout: Layouts.DefaultLayout},
+    { path: routes.error404, component: Error404, layout: null}
 ]
 const privateRoutes = [
 ]
