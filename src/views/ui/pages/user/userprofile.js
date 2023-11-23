@@ -2,28 +2,30 @@ import React, {useState} from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import user from '../../../../assets/ui/images/user/user.jpg'
+import axios from 'axios'
 
 const UserProfile = () => {
    const [email, setEmail] = useState('example@gmail.com');
    const [newEmail, setNewEmail] = useState('');
    const [isEditingEmail, setIsEditingEmail] = useState(false);
-   const handlePasswordChange = () => {
-      setIsEditingPassword(true);
-   };
 
-   const handleSavePassword = () => {
-      // Gửi request API để lưu thay đổi password
-      // Sau khi gửi request thành công, cập nhật state password và kết thúc việc chỉnh sửa
-      setPassword(newPassword);
-      setIsEditingPassword(false);
-      // Nếu cần, thực hiện các bước cần thiết để lưu thay đổi password lên server (gửi request API)
-   };
+   // const handlePasswordChange = () => {
+   //    setIsEditingPassword(true);
+   // };
 
-   const handleCancelPasswordChange = () => {
-      // Hủy bỏ việc chỉnh sửa password và reset giá trị mới
-      setIsEditingPassword(false);
-      setNewPassword('');
-   };
+   // const handleSavePassword = () => {
+   //    // Gửi request API để lưu thay đổi password
+   //    // Sau khi gửi request thành công, cập nhật state password và kết thúc việc chỉnh sửa
+   //    setPassword(newPassword);
+   //    setIsEditingPassword(false);
+   //    // Nếu cần, thực hiện các bước cần thiết để lưu thay đổi password lên server (gửi request API)
+   // };
+
+   // const handleCancelPasswordChange = () => {
+   //    // Hủy bỏ việc chỉnh sửa password và reset giá trị mới
+   //    setIsEditingPassword(false);
+   //    setNewPassword('');
+   // };
 
    const handleEmailChange = () => {
       setIsEditingEmail(true);
@@ -112,7 +114,7 @@ const UserProfile = () => {
                         <Row className="align-items-center justify-content-between mb-3">
                            <Col md="8">
                               <span className="text-light font-size-13">Password</span>
-                              {isEditingPassword ? (
+                              {/* {isEditingPassword ? (
                                  <input
                                     type="password"
                                     value={newPassword}
@@ -121,17 +123,17 @@ const UserProfile = () => {
                                  />
                               ) : (
                                  <p className="mb-0">{password}</p>
-                              )}
+                              )} */}
                            </Col>
                            <Col md="4" className="text-md-right text-left">
-                              {isEditingPassword ?
+                              {/* {isEditingPassword ?
                                  <div>
                                     <button onClick={handleSavePassword}>Save</button>
                                     <button onClick={handleCancelPasswordChange}>Cancel</button>
                                  </div>
                                  :
                                  <button onClick={handlePasswordChange} className="text-primary">Change</button>
-                              }
+                              } */}
                            </Col>
                         </Row>
                         <Row className="align-items-center justify-content-between mb-3">

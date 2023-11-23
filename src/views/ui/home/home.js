@@ -175,7 +175,6 @@ const Homepage =()=>{
 
    return(
       <>
-         <img src={logo} />
          <FsLightbox
                toggler={toggler1}
                sources={[
