@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { Dropdown, Row, Col, Container, Button } from 'react-bootstrap'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
+import {getBlockbusterMovies} from '../../../api/movie/movieApi'
 //img
 import banner from '../../../assets/images/movie-banner/1.jpg'
 import banner2 from '../../../assets/images/movie-banner/2.jpg'
@@ -23,6 +24,8 @@ import movie7 from '../../../assets/images/movies/07.jpg'
 import movie8 from '../../../assets/images/movies/08.jpg'
 import movie9 from '../../../assets/images/movies/09.jpg'
 import movie10 from '../../../assets/images/movies/10.jpg'
+import publicApi from "../../../api/publicApi/exportPublicApi";
+import {getUpcomingMovieslist} from "../../../api/publicApi/publicApi";
 
 // install Swiper modules
 SwiperCore.use([Navigation]);
@@ -31,6 +34,44 @@ const MoviePage = () => {
     const [blockbusterList, setBlockbusterList] = useState([]);
     const [upcomingMovieslist,setupcomingMovieslist] = useState([]);
     const [TopMoviesByViewslist,settopMoviesByViews] = useState([]);
+    const [moviesbyImbdTop , setmoviesbyImbdTop] = useState([]);
+
+    const fetchApiBlockbusterMovies = async () => {
+        const result = await publicApi.getBlockbusterMovies();
+        setBlockbusterList(result);
+    }
+    useEffect(() => {
+        fetchApiBlockbusterMovies();
+    }, [])
+    console.log(blockbusterList)
+
+    const fetchApiUpcomingMovies = async () => {
+        const result = await publicApi.getUpcomingMovieslist();
+        setupcomingMovieslist(result);
+    }
+    useEffect(() => {
+        fetchApiUpcomingMovies();
+    },[])
+    console.log(upcomingMovieslist)
+
+    const fetchApiMoviesbyImbdTop = async () =>{
+        const result = await publicApi.getMoviesbyImbdTop();
+        setmoviesbyImbdTop(result);
+    }
+    useEffect(()=>{
+        fetchApiMoviesbyImbdTop();
+    },[])
+    console.log(moviesbyImbdTop)
+
+    const fetchApiTopMoviesByViews = async () =>{
+        const result = await publicApi.getTopMoviesByViewslist();
+        settopMoviesByViews(result);
+    }
+    useEffect(()=>{
+        fetchApiTopMoviesByViews();
+    },[])
+    console.log(TopMoviesByViewslist)
+
     return (
         <div>
             <section id="movieshow" className="iq-main-slider p-0">
@@ -46,68 +87,22 @@ const MoviePage = () => {
                     }}
                     loop={true}
                     className="">
-                    <SwiperSlide>
+                    {}
+                    { blockbusterList.map( (movie, index) => (  <SwiperSlide>
                         <Link to="/movie-details">
                             <div className="shows-img">
-                                <img src={banner} className="w-100 img" alt=""/>
+                                <img src={movie?.image} className="w-100 img" alt=""/>
                                 <div className="shows-content">
-                                    <h4 className="text-white mb-1">Open Dead Shot</h4>
+                                    <h4 className="text-white mb-1">{movie?.name}</h4>
                                     <div className="movie-time d-flex align-items-center">
-                                        <div className="badge badge-secondary p-1 mr-2">13+</div>
-                                        <span className="text-white">2h 20m</span>
+                                        <span className="text-white"></span>
                                     </div>
                                 </div>
                             </div>
                         </Link>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Link to="/movie-details">
-                            <div className="shows-img">
-                                <img src={banner2} className="w-100 img1" alt=""/>
-                                <div className="shows-content">
-                                    <h4 className="text-white mb-1">Jumbo Queen</h4>
-                                    <div className="movie-time d-flex align-items-center">
-                                        <div className="badge badge-secondary p-1 mr-2">9+</div>
-                                        <span className="text-white">2h 40m</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Link to="/movie-details">
-                            <div className="shows-img">
-                                <img src={banner3} className="w-100 img1" alt=""/>
-                                <div className="shows-content">
-                                    <h4 className="text-white mb-1">The Lost Journey</h4>
-                                    <div className="movie-time d-flex align-items-center">
-                                        <div className="badge badge-secondary p-1 mr-2">20+</div>
-                                        <span className="text-white">2h 15m</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    </SwiperSlide>
+                    </SwiperSlide>))}
+
                 </Swiper>
-                <Dropdown className="genres-box">
-                    <Dropdown.Toggle as={Button} variant="secondary">
-                        Genres
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="three-column">
-                        <Dropdown.Item href="#">Hindi</Dropdown.Item>
-                        <Dropdown.Item href="#">Tamil</Dropdown.Item>
-                        <Dropdown.Item href="#">Punjabi</Dropdown.Item>
-                        <Dropdown.Item href="#">English</Dropdown.Item>
-                        <Dropdown.Item href="#">Comedies</Dropdown.Item>
-                        <Dropdown.Item href="#">Action</Dropdown.Item>
-                        <Dropdown.Item href="#">Romance</Dropdown.Item>
-                        <Dropdown.Item href="#">Dramas</Dropdown.Item>
-                        <Dropdown.Item href="#">Bollywood</Dropdown.Item>
-                        <Dropdown.Item href="#">Hollywood</Dropdown.Item>
-                        <Dropdown.Item href="#">Children & Family</Dropdown.Item>
-                        <Dropdown.Item href="#">Award-Winning</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
             </section>
             <div className="main-content">
                 <section id="iq-favorites">
@@ -272,7 +267,7 @@ const MoviePage = () => {
                         <Row>
                             <Col sm="12" className="overflow-hidden">
                                 <div className="d-flex align-items-center justify-content-between">
-                                    <h4 className="main-title">Movies We Recommend</h4>
+                                    <h4 className="main-title">Top 10 Movie</h4>
                                 </div>
                                 <div id="suggestede-contens">
                                     <div id="prev3" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>

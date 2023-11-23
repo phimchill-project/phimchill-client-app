@@ -3,8 +3,8 @@ import Layouts from "../layouts/Layouts";
 import ShowList from '../components/common/ShowList';
 import AddMovie from '../views/dashboard/movie/AddMovie';
 import MoviePage from "../views/ui/pages/MoviePage";
-import Login from "../views/ui/pages/auth/login"
-import Register from "../views/ui/pages/auth/register";
+import Login from "../views/ui/pages/auth/Login";
+import Register from "../views/ui/pages/auth/Register";
 import UserProfile from "../views/ui/user/userprofile";
 import UserSetting from "../views/ui/user/usersetting";
 import Home from "../views/ui/home/home";

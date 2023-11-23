@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Container,
   Row,
@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Card from "../../../../components/Card";
 
 import CustomToggle from "../../../../components/dropdowns";
+import publicApi from '../../../../api/publicApi/exportPublicApi';
 
 //img
 
@@ -22,6 +23,15 @@ import thumb3 from "../../../../assets/images/notify/thumb-3.jpg";
 import user from "../../../../assets/images/user/user.jpg";
 
 const HeaderStyle1 = (props) => {
+  const [categoryList ,setCategoryList] = useState();
+  const fetchApiAllCategory = async () => {
+    const result = await publicApi.getAllCategory();
+    setCategoryList(result);
+  }
+  useEffect(() => {
+    fetchApiAllCategory();
+  }, [])
+console.log(categoryList);
   return (
     <>
       <header id="main-header">
@@ -239,43 +249,31 @@ const HeaderStyle1 = (props) => {
                         <li className="menu-item">
                           <Link to="/">Home</Link>
                         </li>
-                        <li className="menu-item">
+                        <li className="menu-item ">
                           <Link to="/movie">Movies</Link>
-                          <Link to="#">Movies</Link>
-                          <ul className="sub-menu">
-                            <li className="menu-item">
-                              <Link to="/about-us">About Us</Link>
-                            </li>
-                            <li className="menu-item ">
-                              <Link to="/contact">Contact</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="/faq">FAQ</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="/privacy-policy">Privacy-Policy</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="#">Pricing</Link>
-                              <ul className="sub-menu">
-                                <li className="menu-item">
-                                  <Link to="/pricing-plan-1">
-                                    Pricing Plan 1
-                                  </Link>
+                          <ul className="sub-menu" style={{width:"500px"}}>
+                            <div className="col-12 row">
+                            {categoryList?.map((category,index) => (
+                                <li className="menu-item col-5">
+                                  <Link to="/show">{category?.name}</Link>
                                 </li>
-                                <li className="menu-item">
-                                  <Link to="/pricing-plan-2">
-                                    Pricing Plan 2
-                                  </Link>
+                            ))}
+                            </div>
+                          </ul>
+                        </li>
+                        <li className="menu-item">
+                          <Link to="/tvseries">Tv Show</Link>
+                          <ul className="sub-menu" style={{width:"500px"}}>
+                            <div className="col-12 row">
+                            {categoryList?.map((category,index) => (
+                                <li className="menu-item col-5">
+                                  <Link to="/show">{category?.name}</Link>
                                 </li>
-                              </ul>
-                            </li>
+                            ))}
+                            </div>
                           </ul>
                         </li>
 
-                        <li className="menu-item">
-                          <Link to="/tvseries">Tv Shows</Link>
-                        </li>
                         <li className="menu-item">
                           <Link to="#">Blog</Link>
                           <ul className="sub-menu">

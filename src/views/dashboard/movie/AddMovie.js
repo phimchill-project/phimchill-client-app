@@ -1,30 +1,32 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { useNavigate } from "react-router-dom";
 import Card from '../../../components/Card'
 import { storage } from '../../../config/firebase'
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { v4 } from 'uuid';
+import publicApi from '../../../api/publicApi/exportPublicApi';
+import adminApi from '../../../api/dashboard/exportAdminApi';
 
 
 const regexName = /^[a-zA-Z0-9]+$/;
-
-
+var categories = [];
 function AddMovie() {
       const [name, setName] = useState();
-      const [imageUrl, setImageUrl] = useState();
-      const [categories, setCategories] = useState();
+      const [image, setImage] = useState();
       const [description, setDescription] = useState();
       const [videoUrl, setVideoaUrl] = useState();
       const [year, setYear] = useState();
       const [duration, setDuration] = useState();
       const [imdb, setImdb] = useState();
       const [dateShow, setDateShow] = useState();
-
-      const [image, setImage] = useState(null);
+      const [checked, setChecked] = useState(categories);
+      const [imageFile, setImageFile] = useState(null);
       const [video, setVideo] = useState(null);
       const [categoryList, setCategoryList] = useState([]);
       const [isNameValid, setIsNameVadid] = useState(true);
       const [isVideoUploadSucces, setIsVideoUploadSuccess] = useState(false);
+      const navigate = useNavigate();
       const handleChangeName = (e) => {
             const value = e.target.value;
             setName(value);
@@ -35,20 +37,20 @@ function AddMovie() {
             }
       }
       const handleChangeImage = (e) => {
-            setImage(e.target.files[0]);
+            setImageFile(e.target.files[0]);
       }
       const uploadImage = async () => {
-            if (image === null) {
+            if (imageFile === null) {
                   return;
             }
-            let imageName = image.name + v4();
+            let imageName = imageFile.name + v4();
             const imageRef = ref(storage, `images-movie/${imageName}`);
-            await uploadBytes(imageRef, image).then(() => {
+            await uploadBytes(imageRef, imageFile).then(() => {
                   console.log("upload image success");
             })
             await getDownloadURL(ref(storage, `images-movie/${imageName}`))
                   .then((url) => {
-                        setImageUrl(url);
+                        setImage(url);
                   })
 
       }
@@ -69,7 +71,7 @@ function AddMovie() {
             }, (error) => {
                   console.log("error " + error)
             }, () => {
-                   getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+                  getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
                         setVideoaUrl(downloadURL);
                         setIsVideoUploadSuccess(true);
                         console.log(downloadURL);
@@ -77,7 +79,23 @@ function AddMovie() {
                   )
             })
       }
-      const handleSubmit = (e) => {
+      const handleChecked = (id) => {
+            const isChecked = categories.includes(id);
+            if (isChecked) {
+                  categories.map(() => {
+                        for (let index = 0; index < categories.length; index++) {
+                              if (categories[index] === id) {
+                                    categories.splice(index, 1);
+                              }
+                        }
+                  })
+                  setChecked(categories);
+            } else {
+                  categories.push(id);
+                  setChecked(categories);
+            }
+      }
+      const handleSubmit = async () => {
             uploadImage();
             const newMovie = {
                   name: name,
@@ -85,14 +103,30 @@ function AddMovie() {
                   duration: duration,
                   year: year,
                   imdb: imdb,
-                  imageUrl: imageUrl,
+                  image: image,
                   url: videoUrl,
                   dateRelease: dateShow,
                   categoryList: categories,
             }
             console.log(newMovie);
+            const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
+            if (isCreateSuccess) {
+                  alert("Create Movie Success");
+                  navigate("/add-movie")
+            } else {
+                  alert("Create Movie Fail. Back to add again in 1s");
+                  setTimeout(() => {
+                        navigate("/add-movie")
+                  }, 1000);
+            }
       }
-      console.log(video);
+      const fetchApiAllCategory = async () => {
+            const result = await publicApi.getAllCategory();
+            setCategoryList(result);
+      }
+      useEffect(() => {
+            fetchApiAllCategory();
+      }, [])
       return (
             <>
                   <Container fluid>
@@ -128,61 +162,20 @@ function AddMovie() {
                                                                               <div className='col-12'>
                                                                                     <div>Choose Categories</div>
                                                                                     <div sm="6" className="form-group" style={{ marginLeft: 20 }}>
-                                                                                          <div className="form-check">
-                                                                                                <input
-                                                                                                      className="form-check-input"
-                                                                                                      type="checkbox"
-                                                                                                      defaultValue={1}
-                                                                                                      id="flexCheckDefault"
-                                                                                                />
-                                                                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                                                      1
-                                                                                                </label>
-                                                                                          </div>
-                                                                                          <div className="form-check">
-                                                                                                <input
-                                                                                                      className="form-check-input"
-                                                                                                      type="checkbox"
-                                                                                                      defaultValue={2}
-                                                                                                      id="flexCheckDefault"
-                                                                                                />
-                                                                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                                                      2
-                                                                                                </label>
-                                                                                          </div>
-                                                                                          <div className="form-check">
-                                                                                                <input
-                                                                                                      className="form-check-input"
-                                                                                                      type="checkbox"
-                                                                                                      defaultValue={3}
-                                                                                                      id="flexCheckDefault"
-                                                                                                />
-                                                                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                                                      3
-                                                                                                </label>
-                                                                                          </div>
-                                                                                          <div className="form-check">
-                                                                                                <input
-                                                                                                      className="form-check-input"
-                                                                                                      type="checkbox"
-                                                                                                      defaultValue={4}
-                                                                                                      id="flexCheckDefault"
-                                                                                                />
-                                                                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                                                      4
-                                                                                                </label>
-                                                                                          </div>
-                                                                                          <div className="form-check">
-                                                                                                <input
-                                                                                                      className="form-check-input"
-                                                                                                      type="checkbox"
-                                                                                                      defaultValue={5}
-                                                                                                      id="flexCheckDefault"
-                                                                                                />
-                                                                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                                                                      5
-                                                                                                </label>
-                                                                                          </div>
+                                                                                          {categoryList?.map((category, index) => (
+                                                                                                <div className="form-check" key={index}>
+                                                                                                      <input
+                                                                                                            className="form-check-input"
+                                                                                                            type="checkbox"
+                                                                                                            defaultValue={category.id}
+                                                                                                            id="flexCheckDefault"
+                                                                                                            onChange={() => handleChecked(category.id)}
+                                                                                                      />
+                                                                                                      <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                                                                            {category.name}
+                                                                                                      </label>
+                                                                                                </div>
+                                                                                          ))}
                                                                                     </div>
                                                                               </div>
                                                                         </Row>
