@@ -1,3 +1,4 @@
+
 import { Route, Routes } from 'react-router-dom'
 import { publicRoutes } from "../src/router/routing";
 import { Fragment } from "react";
@@ -8,14 +9,11 @@ import './assets/css/typography.css'
 import './assets/css/style.css';
 import './assets/css/responsive.css'
 
-// import './assets/dashboard/css/bootstrap.min.css'
-// import './assets/dashboard/css/typography.css'
-// import './assets/dashboard/css/style.css';
-// import './assets/dashboard/css/responsive.css'
 
 
 function App() {
   return (
+
     <div className="App">
       <Routes>
         {publicRoutes.map((route, index) => {

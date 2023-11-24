@@ -13,6 +13,7 @@ import Home from "../views/ui/home/home";
 import MovieDetails from "../views/ui/movie/movie-details";
 import TvshowDetails from "../views/ui/tvshow/tvshow-details";
 import Error404 from "../views/ui/error/error404";
+import ShowTvseries from "../components/ListFilm/ShowTvSeries";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -25,7 +26,8 @@ const publicRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.movieDetails, component: MovieDetails, layout: Layouts.DefaultLayout},
     { path: routes.tvshowDetails, component: TvshowDetails, layout: Layouts.DefaultLayout},
-    { path: routes.error404, component: Error404, layout: null}
+    { path: routes.error404, component: Error404, layout: null},
+    { path: routes.tvSeries, component: ShowTvseries, layout: Layouts.DefaultLayout}
 ]
 const privateRoutes = [
 ]
