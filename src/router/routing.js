@@ -2,8 +2,8 @@ import routes from './routes-path'
 import Login from "../views/ui/pages/auth/Login";
 import Register from '../views/ui/pages/auth/Register';
 import Layouts from "../layouts/Layouts";
-import UserProfile from '../views/ui/pages/user/userprofile';
-import UserSetting from '../views/ui/pages/user/usersetting';
+import UserProfile from '../views/ui/pages/user/Userprofile';
+import UserSetting from '../views/ui/pages/user/Usersetting';
 import ShowList from '../components/common/ShowList';
 import MoviePage from '../views/ui/pages/MoviePage';
 import AddMovie from '../views/dashboard/movie/AddMovie';
