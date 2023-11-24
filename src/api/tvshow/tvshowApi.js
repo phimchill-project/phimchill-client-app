@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8080/api/movies/";
+const API = "http://localhost:8080/api/tvseries/";
 
 export const findByName = async (name) => {
     let result = null;
