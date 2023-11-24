@@ -8,6 +8,7 @@ import { v4 } from 'uuid';
 import publicApi from '../../../api/publicApi/exportPublicApi';
 import adminApi from '../../../api/dashboard/exportAdminApi';
 
+
 const regexName = /^[a-zA-Z0-9]+$/;
 var categories = [];
 function AddMovie() {
