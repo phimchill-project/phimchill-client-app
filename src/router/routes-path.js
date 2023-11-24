@@ -10,6 +10,7 @@ const routes = {
     movieDetails: "/watch-movie/:name",
     tvshowDetails: "/watch-tvshow/:name/:season_episode",
     error404: "/error404",
-    tvSeries : "/tvSeries"
+    tvSeries : "/tvSeries",
+    movieInfo : "/movie-detail"
 }
 export default routes;
