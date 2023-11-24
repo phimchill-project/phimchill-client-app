@@ -27,8 +27,7 @@ export const movieSlice = createSlice({
             state.success = action.payload;
         },
     },
-    // extraReducers de xu ly cac action khong phai do slice dinh nghia ra, o day cac action{ pending, fulfilled, rejected}
-    //dươc tao ra tu createAsynThunk nen se chua o extraReducer
+
     extraReducers: (builder) => {
         builder
 

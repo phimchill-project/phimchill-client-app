@@ -2,22 +2,21 @@ import React from "react";
 import {  Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
+import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
-import  { Navigation } from 'swiper/modules';
-import 'swiper/swiper-bundle.css';
-function MainContent({TvSeriesList}) {
+function MainContent({TvSeriesResponse}) {
+    console.log("ffffffffffffff"+TvSeriesResponse)
     return (
-        <div>
+        TvSeriesResponse &&
+        <div style={{ height: '300px', overflow: 'hidden' }}>
             <Container fluid>
                 <Row>
                     <Col sm="12" className="overflow-hidden">
                         <div className="d-flex align-items-center justify-content-between">
-                            <h4 className="main-title">{TvSeriesList.title}</h4>
+                            <h4 className="main-title">{TvSeriesResponse.title}</h4>
                         </div>
                         <div id="favorites-contens">
-                            <div id="prev1" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
-                            <div id="next1" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
+
                             <Swiper
                                 slidesPerView={4}
                                 spaceBetween={20}
@@ -35,12 +34,12 @@ function MainContent({TvSeriesList}) {
                                 className="favorites-slider list-inline  row p-0 m-0 iq-rtl-direction">
 
 
-                                {TvSeriesList.list.map((element, index) => (
-                                    <div key={index}>
+                                {TvSeriesResponse.listTVSeries.map((element) => (
+                                    <div key={element.id}>
                                         <SwiperSlide className="slide-item">
                                             <div className="block-images1 block-images position-relative">
                                                 <div className="img-box">
-                                                    <img src={element.img} className="img-fluid" alt=""/>
+                                                    <img src={element.image} className="img-fluid" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={element.name}/>
                                                 </div>
                                                 <div className="block-description">
                                                     <h6 className="iq-title">{element.name}</h6>
@@ -50,7 +49,7 @@ function MainContent({TvSeriesList}) {
                                                     </div>
                                                     <div className="hover-buttons">
 
-                                                            Play Now
+                                                        Play Now
 
                                                     </div>
                                                 </div>
@@ -83,6 +82,8 @@ function MainContent({TvSeriesList}) {
                 </Row>
             </Container>
         </div>
+
+
     )
 }
 export default MainContent;

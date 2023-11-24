@@ -8,8 +8,7 @@ import logo from '../../assets/images/logo.png'
 import icon from '../../assets/video/trailer.mp4'
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-import  { EffectFade,Navigation,Thumbs,Pagination } from 'swiper/modules';
-import SwiperCore from 'swiper';
+import SwiperCore, { EffectFade,Navigation,Thumbs,Pagination } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { gsap } from 'gsap'
 import {findMoviesImdb} from "../../api/movieAPI/movieAPI";
