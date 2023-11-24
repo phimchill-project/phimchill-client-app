@@ -3,7 +3,7 @@ import { Link, useLocation} from 'react-router-dom'
 import {Accordion,Button} from 'react-bootstrap'
 import Scrollbar from 'smooth-scrollbar'
 
-import logo from '../../../assets/dashboard/images/logo.png'
+import logo from '../../../assets/images/logo.png'
 
 const minisidbar = () => {
     document.body.classList.toggle('sidebar-main')

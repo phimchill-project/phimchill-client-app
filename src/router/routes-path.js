@@ -9,6 +9,7 @@ const routes = {
     addMovie : "/add-movie",
     movieDetails: "/movie-details/:name",
     tvshowDetails: "/tvshow-details/:name/:season_episode",
-    error404: "/error404"
+    error404: "/error404",
+    tvSeries : "/tvSeries"
 }
 export default routes;
