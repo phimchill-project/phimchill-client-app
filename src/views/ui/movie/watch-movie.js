@@ -21,7 +21,7 @@ import upcoming5 from '../../../assets/images/upcoming/05.jpg'
 import Loading from "../../../components/Loading";
 import routes from "../../../router/routes-path";
 
-const MovieDetails = () => {
+const WatchMovie = () => {
 
     let navigate = useNavigate();
     let { name } = useParams();
@@ -572,4 +572,4 @@ const MovieDetails = () => {
         </>
         )
     }
-export default MovieDetails;
+export default WatchMovie;
