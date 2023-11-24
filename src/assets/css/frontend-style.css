@@ -101,9 +101,12 @@
     opacity: 1;
     visibility: visible;
     transform: translate(0, 0);
+    transform: translateX(-150px);
+
 }
 .navbar-right li .iq-sub-dropdown .iq-sub-card{
     color: white !important;
+
 }
 .search{
     left: auto !important;
