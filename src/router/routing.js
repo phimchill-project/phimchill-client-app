@@ -6,12 +6,13 @@ import ShowList from '../components/common/ShowList';
 import AddMovie from '../views/dashboard/movie/AddMovie';
 import MoviePage from "../views/ui/pages/MoviePage";
 import Login from "../views/ui/pages/auth/Login";
-import Register from "../views/ui/pages/auth/Register";
 import Home from "../views/ui/home/home";
 import WatchMovie from "../views/ui/movie/watch-movie";
 import TvshowDetails from "../views/ui/tvshow/watch-tvshow";
 import Error404 from "../views/ui/error/error404";
 import ShowTvseries from "../components/ListFilm/ShowTvSeries";
+import Register from "../views/ui/pages/auth/Register";
+import ShowDetail from '../components/common/ShowDetail';
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
     { path: routes.register, component: Register, layout: null },
@@ -24,7 +25,8 @@ const publicRoutes = [
     { path: routes.movieDetails, component: WatchMovie, layout: Layouts.DefaultLayout},
     { path: routes.tvshowDetails, component: TvshowDetails, layout: Layouts.DefaultLayout},
     { path: routes.error404, component: Error404, layout: null},
-    { path: routes.tvSeries, component: ShowTvseries, layout: Layouts.DefaultLayout}
+    { path: routes.tvSeries, component: ShowTvseries, layout: Layouts.DefaultLayout},
+    { path: routes.movieInfo, component: ShowDetail, layout: Layouts.DefaultLayout}
 ]
 const privateRoutes = [
 ]
