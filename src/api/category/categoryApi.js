@@ -12,6 +12,5 @@ export const getAllCategory = async () => {
           console.log(result);
           return null;
       }
-      console.log(result?.data.data);
       return result?.data.data;
 } 
