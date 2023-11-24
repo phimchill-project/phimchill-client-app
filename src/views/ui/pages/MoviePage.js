@@ -88,14 +88,16 @@ const MoviePage = () => {
                     loop={true}
                     className="">
                     {}
-                    { blockbusterList.map( (movie, index) => (  <SwiperSlide>
+                    { TopMoviesByViewslist.map( (movie, index) => (
+                        <SwiperSlide>
                         <Link to="/movie-details">
                             <div className="shows-img">
-                                <img src={movie?.image} className="w-100 img" alt=""/>
+                                <img src={movie?.image} className="w-100 img1" alt=""/>
                                 <div className="shows-content">
                                     <h4 className="text-white mb-1">{movie?.name}</h4>
                                     <div className="movie-time d-flex align-items-center">
-                                        <span className="text-white"></span>
+                                        <div className="badge badge-secondary p-1 mr-2">{movie?.year}</div>
+                                        <span className="text-white">{movie?.duration} phút</span>
                                     </div>
                                 </div>
                             </div>
