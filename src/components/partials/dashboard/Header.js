@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom'
 import { Navbar, Button, Form, Nav, Dropdown } from 'react-bootstrap'
 import Card from '../../Card'
 import CustomToggle from '../../dropdowns'
-import  user1  from  '../../../assets/images/dashboard/01.jpg'
-import  user01  from  '../../../assets/images/dashboard/01.jpg'
-import  user02  from  '../../../assets/images/dashboard/02.jpg'
-import  user03  from  '../../../assets/images/dashboard/03.jpg'
-import  user04  from  '../../../assets/images/dashboard/04.jpg'
-import  user05  from  '../../../assets/images/dashboard/05.jpg'
-
+import  user1  from  '../../../assets/dashboard/images/dashboard/01.jpg'
+import  user01  from  '../../../assets/dashboard/images/dashboard/01.jpg'
+import  user02  from  '../../../assets/dashboard/images/dashboard/02.jpg'
+import  user03  from  '../../../assets/dashboard/images/dashboard/03.jpg'
+import  user04  from  '../../../assets/dashboard/images/dashboard/04.jpg'
+import  user05  from  '../../../assets/dashboard/images/dashboard/05.jpg'
 //img
-import logo from '../../../assets/images/logo.png'
+import logo from '../../../assets/ui/images/logo.png'
 function Header() {
       const minisidbar =() =>{
             document.body.classList.toggle('sidebar-main')

@@ -5,7 +5,7 @@ import Card from '../../../components/Card'
 import { storage } from '../../../config/firebase'
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { v4 } from 'uuid';
-import publicApi from '../../../api/publicApi/exportPublicApi';
+import publicApi from '../../../api/category/exportCategoryApi';
 import adminApi from '../../../api/dashboard/exportAdminApi';
 
 

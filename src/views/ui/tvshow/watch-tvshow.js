@@ -2,12 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {Link, useNavigate, useParams} from 'react-router-dom'
 import {Container, Row, Col} from 'react-bootstrap'
 import tvshowApi from "../../../api/tvshow/exportMovieApi";
-import Loading from "../../../components/Loading";
-import Episodes from "../../../components/Episodes";
+import Loading from "../../../components/common/Loading";
+import Episodes from "./Episodes";
 import routes from "../../../router/routes-path";
-
-//img
-import video from '../../../assets/video/sample-video.mp4'
 
 const TvShowListDetails = () => {
 

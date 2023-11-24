@@ -1,7 +1,9 @@
-import {Login, register, isEmailExist} from "./authApi"
+import {login, register, isEmailExist, postCommentMovie, postSubCommet} from "./authApi"
 const authApi = {
-    Login,
+    login,
     register,
     isEmailExist,
+    postCommentMovie,
+    postSubCommet
 }
 export default authApi;

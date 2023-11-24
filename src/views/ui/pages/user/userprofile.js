@@ -1,69 +1,66 @@
-import React from 'react'
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import user from "../../../../assets/images/user/user.jpg";
-import { useState } from "react";
-import axios from "axios";
+import React, {useState} from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import user from '../../../../assets/ui/images/user/user.jpg'
+import axios from 'axios'
 
 const UserProfile = () => {
-  const token = localStorage.getItem("token");
-  const [isEditingPassword, setIsEditingPassword] = useState(false);
-  const [password, setPassword] = useState('**********');
-  const [newPassword, setNewPassword] = useState('');
-  const [email, setEmail] = useState('example@gmail.com');
-    const [newEmail, setNewEmail] = useState();
-    const [isEditingEmail, setIsEditingEmail] = useState(false);
-    const handlePasswordChange = () => {
-      setIsEditingPassword(true);
-    };
-  
-    const handleSavePassword = () => {
-      // Gửi request API để lưu thay đổi password
-      // Sau khi gửi request thành công, cập nhật state password và kết thúc việc chỉnh sửa
-      setPassword(newPassword);
-      setIsEditingPassword(false);
-      // Nếu cần, thực hiện các bước cần thiết để lưu thay đổi password lên server (gửi request API)
-    };
-  
-    const handleCancelPasswordChange = () => {
-      // Hủy bỏ việc chỉnh sửa password và reset giá trị mới
-      setIsEditingPassword(false);
-      setNewPassword('');
-    };
+   const [email, setEmail] = useState('example@gmail.com');
+   const [newEmail, setNewEmail] = useState('');
+   const [isEditingEmail, setIsEditingEmail] = useState(false);
 
-    const handleEmailChange = () => {
-        setIsEditingEmail(true);
-    };
+   // const handlePasswordChange = () => {
+   //    setIsEditingPassword(true);
+   // };
 
-    const handleCancelEmailChange = () => {
-        setIsEditingEmail(false);
-        setNewEmail('');
-    };
+   // const handleSavePassword = () => {
+   //    // Gửi request API để lưu thay đổi password
+   //    // Sau khi gửi request thành công, cập nhật state password và kết thúc việc chỉnh sửa
+   //    setPassword(newPassword);
+   //    setIsEditingPassword(false);
+   //    // Nếu cần, thực hiện các bước cần thiết để lưu thay đổi password lên server (gửi request API)
+   // };
 
-   const handleSaveEmail = () => {
-  const token = localStorage.getItem("token");
+   // const handleCancelPasswordChange = () => {
+   //    // Hủy bỏ việc chỉnh sửa password và reset giá trị mới
+   //    setIsEditingPassword(false);
+   //    setNewPassword('');
+   // };
 
-  axios.put(
-    `/api/users/edit-email`,
-    { newEmail },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  )
-    .then(response => {
-      console.log('Email updated successfully:', response.data);
-      setEmail(newEmail);
+   const handleEmailChange = () => {
+      setIsEditingEmail(true);
+   };
+
+   const handleCancelEmailChange = () => {
       setIsEditingEmail(false);
       setNewEmail('');
-    })
-    .catch(error => {
-      console.error('Error updating email:', error);
-    });
-};
+   };
 
-    
+   const handleSaveEmail = () => {
+      const token = localStorage.getItem("token");
+
+      axios.put(
+         `/api/users/edit-email`,
+         { newEmail },
+         {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         }
+      )
+         .then(response => {
+            console.log('Email updated successfully:', response.data);
+            setEmail(newEmail);
+            setIsEditingEmail(false);
+            setNewEmail('');
+         })
+         .catch(error => {
+            console.error('Error updating email:', error);
+         });
+   };
+   console.log(isEditingEmail);
+
+  
   return (
     <>
       <section className="m-profile setting-wrapper">

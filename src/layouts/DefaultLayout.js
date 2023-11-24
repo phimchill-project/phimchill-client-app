@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
-import HeaderStyle1 from '../components/partials/backend/headerstyle/headerstyle1';
-import FooterStyle from '../components/partials/backend/footerstyle/footerstyle'
+import HeaderStyle1 from '../components/partials/ui/headerstyle/headerstyle1';
+import FooterStyle from '../components/partials/ui/footerstyle/footerstyle'
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+// import '../assets/ui/css/typography.css'
+// import '../assets/ui/css/bootstrap.min.css'
+// import '../assets/ui/css/style.css';
+// import '../assets/ui/css/responsive.css'
 
 const DefaultLayout = ({ children }) => {
     const backToTop = document.getElementById("back-to-top")

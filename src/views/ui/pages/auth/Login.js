@@ -31,17 +31,18 @@ function Login(){
     }, [focusPass, Pass]);
 
     const LoginButton = async () => {
-        const data = await authApi.Login({
+        const data = await authApi.login({
             email: Email,
             password : Pass,
         });
-        console.log(data);
         if(data?.statusCode === 200){
-             localStorage.setItem("token",data?.data.token)
+            localStorage.setItem("token",data?.data.token);
+            localStorage.setItem("user",data?.data);
             navigate("/");
+        }else {
+            navigate("/login")
         }
     }
-
 
     const handleBlurPass = () => {
         setFocusPass(true)
