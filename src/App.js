@@ -2,17 +2,10 @@ import { Route, Routes } from 'react-router-dom'
 import { publicRoutes } from "./router/routing";
 import { Fragment } from "react";
 
-
-// import './assets/dashboard/css/bootstrap.min.css'
-// import './assets/dashboard/css/typography.css'
-// import './assets/dashboard/css/style.css';
-// import './assets/dashboard/css/responsive.css'  
-//scss files
 import './assets/ui/css/bootstrap.min.css'
 import './assets/ui/css/typography.css'
 import './assets/ui/css/style.css'
 import './assets/ui/css/responsive.css'
-
 
 function App() {
   return (

@@ -6,11 +6,9 @@ import logo from '../../../assets/ui/images/logo.png'
 import Card from '../../Card'
 import CustomToggle from '../../dropdowns'
 
-
 const minisidbar = () => {
     document.body.classList.toggle('sidebar-main')
 }
-
 
 const SideBar = (props) => {
     //Collapse state

@@ -3,18 +3,14 @@ import { Link } from 'react-router-dom'
 import { Navbar, Button, Form, Nav, Dropdown } from 'react-bootstrap'
 import Card from '../../Card'
 import CustomToggle from '../../dropdowns'
-import  user1  from  '../../../assets/dashboard/images/user/1.jpg'
-import  user01  from  '../../../assets/dashboard/images/user/01.jpg'
-import  user02  from  '../../../assets/dashboard/images/user/02.jpg'
-import  user03  from  '../../../assets/dashboard/images/user/03.jpg'
-import  user04  from  '../../../assets/dashboard/images/user/04.jpg'
-import  user05  from  '../../../assets/dashboard/images/user/05.jpg'
-// import '../../../assets/dashboard/css/bootstrap.min.css'
-// import '../../../assets/dashboard/css/typography.css'
-// import '../../../assets/dashboard/css/style.css';
-// import '../../../assets/dashboard/css/responsive.css'
+import  user1  from  '../../../assets/dashboard/images/dashboard/01.jpg'
+import  user01  from  '../../../assets/dashboard/images/dashboard/01.jpg'
+import  user02  from  '../../../assets/dashboard/images/dashboard/02.jpg'
+import  user03  from  '../../../assets/dashboard/images/dashboard/03.jpg'
+import  user04  from  '../../../assets/dashboard/images/dashboard/04.jpg'
+import  user05  from  '../../../assets/dashboard/images/dashboard/05.jpg'
 //img
-import logo from '../../../assets/dashboard/images/logo.png'
+import logo from '../../../assets/ui/images/logo.png'
 function Header() {
       const minisidbar =() =>{
             document.body.classList.toggle('sidebar-main')

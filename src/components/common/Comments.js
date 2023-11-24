@@ -8,8 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 const props = 1;
 const ShowComments = () => {
     const [comment, setComments] = useState();
+    const [subCommnet, setSubComment] = useState()
     const [commentList, setCommentList] = useState();
-    // const [postCommentValue, setPostCommentValue] = useState();
+    const [userID, setUserID] = useState();
+    const [commetID, setCommentID] = useState();
     const [isShowTextAreaSubCommemt, setIsShowTextAreaSubCommemt] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const navigate = useNavigate();
@@ -21,19 +23,23 @@ const ShowComments = () => {
         //     document.getElementById("like-button").style.color = "#e50914";
         // }
     }
-    const handleCommnet = (e) => {
+    const handleCommnet = (id, commentID) => {
+        console.log(id);
         setIsShowTextAreaSubCommemt(!isShowTextAreaSubCommemt);
-        // if (isShowTextAreaSubCommemt) {
-        //     document.getElementById("comment-button").style.color = "#d7c4b3";
-        // } else {
-        //     document.getElementById("comment-button").style.color = "#e50914";
-        // }
+        setUserID(id);
+        setCommentID(commentID);  
     }
     const handleChange = (e) => {
         setComments(e.target.value);
     }
+    const handleChangeSubComment = (e) => {
+        setSubComment(e.target.value);
+    }
     const fetchPostMovieComment = async (request) => {
         return await authApi.postCommentMovie(request);
+    }
+    const fetchPostSubComment = async (request) => {
+        return await authApi.postSubCommet(request, commetID);
     }
     const postComment = () => {
         const request = {
@@ -43,14 +49,17 @@ const ShowComments = () => {
         };
         const result = fetchPostMovieComment(request);
         console.log(result);
-        setComments("")
-        if(result?.statusCode == 200){
-            fetchAllComments(props);
-            console.log(commentList);
-        }
+        setComments("");
+
     }
     const postSubComment = () => {
-
+        const request = {
+            comment: subCommnet,
+            datePost: new Date(),
+            userID: userID
+        };
+        const result = fetchPostSubComment(request);
+        setSubComment("");
     }
     const fetchAllComments = async (movieID) => {
         let result = await commentApi.getAllCommentsByMovieId(movieID);
@@ -58,7 +67,7 @@ const ShowComments = () => {
     }
     useEffect(() => {
         fetchAllComments(props);
-    }, [commentList])
+    }, [])
     // console.log(commentList);
     return (
         <>
@@ -104,9 +113,9 @@ const ShowComments = () => {
                                                             </p>
                                                             <div className="small d-flex justify-content-start" style={{ marginTop: 10 }}>
                                                                 <div className="d-flex align-items-center me-3" id="like-button" onClick={handleLike}>
-                                                                    <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />
+                                                                    <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />  
                                                                 </div>
-                                                                <div className="d-flex align-items-center me-3" id="comment-button" onClick={handleCommnet}>
+                                                                <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(comment?.userDto.id, comment?.id)}>
                                                                     <FontAwesomeIcon icon={faCommentDots} size="lg" style={{ height: 25, marginLeft: 20 }} />
                                                                 </div>
                                                             </div>
@@ -138,7 +147,7 @@ const ShowComments = () => {
                                                                         <div className="d-flex align-items-center me-3" id="like-button" onClick={handleLike}>
                                                                             <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />
                                                                         </div>
-                                                                        <div className="d-flex align-items-center me-3" id="comment-button" onClick={handleCommnet}>
+                                                                        <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(subComment?.userDtoSubComment.id, comment?.id)}>
                                                                             <FontAwesomeIcon icon={faCommentDots} size="lg" style={{ height: 25, marginLeft: 20 }} />
                                                                         </div>
                                                                     </div>
@@ -151,7 +160,7 @@ const ShowComments = () => {
                                                             <div className="d-flex flex-start w-100 ">
                                                                 <div className="form-outline w-100">
                                                                     <input type="text" className="form-control" id="textAreaExample" rows={4}
-                                                                        defaultValue={""} onChange={handleChange} />
+                                                                        defaultValue={""} onChange={handleChangeSubComment} />
                                                                 </div>
                                                             </div>
                                                             <div className="float-end mt-2 pt-1">
