@@ -1,12 +1,12 @@
 import routes from './routes-path'
-import Login from "../views/ui/pages/auth/login";
-import Register from '../views/ui/pages/auth/Register';
 import Layouts from "../layouts/Layouts";
 import UserProfile from '../views/ui/pages/user/userprofile';
 import UserSetting from '../views/ui/pages/user/usersetting';
 import ShowList from '../components/common/ShowList';
-import MoviePage from '../views/ui/pages/MoviePage';
 import AddMovie from '../views/dashboard/movie/AddMovie';
+import MoviePage from "../views/ui/pages/MoviePage";
+import Login from "../views/ui/pages/auth/Login";
+import Register from "../views/ui/pages/auth/Register";
 import Home from "../views/ui/home/home";
 import MovieDetails from "../views/ui/movie/movie-details";
 import TvshowDetails from "../views/ui/tvshow/tvshow-details";
@@ -29,4 +29,4 @@ const publicRoutes = [
 ]
 const privateRoutes = [
 ]
-export { publicRoutes, privateRoutes }
+export { publicRoutes, privateRoutes } 

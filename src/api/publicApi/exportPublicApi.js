@@ -1,5 +1,9 @@
-import { getAllCategory } from "./publicApi"
+import {getMoviesbyImbdTop,getAllCategory, getBlockbusterMovies, getTopMoviesByViewslist, getUpcomingMovieslist} from "./publicApi"
 const publicApi = {
-      getAllCategory
+      getAllCategory,
+      getBlockbusterMovies,
+      getUpcomingMovieslist,
+      getTopMoviesByViewslist,
+      getMoviesbyImbdTop
 }
 export default publicApi;
