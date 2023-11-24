@@ -3,22 +3,20 @@ import {Container,Row,Col} from 'react-bootstrap'
 import {Link, useNavigate, useParams} from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import movieApi from "../../../api/movie/exportMovieApi";
 import Start from "../../../components/movie/Start";
-
-//images
-import trending from '../../../assets/images/trending/trending-label.png'
-import movie1 from '../../../assets/images/movies/06.jpg'
-import movie2 from '../../../assets/images/movies/07.jpg'
-import movie3 from '../../../assets/images/movies/08.jpg'
-import movie4 from '../../../assets/images/movies/09.jpg'
-import movie5 from '../../../assets/images/movies/10.jpg'
-import upcoming1 from '../../../assets/images/upcoming/01.jpg'
-import upcoming2 from '../../../assets/images/upcoming/02.jpg'
-import upcoming3 from '../../../assets/images/upcoming/03.jpg'
-import upcoming4 from '../../../assets/images/upcoming/04.jpg'
-import upcoming5 from '../../../assets/images/upcoming/05.jpg'
-import Loading from "../../../components/Loading";
+import trending from '../../../assets/ui/images/trending/trending-label.png'
+import movie1 from '../../../assets/ui/images/movies/06.jpg'
+import movie2 from '../../../assets/ui/images/movies/07.jpg'
+import movie3 from '../../../assets/ui/images/movies/08.jpg'
+import movie4 from '../../../assets/ui/images/movies/09.jpg'
+import movie5 from '../../../assets/ui/images/movies/10.jpg'
+import upcoming1 from '../../../assets/ui/images/upcoming/01.jpg'
+import upcoming2 from '../../../assets/ui/images/upcoming/02.jpg'
+import upcoming3 from '../../../assets/ui/images/upcoming/03.jpg'
+import upcoming4 from '../../../assets/ui/images/upcoming/04.jpg'
+import upcoming5 from '../../../assets/ui/images/upcoming/05.jpg'
+import movieApi from "../../../api/movie/exportMovieApi";
+import Loading from "../../../components/common/Loading";
 import routes from "../../../router/routes-path";
 
 const WatchMovie = () => {

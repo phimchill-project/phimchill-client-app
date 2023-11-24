@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import img1 from '../../assets/images/upcoming/01.jpg'
+import img1 from '../../assets/ui/images/upcoming/01.jpg'
 
 const ShowList = () => {
     const [list, setList] = useState([{

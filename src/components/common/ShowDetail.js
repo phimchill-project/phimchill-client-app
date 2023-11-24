@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import logo from '../../assets/images/logo.png'
 function MovieDetail() {
     const [toggler1, setToggler1] = useState(false);
     const [toggler2, setToggler2] = useState(false);

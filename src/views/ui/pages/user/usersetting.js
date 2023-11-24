@@ -4,7 +4,7 @@ import { Col, Row, Container, Form } from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
-import user from '../../../../assets/images/user/user.jpg'
+import user from '../../../../assets/ui/images/user/user.jpg'
 
 const UserSetting = () => {
     const [date, setDate] = useState(new Date());
