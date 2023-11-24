@@ -37,7 +37,7 @@ const TvShowListDetails = () => {
 
             const episodesWithLink = data.data.seasonList[parts[1] - 1].episodeList.map((episode, index) => ({
                 ...episode,
-                link: `/tvshow-details/${name}/season-${parts[1]}-episode-${index + 1}`
+                link: `/watch-tvshow/${name}/season-${parts[1]}-episode-${index + 1}`
             }));
 
             setEpisode(episodesWithLink.splice(parts[3] - 1, 1))
