@@ -19,7 +19,7 @@ import movieApi from "../../../api/movie/exportMovieApi";
 import Loading from "../../../components/common/Loading";
 import routes from "../../../router/routes-path";
 
-const MovieDetails = () => {
+const WatchMovie = () => {
 
     let navigate = useNavigate();
     let { name } = useParams();
@@ -570,4 +570,4 @@ const MovieDetails = () => {
         </>
         )
     }
-export default MovieDetails;
+export default WatchMovie;
