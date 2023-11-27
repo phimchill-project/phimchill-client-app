@@ -27,9 +27,6 @@ const ShowTvseries = () => {
         dispatch(getTvSeriesByNewest());
     }, []);
 
-    //
-    console.log(newestList)
-    //
 
     return(
         <>

@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 function MainContent({TvSeriesResponse}) {
-    console.log("ffffffffffffff"+TvSeriesResponse)
     return (
         TvSeriesResponse &&
         <div style={{ height: '300px', overflow: 'hidden' }}>
