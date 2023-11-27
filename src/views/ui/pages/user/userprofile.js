@@ -1,66 +1,84 @@
-import React, {useState} from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import user from '../../../../assets/ui/images/user/user.jpg'
-import axios from 'axios'
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import user from "../../../../assets/ui/images/user/user.jpg";
+import { useState } from "react";
+import axios from "axios";
 
 const UserProfile = () => {
-   const [email, setEmail] = useState('example@gmail.com');
-   const [newEmail, setNewEmail] = useState('');
-   const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [isEditingPassword, setIsEditingPassword] = useState(false);
+  const [password, setPassword] = useState("**********");
+  const [newPassword, setNewPassword] = useState("");
+  const [email, setEmail] = useState("example@gmail.com");
+  const [newEmail, setNewEmail] = useState();
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const handlePasswordChange = () => {
+    setIsEditingPassword(true);
+  };
 
-   // const handlePasswordChange = () => {
-   //    setIsEditingPassword(true);
-   // };
+  const handleSavePassword = () => {
+    const token = localStorage.getItem("token");
 
-   // const handleSavePassword = () => {
-   //    // Gửi request API để lưu thay đổi password
-   //    // Sau khi gửi request thành công, cập nhật state password và kết thúc việc chỉnh sửa
-   //    setPassword(newPassword);
-   //    setIsEditingPassword(false);
-   //    // Nếu cần, thực hiện các bước cần thiết để lưu thay đổi password lên server (gửi request API)
-   // };
-
-   // const handleCancelPasswordChange = () => {
-   //    // Hủy bỏ việc chỉnh sửa password và reset giá trị mới
-   //    setIsEditingPassword(false);
-   //    setNewPassword('');
-   // };
-
-   const handleEmailChange = () => {
-      setIsEditingEmail(true);
-   };
-
-   const handleCancelEmailChange = () => {
-      setIsEditingEmail(false);
-      setNewEmail('');
-   };
-
-   const handleSaveEmail = () => {
-      const token = localStorage.getItem("token");
-
-      axios.put(
-         `/api/users/edit-email`,
-         { newEmail },
-         {
-            headers: {
-               Authorization: `Bearer ${token}`
-            }
-         }
+    axios
+      .put(
+        "/api/users/edit-password",
+        { newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
-         .then(response => {
-            console.log('Email updated successfully:', response.data);
-            setEmail(newEmail);
-            setIsEditingEmail(false);
-            setNewEmail('');
-         })
-         .catch(error => {
-            console.error('Error updating email:', error);
-         });
-   };
-   console.log(isEditingEmail);
+      .then((response) => {
+        console.log("Password updated successfully:", response.data);
+        setPassword(newPassword);
+        setIsEditingPassword(false);
+        setNewPassword("")
+      })
+      .catch((error) => {
+        console.error("Error updating password:", error);
+      });
 
-  
+  };
+
+  const handleCancelPasswordChange = () => {
+    setIsEditingPassword(false);
+    setNewPassword("");
+  };
+
+  const handleEmailChange = () => {
+    setIsEditingEmail(true);
+  };
+
+  const handleCancelEmailChange = () => {
+    setIsEditingEmail(false);
+    setNewEmail("");
+  };
+
+  const handleSaveEmail = () => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .put(
+        `/api/users/edit-email`,
+        { newEmail },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Email updated successfully:", response.data);
+        setEmail(newEmail);
+        setIsEditingEmail(false);
+        setNewEmail("");
+      })
+      .catch((error) => {
+        console.error("Error updating email:", error);
+      });
+  };
+
   return (
     <>
       <section className="m-profile setting-wrapper">
@@ -89,55 +107,69 @@ const UserProfile = () => {
               <div className="sign-user_card">
                 <h5 className="mb-3 pb-3 a-border">Personal Details</h5>
                 <Row className="row align-items-center justify-content-between mb-3">
-                <Col md="8">
+                  <Col md="8">
                     <span className="text-light font-size-13">Email</span>
                     {isEditingEmail ? (
-                        <input
-                            type="text"
-                            value={newEmail}
-                            onChange={(e) => setNewEmail(e.target.value)}
-                            placeholder="Enter new email"
-                        />
+                      <input
+                        type="text"
+                        value={newEmail}
+                        onChange={(e) => setNewEmail(e.target.value)}
+                        placeholder="Enter new email"
+                      />
                     ) : (
-                        <p className="mb-0">{email}</p>
+                      <p className="mb-0">{email}</p>
                     )}
-                </Col>
-                <Col md="4" className="text-md-right text-left">
+                  </Col>
+                  <Col md="4" className="text-md-right text-left">
                     {isEditingEmail ? (
-                        <div>
-                            <button onClick={handleSaveEmail}>Save</button>
-                            <button onClick={handleCancelEmailChange}>Cancel</button>
-                        </div>
+                      <div>
+                        <button onClick={handleSaveEmail}>Save</button>
+                        <button onClick={handleCancelEmailChange}>
+                          Cancel
+                        </button>
+                      </div>
                     ) : (
-                        <button onClick={handleEmailChange} className="text-primary">Change</button>
+                      <button
+                        onClick={handleEmailChange}
+                        className="text-primary"
+                      >
+                        Change
+                      </button>
                     )}
-                </Col>
-            </Row>
-            <Row className="align-items-center justify-content-between mb-3">
-        <Col md="8">
-          <span className="text-light font-size-13">Password</span>
-          {isEditingPassword ? (
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
-            />
-          ) : (
-            <p className="mb-0">{password}</p>
-          )}
-        </Col>
-        <Col md="4" className="text-md-right text-left">
-          {isEditingPassword ? (
-            <div>
-              <button onClick={handleSavePassword}>Save</button>
-              <button onClick={handleCancelPasswordChange}>Cancel</button>
-            </div>
-          ) : (
-            <button onClick={handlePasswordChange} className="text-primary">Change</button>
-          )}
-        </Col>
-      </Row>
+                  </Col>
+                </Row>
+                <Row className="align-items-center justify-content-between mb-3">
+                  <Col md="8">
+                    <span className="text-light font-size-13">Password</span>
+                    {isEditingPassword ? (
+                      <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        placeholder="Enter new password"
+                      />
+                    ) : (
+                      <p className="mb-0">{password}</p>
+                    )}
+                  </Col>
+                  <Col md="4" className="text-md-right text-left">
+                    {isEditingPassword ? (
+                      <div>
+                        <button onClick={handleSavePassword}>Save</button>
+                        <button onClick={handleCancelPasswordChange}>
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handlePasswordChange}
+                        className="text-primary"
+                      >
+                        Change
+                      </button>
+                    )}
+                  </Col>
+                </Row>
                 <Row className="align-items-center justify-content-between mb-3">
                   <Col md="8">
                     <span className="text-light font-size-13">
