@@ -161,9 +161,9 @@ function AddMovie() {
                                                                         <Row className='col-12'>
                                                                               <div className='col-12'>
                                                                                     <div>Choose Categories</div>
-                                                                                    <div sm="6" className="form-group" style={{ marginLeft: 20 }}>
+                                                                                    <div sm="6" className="form-group row" style={{ marginLeft: 20 }}>
                                                                                           {categoryList?.map((category, index) => (
-                                                                                                <div className="form-check" key={index}>
+                                                                                                <div className="form-check col-sm-4" key={index}>
                                                                                                       <input
                                                                                                             className="form-check-input"
                                                                                                             type="checkbox"

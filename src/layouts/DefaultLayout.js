@@ -33,8 +33,8 @@ const DefaultLayout = ({ children }) => {
             <div id="back-to-top">
                 <Link className="top" to="#" id="top"> <i className="fa fa-angle-up"></i></Link>
             </div>
-            <div className="wraper">
-                <div className="content-page" id="content-page">
+            <div className="wraper" style={{top : 100}}>
+                <div className="content-page" id="content-page" >
                     <TransitionGroup>
                         <CSSTransition
                             classNames="fade"

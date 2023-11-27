@@ -5,12 +5,14 @@ import authApi from "../../api/authApi/exportAuthApi";
 import commentApi from "../../api/comment/exportCommentApi";
 import { Link, useNavigate } from "react-router-dom";
 
-const props = 1;
-const ShowComments = () => {
+
+// const props = 1;
+const ShowComments = ({movieId}) => {
+    const [idMovie, setIdMovie] = useState(movieId);
     const [comment, setComments] = useState();
     const [subCommnet, setSubComment] = useState()
     const [commentList, setCommentList] = useState();
-    const [userID, setUserID] = useState();
+    const [userIDTagged, setIDTagged] = useState([]);
     const [commetID, setCommentID] = useState();
     const [isShowTextAreaSubCommemt, setIsShowTextAreaSubCommemt] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -24,9 +26,8 @@ const ShowComments = () => {
         // }
     }
     const handleCommnet = (id, commentID) => {
-        console.log(id);
         setIsShowTextAreaSubCommemt(!isShowTextAreaSubCommemt);
-        setUserID(id);
+        setIDTagged(id);
         setCommentID(commentID);  
     }
     const handleChange = (e) => {
@@ -45,30 +46,33 @@ const ShowComments = () => {
         const request = {
             comment: comment,
             datePost: new Date(),
-            movieID: 1
+            movieId: movieId
         };
         const result = fetchPostMovieComment(request);
         console.log(result);
         setComments("");
-
     }
     const postSubComment = () => {
         const request = {
             comment: subCommnet,
             datePost: new Date(),
-            userID: userID
+            userID: userIDTagged
         };
         const result = fetchPostSubComment(request);
         setSubComment("");
     }
-    const fetchAllComments = async (movieID) => {
-        let result = await commentApi.getAllCommentsByMovieId(movieID);
-        setCommentList(result.data);
+    const fetchAllComments = async () => {
+        let result = await commentApi.getAllCommentsByMovieId(idMovie);
+        setCommentList(result?.data);
     }
+    // useEffect(() => {
+    //     if(idMovie != null){
+    //         fetchAllComments();
+    //     }
+    // })
     useEffect(() => {
-        fetchAllComments(props);
-    }, [])
-    // console.log(commentList);
+        console.log("aaa", idMovie);
+    })
     return (
         <>
             <section>
@@ -120,7 +124,7 @@ const ShowComments = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        {comment?.repliedMovieCommentDtoList.map((subComment, index) => (
+                                                        {comment?.subCommentDtoList.map((subComment, index) => (
                                                             <div className="d-flex flex-start mt-4" key={index}>
                                                                 <Link className="me-3">
                                                                     <img
@@ -135,7 +139,7 @@ const ShowComments = () => {
                                                                     <div>
                                                                         <div className="d-flex justify-content-between align-items-center">
                                                                             <p className="mb-1">
-                                                                                {subComment?.userDtoSubComment.name}{" "}
+                                                                                {subComment?.userDtoComment.name}{" "}
                                                                                 <span className="small">- 3 hours ago</span>
                                                                             </p>
                                                                         </div>
@@ -147,7 +151,7 @@ const ShowComments = () => {
                                                                         <div className="d-flex align-items-center me-3" id="like-button" onClick={handleLike}>
                                                                             <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />
                                                                         </div>
-                                                                        <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(subComment?.userDtoSubComment.id, comment?.id)}>
+                                                                        <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(subComment?.userDtoComment.id, comment?.id)}>
                                                                             <FontAwesomeIcon icon={faCommentDots} size="lg" style={{ height: 25, marginLeft: 20 }} />
                                                                         </div>
                                                                     </div>

@@ -61,3 +61,27 @@ export const getMoviesbyImbdTop = async () => {
     }
     return result?.data.data;
 }
+
+export const getMoviesByCategoryId = async (id) => {
+    let result = null;
+    try {
+        result = await axios.get(`${API}category/${id}/movies`);
+    } catch (e) {
+        console.log("Find Check API error: " + e);
+        return null;
+    }
+    console.log(result.data.data);
+    return result?.data.data;
+}
+
+export const getTvSeriesByCategoryId = async (id) => {
+    let result = null;
+    try {
+        result = await axios.get(`${API}category/${id}/tv-series`);
+    } catch (e) {
+        console.log("Find Check API error: " + e);
+        return null;
+    }
+    console.log(result.data.data);
+    return result?.data.data;
+}

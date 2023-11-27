@@ -1,5 +1,7 @@
-import { getAllCategory } from "./categoryApi"
+import { getAllCategory, getMoviesByCategoryId, getTvSeriesByCategoryId } from "./categoryApi"
 const categoryApi = {
-      getAllCategory
+      getAllCategory,
+      getMoviesByCategoryId,
+      getTvSeriesByCategoryId
 }
 export default categoryApi;

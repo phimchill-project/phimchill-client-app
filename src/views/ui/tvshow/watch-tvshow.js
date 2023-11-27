@@ -6,7 +6,7 @@ import Loading from "../../../components/common/Loading";
 import Episodes from "./Episodes";
 import routes from "../../../router/routes-path";
 
-const TvShowListDetails = () => {
+const WatchTvSeries = () => {
 
     let navigate = useNavigate();
     let { name, season_episode } = useParams();
@@ -113,4 +113,4 @@ const TvShowListDetails = () => {
 
     )
 }
-export default TvShowListDetails;
+export default WatchTvSeries;
