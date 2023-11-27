@@ -2,7 +2,7 @@ import {Link} from "react-router-dom";
 import {Col, Container, Row} from "react-bootstrap";
 
 // img
-import img404 from '../../../assets/images/error/404.png'
+import img404 from '../../../assets/ui/images/error/404.png'
 
 function Error404(){
     return (

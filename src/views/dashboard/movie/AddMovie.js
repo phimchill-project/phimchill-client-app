@@ -5,8 +5,9 @@ import Card from '../../../components/Card'
 import { storage } from '../../../config/firebase'
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { v4 } from 'uuid';
-import publicApi from '../../../api/publicApi/exportPublicApi';
+import publicApi from '../../../api/category/exportCategoryApi';
 import adminApi from '../../../api/dashboard/exportAdminApi';
+
 
 const regexName = /^[a-zA-Z0-9]+$/;
 var categories = [];
@@ -160,9 +161,9 @@ function AddMovie() {
                                                                         <Row className='col-12'>
                                                                               <div className='col-12'>
                                                                                     <div>Choose Categories</div>
-                                                                                    <div sm="6" className="form-group" style={{ marginLeft: 20 }}>
+                                                                                    <div sm="6" className="form-group row" style={{ marginLeft: 20 }}>
                                                                                           {categoryList?.map((category, index) => (
-                                                                                                <div className="form-check" key={index}>
+                                                                                                <div className="form-check col-sm-4" key={index}>
                                                                                                       <input
                                                                                                             className="form-check-input"
                                                                                                             type="checkbox"

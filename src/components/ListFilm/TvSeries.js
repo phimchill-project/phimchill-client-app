@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 function TvSeries(tvSeries) {
-    return(
+    return (
         <div>
             <div className="block-images1 block-images position-relative">
                 <div className="img-box">
-                    <img src={tvSeries.img} className="img-fluid" alt=""/>
+                    <img src={tvSeries.img} className="img-fluid" alt="" />
                 </div>
                 <div className="block-description">
                     <h6 className="iq-title"><Link to="/movie-details">{tvSeries.name}</Link></h6>

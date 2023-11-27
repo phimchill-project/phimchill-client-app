@@ -177,7 +177,7 @@ function Register() {
     }
     useEffect(() => {
         if (user != null) {
-            fetchRegister(user);
+            fetchRegister(user).then();
         }
     }, [user])
     return (
