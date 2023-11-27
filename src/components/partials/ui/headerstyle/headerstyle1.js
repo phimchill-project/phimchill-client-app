@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -23,7 +23,8 @@ import thumb3 from "../../../../assets/ui/images/notify/thumb-3.jpg";
 import user from "../../../../assets/ui/images/user/user.jpg";
 
 const HeaderStyle1 = (props) => {
-  const [categoryList ,setCategoryList] = useState();
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [categoryList, setCategoryList] = useState();
   const fetchApiAllCategory = async () => {
     const result = await publicApi.getAllCategory();
     setCategoryList(result);
@@ -31,10 +32,9 @@ const HeaderStyle1 = (props) => {
   useEffect(() => {
     fetchApiAllCategory();
   }, [])
-console.log(categoryList);
   return (
     <>
-      <header id="main-header">
+      <header id="main-header" >
         <div className="main-header">
           <Container fluid>
             <Row>
@@ -251,25 +251,25 @@ console.log(categoryList);
                         </li>
                         <li className="menu-item ">
                           <Link to="/movie">Movies</Link>
-                          <ul className="sub-menu" style={{width:"500px"}}>
+                          <ul className="sub-menu" style={{ width: "500px" }}>
                             <div className="col-12 row">
-                            {categoryList?.map((category,index) => (
-                                <li className="menu-item col-5">
-                                  <Link to="/show">{category?.name}</Link>
+                              {categoryList?.map((category, index) => (
+                                <li className="menu-item col-5" key={index}>
+                                  <Link to={`/category/${category?.id}/show-movies`}>{category?.name}</Link>
                                 </li>
-                            ))}
+                              ))}
                             </div>
                           </ul>
                         </li>
                         <li className="menu-item">
                           <Link to="/tvseries">Tv Show</Link>
-                          <ul className="sub-menu" style={{width:"500px"}}>
+                          <ul className="sub-menu" style={{ width: "500px" }}>
                             <div className="col-12 row">
-                            {categoryList?.map((category,index) => (
-                                <li className="menu-item col-5">
-                                  <Link to="/show">{category?.name}</Link>
+                              {categoryList?.map((category, index) => (
+                                <li className="menu-item col-5" key={index}>
+                                  <Link to={`/category/${category?.id}/show-tvseries`}>{category?.name}</Link>
                                 </li>
-                            ))}
+                              ))}
                             </div>
                           </ul>
                         </li>
@@ -346,159 +346,172 @@ console.log(categoryList);
                           </Form>
                         </Dropdown.Menu>
                       </Dropdown>
-                      <Dropdown as="li" className="nav-item">
-                        <Dropdown.Toggle
-                          href="#"
-                          as={CustomToggle}
-                          variant="search-toggle position-relative"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            width="22"
-                            height="22"
-                            className="noti-svg"
-                          >
-                            <path fill="none" d="M0 0h24v24H0z" />
-                            <path d="M18 10a6 6 0 1 0-12 0v8h12v-8zm2 8.667l.4.533a.5.5 0 0 1-.4.8H4a.5.5 0 0 1-.4-.8l.4-.533V10a8 8 0 1 1 16 0v8.667zM9.5 21h5a2.5 2.5 0 1 1-5 0z" />
-                          </svg>
-                          <span className="bg-danger dots"></span>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu
-                          className="iq-sub-dropdown"
-                          align="right"
-                        >
-                          <Card className="shadow-none m-0">
-                            <Card.Body>
-                              <Link to="#" className="iq-sub-card">
-                                <div className="media align-items-center">
+                      {token != null ?
+                        (
+                          <>
+                            <Dropdown as="li" className="nav-item">
+                              <Dropdown.Toggle
+                                href="#"
+                                as={CustomToggle}
+                                variant="search-toggle position-relative"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="22"
+                                  height="22"
+                                  className="noti-svg"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path d="M18 10a6 6 0 1 0-12 0v8h12v-8zm2 8.667l.4.533a.5.5 0 0 1-.4.8H4a.5.5 0 0 1-.4-.8l.4-.533V10a8 8 0 1 1 16 0v8.667zM9.5 21h5a2.5 2.5 0 1 1-5 0z" />
+                                </svg>
+                                <span className="bg-danger dots"></span>
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu
+                                className="iq-sub-dropdown"
+                                align="right"
+                              >
+                                <Card className="shadow-none m-0">
+                                  <Card.Body>
+                                    <Link to="#" className="iq-sub-card">
+                                      <div className="media align-items-center">
+                                        <img
+                                          src={thumb1}
+                                          className="img-fluid mr-3"
+                                          alt="streamit"
+                                        />
+                                        <div className="media-body">
+                                          <h6 className="mb-0 ">Boot Bitty</h6>
+                                          <small className="font-size-12">
+                                            {" "}
+                                            just now
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                    <Link to="#" className="iq-sub-card">
+                                      <div className="media align-items-center">
+                                        <img
+                                          src={thumb2}
+                                          className="img-fluid mr-3"
+                                          alt="streamit"
+                                        />
+                                        <div className="media-body">
+                                          <h6 className="mb-0 ">The Last Breath</h6>
+                                          <small className="font-size-12">
+                                            15 minutes ago
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                    <Link to="#" className="iq-sub-card">
+                                      <div className="media align-items-center">
+                                        <img
+                                          src={thumb3}
+                                          className="img-fluid mr-3"
+                                          alt="streamit"
+                                        />
+                                        <div className="media-body">
+                                          <h6 className="mb-0 ">The Hero Camp</h6>
+                                          <small className="font-size-12">
+                                            1 hour ago
+                                          </small>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                  </Card.Body>
+                                </Card>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                            <Dropdown as="li" className="nav-item nav-icon">
+                              <Dropdown.Toggle
+                                href="#"
+                                as={CustomToggle}
+                                variant="search-toggle"
+                              >
+                                <div
+                                  className="iq-user-dropdown search-toggle p-0 d-flex align-items-center active"
+                                  data-toggle="search-toggle"
+                                >
                                   <img
-                                    src={thumb1}
-                                    className="img-fluid mr-3"
-                                    alt="streamit"
+                                    src={user}
+                                    className="img-fluid avatar-40 rounded-circle"
+                                    alt="user"
                                   />
-                                  <div className="media-body">
-                                    <h6 className="mb-0 ">Boot Bitty</h6>
-                                    <small className="font-size-12">
-                                      {" "}
-                                      just now
-                                    </small>
-                                  </div>
                                 </div>
-                              </Link>
-                              <Link to="#" className="iq-sub-card">
-                                <div className="media align-items-center">
-                                  <img
-                                    src={thumb2}
-                                    className="img-fluid mr-3"
-                                    alt="streamit"
-                                  />
-                                  <div className="media-body">
-                                    <h6 className="mb-0 ">The Last Breath</h6>
-                                    <small className="font-size-12">
-                                      15 minutes ago
-                                    </small>
-                                  </div>
-                                </div>
-                              </Link>
-                              <Link to="#" className="iq-sub-card">
-                                <div className="media align-items-center">
-                                  <img
-                                    src={thumb3}
-                                    className="img-fluid mr-3"
-                                    alt="streamit"
-                                  />
-                                  <div className="media-body">
-                                    <h6 className="mb-0 ">The Hero Camp</h6>
-                                    <small className="font-size-12">
-                                      1 hour ago
-                                    </small>
-                                  </div>
-                                </div>
-                              </Link>
-                            </Card.Body>
-                          </Card>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                      <Dropdown as="li" className="nav-item nav-icon">
-                        <Dropdown.Toggle
-                          href="#"
-                          as={CustomToggle}
-                          variant="search-toggle"
-                        >
-                          <div
-                            className="iq-user-dropdown search-toggle p-0 d-flex align-items-center active"
-                            data-toggle="search-toggle"
-                          >
-                            <img
-                              src={user}
-                              className="img-fluid avatar-40 rounded-circle"
-                              alt="user"
-                            />
-                          </div>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu
-                          className="iq-sub-dropdown iq-user-dropdown "
-                          align="right"
-                        >
-                          <Card className="shadow-none m-0">
-                            <Card.Body className="p-0 pl-3 pr-3 ">
-                              <Link
-                                to="/usersetting"
-                                className="iq-sub-card setting-dropdown"
+                              </Dropdown.Toggle>
+                              <Dropdown.Menu
+                                className="iq-sub-dropdown iq-user-dropdown "
+                                align="right"
                               >
-                                <div className="media align-items-center">
-                                  <div className="right-icon">
-                                    <i className="ri-file-user-line text-primary"></i>
-                                  </div>
-                                  <div className="media-body ml-3">
-                                    <h6 className="my-0 ">Manage Profile</h6>
-                                  </div>
-                                </div>
-                              </Link>
-                              <Link
-                                to="/user"
-                                className="iq-sub-card setting-dropdown"
-                              >
-                                <div className="media align-items-center">
-                                  <div className="right-icon">
-                                    <i className="ri-settings-4-line text-primary"></i>
-                                  </div>
-                                  <div className="media-body ml-3">
-                                    <h6 className="my-0 ">Settings</h6>
-                                  </div>
-                                </div>
-                              </Link>
-                              <Link
-                                to="/pricing-plan-1"
-                                className="iq-sub-card setting-dropdown"
-                              >
-                                <div className="media align-items-center">
-                                  <div className="right-icon">
-                                    <i className="ri-settings-4-line text-primary"></i>
-                                  </div>
-                                  <div className="media-body ml-3">
-                                    <h6 className="my-0 ">Pricing Plan</h6>
-                                  </div>
-                                </div>
-                              </Link>
-                              <Link
-                                to="/extra-pages/login"
-                                className="iq-sub-card setting-dropdown"
-                              >
-                                <div className="media align-items-center">
-                                  <div className="right-icon">
-                                    <i className="ri-logout-circle-line text-primary"></i>
-                                  </div>
-                                  <div className="media-body ml-3">
-                                    <h6 className="my-0 ">Logout</h6>
-                                  </div>
-                                </div>
-                              </Link>
-                            </Card.Body>
-                          </Card>
-                        </Dropdown.Menu>
-                      </Dropdown>
+                                <Card className="shadow-none m-0">
+                                  <Card.Body className="p-0 pl-3 pr-3 ">
+                                    <Link
+                                      to="/usersetting"
+                                      className="iq-sub-card setting-dropdown"
+                                    >
+                                      <div className="media align-items-center">
+                                        <div className="right-icon">
+                                          <i className="ri-file-user-line text-primary"></i>
+                                        </div>
+                                        <div className="media-body ml-3">
+                                          <h6 className="my-0 ">Manage Profile</h6>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                    <Link
+                                      to="/user"
+                                      className="iq-sub-card setting-dropdown"
+                                    >
+                                      <div className="media align-items-center">
+                                        <div className="right-icon">
+                                          <i className="ri-settings-4-line text-primary"></i>
+                                        </div>
+                                        <div className="media-body ml-3">
+                                          <h6 className="my-0 ">Settings</h6>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                    <Link
+                                      to="/pricing-plan-1"
+                                      className="iq-sub-card setting-dropdown"
+                                    >
+                                      <div className="media align-items-center">
+                                        <div className="right-icon">
+                                          <i className="ri-settings-4-line text-primary"></i>
+                                        </div>
+                                        <div className="media-body ml-3">
+                                          <h6 className="my-0 ">Pricing Plan</h6>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                    <Link
+                                      to="/extra-pages/login"
+                                      className="iq-sub-card setting-dropdown"
+                                    >
+                                      <div className="media align-items-center">
+                                        <div className="right-icon">
+                                          <i className="ri-logout-circle-line text-primary"></i>
+                                        </div>
+                                        <div className="media-body ml-3">
+                                          <h6 className="my-0 ">Logout</h6>
+                                        </div>
+                                      </div>
+                                    </Link>
+                                  </Card.Body>
+                                </Card>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </>
+                        ) : (
+                          <>
+                            <li className="menu-item ">
+                              <Link to="/login">Login</Link>
+                              <Link to="/register">Register</Link>
+                            </li>
+                          </>
+                        )}
+
                     </ul>
                   </div>
                 </Navbar>

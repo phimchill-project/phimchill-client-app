@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import {Container,Row,Col} from 'react-bootstrap'
-import {Link, useNavigate, useParams} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import ReactPlayer from 'react-player';
+
 import Start from "../../../components/movie/Start";
 import trending from '../../../assets/ui/images/trending/trending-label.png'
 import movie1 from '../../../assets/ui/images/movies/06.jpg'
@@ -20,7 +22,6 @@ import Loading from "../../../components/common/Loading";
 import routes from "../../../router/routes-path";
 
 const WatchMovie = () => {
-
     let navigate = useNavigate();
     let { name } = useParams();
     const [isLoading, setIsLoading] = useState(true);
@@ -33,14 +34,14 @@ const WatchMovie = () => {
 
     const findByName = async () => {
         const data = await movieApi.findByName(name);
-        if (data.statusCode === 404){
+        if (data?.statusCode === 404) {
             navigate(routes.error404);
-        }else if (data.statusCode === 200){
+        } else if (data?.statusCode === 200) {
             setIsLoading(false);
         }
         setMovie(data);
     };
-
+    console.log(movie);
     return (
         <>
             {isLoading ? (
@@ -48,9 +49,20 @@ const WatchMovie = () => {
             ) : (
                 <>
                     <div className="video-container iq-main-slider">
-                        <video className="video d-block" controls loop>
-                            <source src="https://firebasestorage.googleapis.com/v0/b/phim-chill.appspot.com/o/videos-movie%2FSpider-Man%20No%20Way%20Home.mp4?alt=media&token=4fed2030-a19d-4fdd-98d4-c5fd6df1865d"/>
+                        <video className="video d-block" controls loop >
+                            <source src={movie.data.url}/>
                         </video>
+                        {/* <div>
+                        <ReactPlayer
+                            url={movie.data.url}
+                            width="640px"
+                            height="360px"
+                            playing={true}
+                            controls={true}
+                           
+                        />
+                        </div> */}
+                        
                     </div>
                     <div className="main-content movi">
                         <section className="movie-detail container-fluid">
@@ -58,7 +70,7 @@ const WatchMovie = () => {
                                 <Col lg="12">
                                     <div className="trending-info g-border">
                                         <h1 className="trending-text big-title text-uppercase mt-0 fadeInLeft animated d-inline-block" data-animation-in="fadeInLeft" data-delay-in="0.6">{movie.data.name}</h1>
-                                        <Start imdb={movie.data.imdb} />
+                                        <Start imdb={movie?.data.imdb} />
                                         <ul className="p-0 list-inline d-flex align-items-center movie-content">
                                             <li className="trending-list">
                                                 <a className="text-primary" href="/">Action</a>
@@ -72,14 +84,14 @@ const WatchMovie = () => {
                                         </ul>
                                         <div className="d-flex align-items-center text-white text-detail">
                                             <span className="badge badge-secondary p-3">13+</span>
-                                            <span className="ml-3">{movie.data.duration} minutes</span>
+                                            <span className="ml-3">{movie?.data.duration} minutes</span>
                                             <span className="trending-year">2020</span>
                                         </div>
                                         <div className="d-flex align-items-center series mb-4">
-                                            <Link to="#"><img src={trending} className="img-fluid" alt=""/></Link>
+                                            <Link to="#"><img src={trending} className="img-fluid" alt="" /></Link>
                                             <span className="text-gold ml-3">#2 in Series Today</span>
                                         </div>
-                                        <p className="trending-dec w-100 mb-0">{movie.data.description}</p>
+                                        <p className="trending-dec w-100 mb-0">{movie?.data.description}</p>
                                         <ul className="list-inline p-0 mt-4 share-icons music-play-lists">
                                             <li>
                                                 <span><i className="ri-add-line"></i></span>
@@ -110,8 +122,8 @@ const WatchMovie = () => {
                                             <h4 className="main-title"><Link to="#">More Like This</Link></h4>
                                         </div>
                                         <div id="favorites-contens">
-                                            <div id="prev1" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
-                                            <div id="next1" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
+                                            <div id="prev1" className="swiper-button swiper-button-prev"><i className="fa fa-chevron-left"></i></div>
+                                            <div id="next1" className="swiper-button swiper-button-next"><i className="fa fa-chevron-right"></i></div>
                                             <Swiper
                                                 slidesPerView={4}
                                                 spaceBetween={20}
@@ -130,7 +142,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images1 block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie1} className="img-fluid" alt=""/>
+                                                            <img src={movie1} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">The Lost Journey</Link></h6>
@@ -139,9 +151,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 15m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -170,7 +182,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie2} className="img-fluid" alt=""/>
+                                                            <img src={movie2} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Boop Bitty</Link></h6>
@@ -179,9 +191,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -210,7 +222,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie3} className="img-fluid" alt=""/>
+                                                            <img src={movie3} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Unknown Land</Link></h6>
@@ -219,9 +231,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -250,7 +262,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie4} className="img-fluid" alt=""/>
+                                                            <img src={movie4} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Blood Block</Link></h6>
@@ -259,9 +271,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 40m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -290,7 +302,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie5} className="img-fluid" alt=""/>
+                                                            <img src={movie5} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Champions</Link></h6>
@@ -299,9 +311,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -341,8 +353,8 @@ const WatchMovie = () => {
                                             <h4 className="main-title"><Link to="#">Upcoming Movies</Link></h4>
                                         </div>
                                         <div id="upcoming-contens">
-                                            <div id="prev2" className="swiper-button swiper-button-prev"><i className= "fa fa-chevron-left"></i></div>
-                                            <div id="next2" className="swiper-button swiper-button-next"><i className= "fa fa-chevron-right"></i></div>
+                                            <div id="prev2" className="swiper-button swiper-button-prev"><i className="fa fa-chevron-left"></i></div>
+                                            <div id="next2" className="swiper-button swiper-button-next"><i className="fa fa-chevron-right"></i></div>
                                             <Swiper
                                                 slidesPerView={4}
                                                 spaceBetween={20}
@@ -361,7 +373,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images1 block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming1} className="img-fluid" alt=""/>
+                                                            <img src={upcoming1} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">The Last Breath</Link></h6>
@@ -370,9 +382,9 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -401,7 +413,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming2} className="img-fluid" alt=""/>
+                                                            <img src={upcoming2} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Last Night</Link></h6>
@@ -410,10 +422,10 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 15m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover">
-                                                                <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover">
+                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -442,7 +454,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming3} className="img-fluid" alt=""/>
+                                                            <img src={upcoming3} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">1980</Link></h6>
@@ -451,10 +463,10 @@ const WatchMovie = () => {
                                                                 <span className="text-white">3h</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover">
-                                                                <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover">
+                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -483,7 +495,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming4} className="img-fluid" alt=""/>
+                                                            <img src={upcoming4} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Looters</Link></h6>
@@ -492,10 +504,10 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 45m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                            <span className="btn btn-hover">
-                                                                <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                                Play Now
-                                                            </span>
+                                                                <span className="btn btn-hover">
+                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -524,7 +536,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming5} className="img-fluid" alt=""/>
+                                                            <img src={upcoming5} className="img-fluid" alt="" />
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Vugotronic</Link></h6>
@@ -533,10 +545,10 @@ const WatchMovie = () => {
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                        <span className="btn btn-hover">
-                                                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                            Play Now
-                                                        </span>
+                                                                <span className="btn btn-hover">
+                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    Play Now
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div className="block-social-info">
@@ -568,6 +580,6 @@ const WatchMovie = () => {
                 </>
             )}
         </>
-        )
-    }
+    )
+}
 export default WatchMovie;

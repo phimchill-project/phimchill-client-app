@@ -1,74 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
-import img1 from '../../assets/ui/images/upcoming/01.jpg'
+import { Link, useNavigate, useParams } from "react-router-dom";
+import categoryApi from "../../api/category/exportCategoryApi";
 
-const ShowList = () => {
-    const [list, setList] = useState([{
-        "name": "Marvin, Goyette and Kautzer",
-        "number": "2",
-        "id": "1"
-       },
-       {
-        "name": "Farrell, Boehm and Marquardt",
-        "number": "8",
-        "id": "2"
-       },
-       {
-        "name": "Fritsch Group",
-        "number": "1",
-        "id": "3"
-       },
-       {
-        "name": "Schmeler and Sons",
-        "number": "4",
-        "id": "4"
-       },
-       {
-        "name": "Becker - Kling",
-        "number": "1",
-        "id": "5"
-       },
-       {
-        "name": "Pacocha - Schulist",
-        "number": "4",
-        "id": "6"
-       },
-       {
-        "name": "Crist, Becker and Hahn",
-        "number": "6",
-        "id": "7"
-       }]);
-    // const navigate = useNavigate();
-    // const fetchApi = async () => {
-    //     let result = null;
-    //     try {
-    //         result = await axios.get("http://localhost:8080/api/movies");
-    //         console.log(result);
-    //     } catch (e) {
-    //         console.log("Error get list film");
-    //     }
-    //     if (result != null) {
-    //         setList(result.data);
-    //     }
-    // }
-    // useEffect(() => {
-    //     fetchApi();
-    // }, [])
+const ShowTvSeriesList = () => {
+    const {id} = useParams();
+    const [list, setList] = useState();
+    const fetchTvSeriesByCategoryId = async () => {
+        let result = await categoryApi.getTvSeriesByCategoryId(id);
+        console.log(result);
+        if(result == null){
+            setList([]);
+            return;
+        }
+        setList(result);
+    }
+    useEffect(() => {
+        fetchTvSeriesByCategoryId();
+    },[id]);
     return (
         <>
             <main id="main" className="site-main">
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
-                        <h4 className="main-title">Videos</h4>
+                        <h4 className="main-title">TV Series</h4>
                     </div>
                     <ul className=" row list-inline  mb-0 iq-rtl-direction ">
-                        { list?.map( (movie, index) => (
+                        { list?.map( (tvseries, index) => (
                             <li className="slide-item col-lg-3 mb-4" key={index}>
                                 <div className="block-images position-relative">
                                     <div className="img-box">
                                         <img
-                                            src={img1}
+                                            src={tvseries.image}
                                             className="img-fluid"
                                             alt=""
                                             loading="lazy"
@@ -76,15 +38,15 @@ const ShowList = () => {
                                     </div>
                                     <div className="block-description">
                                         <h6 className="iq-title">
-                                            <Link to={`/movie/${movie.id}`}>{movie.name}</Link>
+                                            <Link to={`/movie/${tvseries.id}`}>{tvseries.name}</Link>
                                         </h6>
                                         <div className="movie-time d-flex align-items-center my-2">
-                                            <span className="text-white">{movie.duration} minutes</span>
+                                            <span className="text-white">{tvseries.duration} minutes</span>
                                         </div>
                                         <div className="hover-buttons">
                                             <Link
                                                 className="btn btn-hover"
-                                                to={`/movie/${movie.id}`}
+                                                to={`/movie/${tvseries.id}`}
                                             >
                                                 <i className="fa fa-play mr-1" aria-hidden="true" />
                                                 Play Now
@@ -150,4 +112,4 @@ const ShowList = () => {
         </>
     )
 }
-export default ShowList;
+export default ShowTvSeriesList;

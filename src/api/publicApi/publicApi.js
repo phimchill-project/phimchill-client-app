@@ -8,10 +8,8 @@ export const getAllCategory = async () => {
         result = await axios.get(`${API}category`);
     } catch (e) {
         console.log("Find Check Email Exist API error: " + e);
-        console.log(result);
         return null;
     }
-    console.log(result?.data.data);
     return result?.data.data;
 }
 

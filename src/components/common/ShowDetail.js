@@ -1,22 +1,41 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import movieApi from "../../api/movie/exportMovieApi";
+import logo from "../../assets/ui/images/logo.png"
+import ShowComments from "../../components/common/Comments"
+
 function MovieDetail() {
-    const [toggler1, setToggler1] = useState(false);
-    const [toggler2, setToggler2] = useState(false);
+    let navigate = useNavigate();
+    let { name } = useParams();
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [movie, setMovie] = useState({});
+
+    useEffect(() => {
+        findByName();
+    }, []);
+    const findByName = async () => {
+        const data = await movieApi.findByName(name);
+        setMovie(data?.data);
+    };
+    const redirectToWathchingMoviePage = (name) => {
+        let newName = name.replace(/ /g, "-");
+        navigate(`/watch-movie/${newName}`)
+    }
     const [toggler3, setToggler3] = useState(false);
     return (
         <div>
             <Container fluid className="position-relative h-100">
                 <div className="slider-inner h-100" >
-                    <Row className="align-items-center  h-100 iq-ltr-direction" style={{marginTop : 150}}>
+                    <Row className="align-items-center  h-100 iq-ltr-direction" style={{ marginTop: 150 }}>
                         <Col xl="6" lg="12" md="12">
-                            {/* <Link to="#">
+                            <Link to="#">
                                 <div className="channel-logo">
                                     <img src={logo} className="c-logo" alt="streamit" />
                                 </div>
-                            </Link> */}
-                            <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">the army</h1>
+                            </Link>
+                            <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">{movie?.name}</h1>
                             <div className="d-flex flex-wrap align-items-center">
                                 <div className="slider-ratting d-flex align-items-center mr-4 mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
                                     <ul className="ratting-start p-0 m-0 list-inline text-primary d-flex align-items-center justify-content-left">
@@ -36,32 +55,39 @@ function MovieDetail() {
                                             <i className="fa fa-star-half" aria-hidden="true"></i>
                                         </li>
                                     </ul>
-                                    <span className="text-white ml-2">4.7(lmdb)</span>
+                                    <span className="text-white ml-2">{movie?.imdb}(lmdb)</span>
                                 </div>
                                 <div className="d-flex align-items-center mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
                                     <span className="badge badge-secondary p-2">20+</span>
-                                    <span className="ml-3">3h</span>
+                                    <span className="ml-3">{movie?.duration}</span>
                                 </div>
                             </div>
-                            <p data-iq-gsap="onStart" data-iq-position-y="80" data-iq-delay="0.8">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                                dummy text ever since the 1500s.
+                            <p data-iq-gsap="onStart" data-iq-position-y="80" data-iq-delay="0.8">{movie?.description}
                             </p>
                             <div className="trending-list" data-wp_object-in="fadeInUp" data-delay-in="1.2">
                                 <div className="text-primary title starring">
                                     Starring: <span className="text-body">Karen Gilchrist, James Earl Jones</span>
                                 </div>
                                 <div className="text-primary title genres">
-                                    Genres: <span className="text-body">Action</span>
+                                    Genres:
+                                    {movie?.categoryList?.map((category, index) => (
+                                        <div key={index}>
+                                            <span className="text-body" >{category?.name}</span>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="text-primary title tag">
+                                {/* <div className="text-primary title tag">
                                     Tag: <span className="text-body">Action, Adventure, Horror</span>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="d-flex align-items-center r-mb-23" data-iq-gsap="onStart" data-iq-position-y="80" data-iq-delay="0.8">
-                                <Link to="/show-details" className="btn btn-hover iq-button">
-                                    <i className="fa fa-play mr-2" aria-hidden="true"></i>Play Now
+                                <Link role="button" className="btn btn-hover" onClick={(e) => {
+                                    e.preventDefault();
+                                    redirectToWathchingMoviePage(movie?.name)
+                                }}>
+                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                    Play Now
                                 </Link>
-                                <Link to="/show-details" className="btn btn-link">More details</Link>
                             </div>
                         </Col>
                         <Col xl="5" lg="12" md="12" className="trailor-video  text-center">
@@ -81,6 +107,7 @@ function MovieDetail() {
                     </Row>
                 </div>
             </Container>
+            <ShowComments movieId={movie?.id} />
         </div>
     )
 }
