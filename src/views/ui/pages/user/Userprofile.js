@@ -5,7 +5,7 @@ import user from "../../../../assets/ui/images/user/user.jpg";
 import { useState } from "react";
 import axios from "axios";
 
-const UserProfile = () => {
+const Userprofile = () => {
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [password, setPassword] = useState("**********");
   const [newPassword, setNewPassword] = useState("");
@@ -242,4 +242,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default Userprofile;

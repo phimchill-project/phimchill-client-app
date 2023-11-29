@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import user from '../../../../assets/ui/images/user/user.jpg'
 
-const UserSetting = () => {
+const Usersetting = () => {
     const [date, setDate] = useState(new Date());
     const handleChange3 = date => setDate(date);
     const options1 = [
@@ -119,4 +119,4 @@ const UserSetting = () => {
     )
 }
 
-export default UserSetting;
+export default Usersetting;
