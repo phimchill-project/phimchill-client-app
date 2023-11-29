@@ -2,9 +2,9 @@ import routes from './routes-path'
 import Login from "../views/ui/pages/auth/Login";
 import Register from '../views/ui/pages/auth/Register';
 import Layouts from "../layouts/Layouts";
-import UserProfile from '../views/ui/pages/user/Userprofile';
+import UserProfile from '../views/ui/pages/user/userprofile';
 import UserSetting from '../views/ui/pages/user/Usersetting';
-import ShowMovieList from '../components/common/ShowMovieList';
+import CategoryMovie from '../views/ui/movie/CategoryMovie';
 import ShowTvSeriesList from '../components/common/ShowTvSeriesList';
 import MoviePage from '../views/ui/pages/MoviePage';
 import AddMovie from '../views/dashboard/movie/AddMovie';
@@ -21,7 +21,7 @@ const publicRoutes = [
     { path: routes.home, component: Home, layout: Layouts.DefaultLayout },
     { path: routes.userdetail, component: UserProfile, layout: Layouts.DefaultLayout },
     { path: routes.UserProfile, component: UserSetting, layout: Layouts.DefaultLayout },
-    { path: routes.showMovie, component: ShowMovieList, layout: Layouts.DefaultLayout },
+    { path: routes.categoryMovie, component: CategoryMovie, layout: Layouts.DefaultLayout },
     { path: routes.showTvSeries, component: ShowTvSeriesList, layout: Layouts.DefaultLayout },
     { path: routes.movie, component: MoviePage, layout: Layouts.DefaultLayout },
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },

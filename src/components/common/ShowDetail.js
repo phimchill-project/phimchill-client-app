@@ -8,10 +8,7 @@ import ShowComments from "../../components/common/Comments"
 function MovieDetail() {
     let navigate = useNavigate();
     let { name } = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [movie, setMovie] = useState({});
-
+    const [movie, setMovie] = useState(null);
     useEffect(() => {
         findByName();
     }, []);
@@ -37,7 +34,7 @@ function MovieDetail() {
                             </Link>
                             <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">{movie?.name}</h1>
                             <div className="d-flex flex-wrap align-items-center">
-                                <div className="slider-ratting d-flex align-items-center mr-4 mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
+                                <div className="slider-ratting d-flex align-items-cent`er mr-4 mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
                                     <ul className="ratting-start p-0 m-0 list-inline text-primary d-flex align-items-center justify-content-left">
                                         <li>
                                             <i className="fa fa-star" aria-hidden="true"></i>
@@ -107,7 +104,7 @@ function MovieDetail() {
                     </Row>
                 </div>
             </Container>
-            <ShowComments movieId={movie?.id} />
+            {movie != null ? <ShowComments movieId={movie?.id} /> : ""}
         </div>
     )
 }

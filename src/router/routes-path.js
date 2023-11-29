@@ -4,7 +4,7 @@ const routes = {
     home :"/",
     userdetail:"/user",
     UserProfile :"/usersetting",
-    showMovie : "/category/:id/show-movies",
+    categoryMovie : "/category/:id/show-movies",
     showTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
     addMovie : "/add-movie",
