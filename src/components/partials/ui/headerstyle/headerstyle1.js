@@ -8,7 +8,7 @@ import {
   Form,
   Nav,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../../components/Card";
 
 import CustomToggle from "../../../../components/dropdowns";
@@ -25,6 +25,19 @@ import user from "../../../../assets/ui/images/user/user.jpg";
 const HeaderStyle1 = (props) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [categoryList, setCategoryList] = useState();
+
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+
+    // Thay đổi route mỗi khi giá trị input thay đổi
+    navigate(`/search?q=${newValue}`);
+  };
+
+
   const fetchApiAllCategory = async () => {
     const result = await publicApi.getAllCategory();
     setCategoryList(result);
@@ -339,7 +352,9 @@ const HeaderStyle1 = (props) => {
                               <input
                                 type="text"
                                 className="text search-input font-size-12"
-                                placeholder="type here to search..."
+                                placeholder="Type here to search..."
+                                value={inputValue}
+                                onChange={handleChange}
                               />
                               <i className="search-link ri-search-line"></i>
                             </div>
