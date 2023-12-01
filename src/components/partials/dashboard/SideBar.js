@@ -1,128 +1,92 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Accordion, Button, Dropdown } from 'react-bootstrap'
+import { Dropdown, Accordion } from 'react-bootstrap'
 import Scrollbar from 'smooth-scrollbar'
 import logo from '../../../assets/ui/images/logo.png'
-import Card from '../../Card'
-import CustomToggle from '../../dropdowns'
-
 const minisidbar = () => {
-    document.body.classList.toggle('sidebar-main')
+  document.body.classList.toggle('sidebar-main')
 }
 
-const SideBar = (props) => {
-    //Collapse state
-    // useEffect(
-    //     () => {
-    //         Scrollbar.init(document.querySelector('#sidebar-scrollbar'))
-    //     }
-    // )
-    return (
-        <>
-            <div className="iq-sidebar">
-                <div className="iq-sidebar-logo d-flex justify-content-between">
-                    <Link to="/" className="header-logo">
-                        <img src={logo} className="img-fluid rounded-normal" alt="" />
-                        <div className="logo-title">
-                            <span className="text-primary text-uppercase">Streamit</span>
-                        </div>
-                    </Link>
-                    <div className="iq-menu-bt-sidebar">
-                        <div className="iq-menu-bt align-self-center">
-                            <div className="wrapper-menu" onClick={minisidbar}>
-                                <div className="main-circle"><i className="las la-bars"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="data-scrollbar" data-scroll="1" id="sidebar-scrollbar">
-                    <nav className="iq-sidebar-menu">
-                    <Dropdown as="li" className="nav-item">
-                            <Dropdown.Toggle
-                              href="#"
-                              as={CustomToggle}
-                              variant="search-toggle"
-                            >
-                              <div
-                                className="iq-user-dropdown search-toggle p-0 d-flex align-items-center active"
-                                data-toggle="search-toggle"
-                              >
-                                <img
-                                  src={logo}
-                                  className="img-fluid avatar-40 rounded-circle"
-                                  alt="user"
-                                />
-                              </div>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu
-                              className="iq-sub-dropdown iq-user-dropdown"
-                              align="right"
-                            >
-                              <Card className="shadow-none m-0">
-                                <Card.Body className="p-0 pl-3 pr-3">
-                                  <Link
-                                    to="/manage-profile"
-                                    className="iq-sub-card setting-dropdown"
-                                  >
-                                    <div className="media align-items-center">
-                                      <div className="right-icon">
-                                        <i className="ri-file-user-line text-primary"></i>
-                                      </div>
-                                      <div className="media-body ml-3">
-                                        <h6 className="my-0 ">
-                                          Manage Profile
-                                        </h6>
-                                      </div>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    to="/setting"
-                                    className="iq-sub-card setting-dropdown"
-                                  >
-                                    <div className="media align-items-center">
-                                      <div className="right-icon">
-                                        <i className="ri-settings-4-line text-primary"></i>
-                                      </div>
-                                      <div className="media-body ml-3">
-                                        <h6 className="my-0 ">Settings</h6>
-                                      </div>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    to="/pricing-plan-1"
-                                    className="iq-sub-card setting-dropdown"
-                                  >
-                                    <div className="media align-items-center">
-                                      <div className="right-icon">
-                                        <i className="ri-settings-4-line text-primary"></i>
-                                      </div>
-                                      <div className="media-body ml-3">
-                                        <h6 className="my-0 ">Pricing Plan</h6>
-                                      </div>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    to="/extra-pages/login"
-                                    className="iq-sub-card setting-dropdown"
-                                  >
-                                    <div className="media align-items-center">
-                                      <div className="right-icon">
-                                        <i className="ri-logout-circle-line text-primary"></i>
-                                      </div>
-                                      <div className="media-body ml-3">
-                                        <h6 className="my-0 ">Logout</h6>
-                                      </div>
-                                    </div>
-                                  </Link>
-                                </Card.Body>
-                              </Card>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                    </nav>
-                </div>
+const SideBar = () => {
+  const [activeMenu, setActiveMenu] = useState(false)
+  //   const[activesubMenu,setSubmenu] = useState(false)
+  //   const[activesubMenu1,setSubmenu1] = useState(false)
+  //Collapse state
+  useEffect(
+    () => {
+      Scrollbar.init(document.querySelector('#sidebar-scrollbar'))
+    }
+  )
+  return (
+    <div className="" style={{marginTop : 100, fontSize : 30}}>
+      <div className="">
+        {/* <Link to="/" className="header-logo">
+          <img src={logo} className="img-fluid rounded-normal" alt="" />
+          <div className="logo-title">
+            <span className="text-primary text-uppercase">Streamit</span>
+          </div>
+        </Link> */}
+        {/* <div className="iq-menu-bt-sidebar">
+          <div className="iq-menu-bt align-self-center">
+            <div className="wrapper-menu" onClick={minisidbar}>
+              <div className="main-circle"><i className="las la-bars"></i></div>
             </div>
-        </>
-    )
+          </div>
+        </div> */}
+      </div>
+      <div className="data-scrollbar" data-scroll="1" id="sidebar-scrollbar">
+        <nav className="iq-sidebar-menu">
+          <div  id="iq-sidebar-toggle" className="iq-menu" style={{width : 200}}>
+            <li className='active' style={{listStyleType : 'none', marginLeft: 70, borderStyle: 'outset'}}>
+              <Link to="/" className="text-primary">
+                <i className="ri-arrow-right-line"></i>
+                <span>Visit site</span>
+              </Link>
+            </li>
+            <li className='active' style={{listStyleType : 'none', marginLeft: 70}}>
+              <Link to="/" className="iq-waves-effect">
+                <i className="las la-home iq-arrow-left"></i>
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li className='active' style={{listStyleType : 'none', marginLeft: 70}}>
+              <Link to="/rating" className="iq-waves-effect">
+                <i className="las la-star-half-alt"></i>
+                <span>Rating </span>
+              </Link>
+            </li>
+            <li className='active' style={{listStyleType : 'none', marginLeft: 70}}>
+              <Link to="/comment" className="iq-waves-effect">
+                <i className="las la-comments"></i>
+                <span>Comment</span>
+              </Link>
+            </li>
+
+          </div>
+        </nav>
+      </div>
+    </div>
+    // <div class="col-md-3 col-lg-2 sidebar-offcanvas pl-0" id="sidebar" role="navigation" >
+    //   <ul class="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3 ">
+    //     <li class="nav-item mb-2 mt-3"><a class="nav-link text-secondary" href="#"><h5>Jacob Nejam</h5></a></li>
+    //     <li class="nav-item mb-2 "><a class="nav-link text-secondary" href="#"><i class="fas fa-user font-weight-bold"></i> <span className="ml-3">Overview</span></a></li>
+    //     <li class="nav-item mb-2">
+    //       <a class="nav-link text-secondary" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="far fa-file-word font-weight-bold"></i> <span className="ml-3"> Reports▾</span></a>
+    //       <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
+    //         <li class="nav-item mb-2 "><a class="nav-link text-secondary" href=""><i class="fas fa-book-reader"></i> Data Report </a></li>
+    //         <li class="nav-item mb-2 "><a class="nav-link text-secondary" href=""> <i class="fas fa-book-medical"></i> File Report </a></li>
+    //       </ul>
+    //     </li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#"><i class="far fa-chart-bar font-weight-bold"></i> <span className="ml-3">Analytics</span></a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#"><i class="fas fa-file-export font-weight-bold"></i><span className="ml-3">Export</span></a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#"><i class="fas fa-tablet-alt font-weight-bold"></i><span className="ml-3">Snippets</span></a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#"><i class="fas fa-atom font-weight-bold"></i> <span className="ml-3">Flex</span></a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#"><i class="far fa-folder font-weight-bold"></i> <span className="ml-3">Layouts</span></a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#">Templates</a></li>
+    //     <li class="nav-item mb-2"><a class="nav-link text-secondary" href="#">Themes</a></li>
+    //   </ul>
+    // </div>
+  )
 }
 
 export default SideBar;
