@@ -1,268 +1,521 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar, Button, Form, Nav, Dropdown } from 'react-bootstrap'
+import {
+      Container,
+      Row,
+      Col,
+      Navbar,
+      Dropdown,
+      Form,
+      Nav,
+      Button
+} from "react-bootstrap";
 import Card from '../../Card'
 import CustomToggle from '../../dropdowns'
-import  user1  from  '../../../assets/dashboard/images/dashboard/01.jpg'
-import  user01  from  '../../../assets/dashboard/images/dashboard/01.jpg'
-import  user02  from  '../../../assets/dashboard/images/dashboard/02.jpg'
-import  user03  from  '../../../assets/dashboard/images/dashboard/03.jpg'
-import  user04  from  '../../../assets/dashboard/images/dashboard/04.jpg'
-import  user05  from  '../../../assets/dashboard/images/dashboard/05.jpg'
+import user1 from '../../../assets/dashboard/images/dashboard/01.jpg'
+import user01 from '../../../assets/dashboard/images/dashboard/01.jpg'
+import user02 from '../../../assets/dashboard/images/dashboard/02.jpg'
+import user03 from '../../../assets/dashboard/images/dashboard/03.jpg'
+import user04 from '../../../assets/dashboard/images/dashboard/04.jpg'
+import user05 from '../../../assets/dashboard/images/dashboard/05.jpg'
 //img
 import logo from '../../../assets/ui/images/logo.png'
+import thumb1 from "../../../assets/ui/images/notify/thumb-1.jpg";
+import thumb2 from "../../../assets/ui/images/notify/thumb-2.jpg";
+import thumb3 from "../../../assets/ui/images/notify/thumb-3.jpg";
+import user from "../../../assets/ui/images/user/user.jpg";
 function Header() {
-      const minisidbar =() =>{
+      const minisidbar = () => {
             document.body.classList.toggle('sidebar-main')
-        }
+      }
+
       return (
-            <>
-                  <div className="iq-top-navbar">
-                        <div className="iq-navbar-custom">
-                              <Navbar className="p-0" expand="lg">
-                                    <div className="iq-menu-bt d-flex align-items-center">
-                                          <div className="wrapper-menu" onClick={minisidbar}>
-                                                <div className="main-circle"><i className="las la-bars"></i></div>
-                                          </div>
-                                          <div className="iq-navbar-logo d-flex justify-content-between">
-                                                <Link to="#" className="header-logo">
-                                                      <img src={logo} className="img-fluid rounded-normal" alt="" />
-                                                      <div className="logo-title">
-                                                            <span className="text-primary text-uppercase">Streamit</span>
+            <header id="main-header" style={{top : 0}}>
+                  <div className="main-header">
+                        <Container fluid>
+                              <Row>
+                                    <Col sm="12">
+                                          <Navbar expand="lg" className="p-0">
+                                                <Navbar.Toggle className="c-toggler">
+                                                      <div className="navbar-toggler-icon">
+                                                            <span className="navbar-menu-icon navbar-menu-icon--top"></span>
+                                                            <span className="navbar-menu-icon navbar-menu-icon--middle"></span>
+                                                            <span className="navbar-menu-icon navbar-menu-icon--bottom"></span>
                                                       </div>
-                                                </Link>
-                                          </div>
-                                    </div>
-                                    <div className="iq-search-bar ml-auto">
-                                          <Form action="#" className="searchbox">
-                                                <input type="text" className="text search-input" placeholder="Search Here..." />
-                                                <Link className="search-link" to="#"><i className="ri-search-line"></i></Link>
-                                          </Form>
-                                    </div>
-                                    <Navbar.Toggle as={Button} aria-controls="responsive-navbar-nav">
-                                          <i className="ri-menu-3-line"></i>
-                                    </Navbar.Toggle>
-                                    <Navbar.Collapse id="responsive-navbar-nav">
-                                          <Nav as="ul" className="ml-auto navbar-list iq-header">
-                                                <Dropdown as="li" className="nav-item nav-icon search-content iq-search">
-                                                      <Dropdown.Toggle as={CustomToggle} href="#" variant="search-toggle iq-waves-effect text-gray rounded">
-                                                            <i className="ri-search-line"></i>
+                                                </Navbar.Toggle>
+                                                <Navbar.Brand className="navbar-brand" href="/">
+                                                      <img className="img-fluid logo" src={logo} alt="streamit" />
+                                                </Navbar.Brand>
+                                                <Dropdown className="mobile-more-menu">
+                                                      <Dropdown.Toggle
+                                                            to="#"
+                                                            as={CustomToggle}
+                                                            variant="more-toggle"
+                                                      >
+                                                            <i className="ri-more-line"></i>
                                                       </Dropdown.Toggle>
-                                                      <Dropdown.Menu>
-                                                            <Form action="#" className="search-box p-0">
-                                                                  <input type="text" className="text search-input" placeholder="Type here to search..." />
-                                                                  <Link className="search-link" to="#"><i className="ri-search-line"></i></Link>
-                                                            </Form>
-                                                      </Dropdown.Menu>
-                                                </Dropdown>
-                                                <Dropdown as="li" className="nav-item nav-icon">
-                                                      <Dropdown.Toggle as={CustomToggle} href="#" variant="search-toggle iq-waves-effect text-gray rounded">
-                                                            <span className="ripple rippleEffect" style={{ width: '35px', height: '35px', top: '0.5px', left: '-8.5px' }}></span>
-                                                            <i className="ri-notification-2-line"></i>
-                                                            <span className="bg-primary dots"></span>
-                                                      </Dropdown.Toggle>
-                                                      <Dropdown.Menu className="iq-sub-dropdown m-0" align="right">
-                                                            <Card className="shadow-none m-0">
-                                                                  <Card.Body className="p-0">
-                                                                        <div className="bg-primary p-3 d-flex justify-content-between">
-                                                                              <h5 className="mb-0 text-white">All Notifications</h5>
-                                                                              <small className="badge  badge-light float-right pt-1">4</small>
-                                                                        </div>
-                                                                        <Link to="#" className="iq-sub-card" >
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user01} alt="" />
+                                                      <Dropdown.Menu className="more-menu">
+                                                            <div className="navbar-right position-relative">
+                                                                  <ul
+                                                                        className="d-flex align-items-center justify-content-end list-inline m-0"
+                                                                        style={{ height: 50 }}
+                                                                  >
+                                                                        <Dropdown as="li" className="nav-item">
+                                                                              <Dropdown.Toggle
+                                                                                    href="#"
+                                                                                    as={CustomToggle}
+                                                                                    variant="search-toggle"
+                                                                              >
+                                                                                    <i className="ri-search-line"></i>
+                                                                              </Dropdown.Toggle>
+                                                                              <Dropdown.Menu className="search-box iq-search-bar d-search p-0 m-0 dropdown-menu-right">
+                                                                                    <Form action="#" className="searchbox">
+                                                                                          <div className="position-relative">
+                                                                                                <input
+                                                                                                      type="text"
+                                                                                                      className="text search-input font-size-12"
+                                                                                                      placeholder="type here to search..."
+                                                                                                />
+                                                                                                <i className="search-link ri-search-line"></i>
+                                                                                          </div>
+                                                                                    </Form>
+                                                                              </Dropdown.Menu>
+                                                                        </Dropdown>
+                                                                        <Dropdown as="li" className="nav-item">
+                                                                              <Dropdown.Toggle
+                                                                                    href="#"
+                                                                                    as={CustomToggle}
+                                                                                    variant="search-toggle position-relative"
+                                                                              >
+                                                                                    <svg
+                                                                                          xmlns="http://www.w3.org/2000/svg"
+                                                                                          viewBox="0 0 24 24"
+                                                                                          width="22"
+                                                                                          height="22"
+                                                                                          className="noti-svg"
+                                                                                    >
+                                                                                          <path fill="none" d="M0 0h24v24H0z" />
+                                                                                          <path d="M18 10a6 6 0 1 0-12 0v8h12v-8zm2 8.667l.4.533a.5.5 0 0 1-.4.8H4a.5.5 0 0 1-.4-.8l.4-.533V10a8 8 0 1 1 16 0v8.667zM9.5 21h5a2.5 2.5 0 1 1-5 0z" />
+                                                                                    </svg>
+                                                                                    <span className="bg-danger dots"></span>
+                                                                              </Dropdown.Toggle>
+                                                                              <Dropdown.Menu className="iq-sub-dropdown dropdown-menu dropdown-menu-right">
+                                                                                    <Card className="iq-card shadow-none m-0">
+                                                                                          <Card.Body className="iq-card-body">
+                                                                                                <Link to="#" className="iq-sub-card">
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <img
+                                                                                                                  src={thumb1}
+                                                                                                                  className="img-fluid mr-3"
+                                                                                                                  alt="streamit"
+                                                                                                            />
+                                                                                                            <div className="media-body">
+                                                                                                                  <h6 className="mb-0 ">Boot Bitty</h6>
+                                                                                                                  <small className="font-size-12">
+                                                                                                                        {" "}
+                                                                                                                        just now
+                                                                                                                  </small>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                                <Link to="#" className="iq-sub-card">
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <img
+                                                                                                                  src={thumb2}
+                                                                                                                  className="img-fluid mr-3"
+                                                                                                                  alt="streamit"
+                                                                                                            />
+                                                                                                            <div className="media-body">
+                                                                                                                  <h6 className="mb-0 ">
+                                                                                                                        The Last Breath
+                                                                                                                  </h6>
+                                                                                                                  <small className="font-size-12">
+                                                                                                                        15 minutes ago
+                                                                                                                  </small>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                                <Link to="#" className="iq-sub-card">
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <img
+                                                                                                                  src={thumb3}
+                                                                                                                  className="img-fluid mr-3"
+                                                                                                                  alt="streamit"
+                                                                                                            />
+                                                                                                            <div className="media-body">
+                                                                                                                  <h6 className="mb-0 ">The Hero Camp</h6>
+                                                                                                                  <small className="font-size-12">
+                                                                                                                        1 hour ago
+                                                                                                                  </small>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                          </Card.Body>
+                                                                                    </Card>
+                                                                              </Dropdown.Menu>
+                                                                        </Dropdown>
+                                                                        <Dropdown as="li" className="nav-item">
+                                                                              <Dropdown.Toggle
+                                                                                    href="#"
+                                                                                    as={CustomToggle}
+                                                                                    variant="search-toggle"
+                                                                              >
+                                                                                    <div
+                                                                                          className="iq-user-dropdown search-toggle p-0 d-flex align-items-center active"
+                                                                                          data-toggle="search-toggle"
+                                                                                    >
+                                                                                          <img
+                                                                                                src={user}
+                                                                                                className="img-fluid avatar-40 rounded-circle"
+                                                                                                alt="user"
+                                                                                          />
                                                                                     </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0">Emma Watson Barry</h6>
-                                                                                          <small className="float-right font-size-12 iq-text">Just Now</small>
-                                                                                          <p className="mb-0 iq-text">95 MB</p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card" >
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user02} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">New customer is join</h6>
-                                                                                          <small className="float-right iq-text font-size-12">5 days ago</small>
-                                                                                          <p className="mb-0 iq-text">Cyst Barry</p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card" >
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user03} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Two customer is left</h6>
-                                                                                          <small className="float-right iq-text font-size-12">2 days ago</small>
-                                                                                          <p className="mb-0 iq-text">Cyst Barry</p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card" >
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user04} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">New Mail from Fenny</h6>
-                                                                                          <small className="float-right iq-text font-size-12">3 days ago</small>
-                                                                                          <p className="mb-0 iq-text">Cyst Barry</p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                  </Card.Body>
-                                                            </Card>
-                                                      </Dropdown.Menu>
-                                                </Dropdown>
-                                                <Dropdown as="li" className="nav-item nav-icon dropdown">
-                                                      <Dropdown.Toggle as={CustomToggle} href="#" variant="search-toggle" >
-                                                            <div className="search-toggle iq-waves-effect text-gray rounded">
-                                                                  <i className="ri-mail-line"></i>
-                                                                  <span className="bg-primary dots"></span>
+                                                                              </Dropdown.Toggle>
+                                                                              <Dropdown.Menu
+                                                                                    className="iq-sub-dropdown iq-user-dropdown"
+                                                                                    align="right"
+                                                                              >
+                                                                                    <Card className="shadow-none m-0">
+                                                                                          <Card.Body className="p-0 pl-3 pr-3">
+                                                                                                <Link
+                                                                                                      to="/manage-profile"
+                                                                                                      className="iq-sub-card setting-dropdown"
+                                                                                                >
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <div className="right-icon">
+                                                                                                                  <i className="ri-file-user-line text-primary"></i>
+                                                                                                            </div>
+                                                                                                            <div className="media-body ml-3">
+                                                                                                                  <h6 className="my-0 ">
+                                                                                                                        Manage Profile
+                                                                                                                  </h6>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                                <Link
+                                                                                                      to="/setting"
+                                                                                                      className="iq-sub-card setting-dropdown"
+                                                                                                >
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <div className="right-icon">
+                                                                                                                  <i className="ri-settings-4-line text-primary"></i>
+                                                                                                            </div>
+                                                                                                            <div className="media-body ml-3">
+                                                                                                                  <h6 className="my-0 ">Settings</h6>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                                <Link
+                                                                                                      to="/pricing-plan-1"
+                                                                                                      className="iq-sub-card setting-dropdown"
+                                                                                                >
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <div className="right-icon">
+                                                                                                                  <i className="ri-settings-4-line text-primary"></i>
+                                                                                                            </div>
+                                                                                                            <div className="media-body ml-3">
+                                                                                                                  <h6 className="my-0 ">Pricing Plan</h6>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                                <Link
+                                                                                                      to="/extra-pages/login"
+                                                                                                      className="iq-sub-card setting-dropdown"
+                                                                                                >
+                                                                                                      <div className="media align-items-center">
+                                                                                                            <div className="right-icon">
+                                                                                                                  <i className="ri-logout-circle-line text-primary"></i>
+                                                                                                            </div>
+                                                                                                            <div className="media-body ml-3">
+                                                                                                                  <h6 className="my-0 ">Logout</h6>
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </Link>
+                                                                                          </Card.Body>
+                                                                                    </Card>
+                                                                              </Dropdown.Menu>
+                                                                        </Dropdown>
+                                                                  </ul>
                                                             </div>
-                                                      </Dropdown.Toggle>
-                                                      <Dropdown.Menu className="iq-sub-dropdown" align="right">
-                                                            <Card className="shadow-none m-0">
-                                                                  <Card.Body className="p-0">
-                                                                        <div className="bg-primary p-3 d-flex justify-content-between">
-                                                                              <h5 className="mb-0 text-white">All Messages</h5>
-                                                                              <small className="badge  badge-light float-right pt-1">5</small>
-                                                                        </div>
-                                                                        <Link to="#" className="iq-sub-card">
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user01} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 text-white">Barry Emma Watson</h6>
-                                                                                          <small className="float-left iq-text font-size-12">13 Jun</small>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card">
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user02} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 text-white">Lorem Ipsum Watson</h6>
-                                                                                          <small className="float-left iq-text font-size-12">20 Apr</small>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card">
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user03} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Why do we use it?</h6>
-                                                                                          <small className="float-left iq-text font-size-12">30 Jun</small>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card">
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user04} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Variations Passages</h6>
-                                                                                          <small className="float-left iq-text font-size-12">12 Sep</small>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <Link to="#" className="iq-sub-card">
-                                                                              <div className="media align-items-center">
-                                                                                    <div>
-                                                                                          <img className="avatar-40 rounded" src={user05} alt="" />
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Lorem Ipsum generators</h6>
-                                                                                          <small className="float-left text-white font-size-12">5 Dec</small>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                  </Card.Body>
-                                                            </Card>
                                                       </Dropdown.Menu>
                                                 </Dropdown>
-                                                <Dropdown as="li" className="line-height pt-3">
-                                                      <Dropdown.Toggle href="#" as={CustomToggle} variant="search-toggle iq-waves-effect d-flex align-items-center" >
-                                                            <img src={user1} className="img-fluid rounded-circle mr-3" alt="user" />
-                                                      </Dropdown.Toggle>
-                                                      <Dropdown.Menu className="iq-sub-dropdown iq-user-dropdown m-0" align="right">
-                                                            <Card className="shadow-none m-0">
-                                                                  <Card.Header className="d-flex justify-content-start bg-primary p-0">
-                                                                        <div className="bg-primary p-3">
-                                                                              <h5 className="mb-0 text-white line-height">Hello Barry Tech</h5>
-                                                                              <span className="text-white font-size-12 iq-text">Available</span>
-                                                                        </div>
-                                                                  </Card.Header>
-                                                                  <Card.Body className="p-0 ">
-                                                                        <Link to="/user-profile" className="iq-sub-card iq-bg-primary-hover">
-                                                                              <div className="media align-items-center">
-                                                                                    <div className="rounded iq-card-icon iq-bg-primary">
-                                                                                          <i className="ri-file-user-line"></i>
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">My Profile</h6>
-                                                                                          <p className="mb-0 font-size-12 iq-text">View personal profile details.</p>
-                                                                                    </div>
+                                                <Navbar.Collapse className="">
+                                                      <div className="menu-main-menu-container">
+                                                            <Nav as="ul" id="top-menu" className="ml-auto">
+                                                                  <li className="menu-item">
+                                                                        <Link to="/">Home</Link>
+                                                                  </li>
+                                                                  <li className="menu-item ">
+                                                                        <Link to="/movie">Movies</Link>
+                                                                        <ul className="sub-menu" style={{ width: "500px" }}>
+                                                                              <div className="col-12 row">
+                                                                                    {/* {categoryList?.map((category, index) => (
+                                                                                    <li className="menu-item col-5" key={index}>
+                                                                                          <Link to={`/category/${category?.id}/show-movies`}>{category?.name}</Link>
+                                                                                    </li>
+                                                                              ))} */}
                                                                               </div>
-                                                                        </Link>
-                                                                        <Link to="/user-profile-edit" className="iq-sub-card iq-bg-primary-hover">
-                                                                              <div className="media align-items-center">
-                                                                                    <div className="rounded iq-card-icon iq-bg-primary">
-                                                                                          <i className="ri-profile-line"></i>
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Edit Profile</h6>
-                                                                                          <p className="mb-0 font-size-12 iq-text">Modify your personal details.</p>
-                                                                                    </div>
+                                                                        </ul>
+                                                                  </li>
+                                                                  <li className="menu-item">
+                                                                        <Link to="/tvseries">Tv Show</Link>
+                                                                        <ul className="sub-menu" style={{ width: "500px" }}>
+                                                                              <div className="col-12 row">
+                                                                                    {/* {categoryList?.map((category, index) => (
+                                                                                    <li className="menu-item col-5" key={index}>
+                                                                                          <Link to={`/category/${category?.id}/show-tvseries`}>{category?.name}</Link>
+                                                                                    </li>
+                                                                              ))} */}
                                                                               </div>
-                                                                        </Link>
-                                                                        <Link to="/user-account-setting" className="iq-sub-card iq-bg-primary-hover">
-                                                                              <div className="media align-items-center">
-                                                                                    <div className="rounded iq-card-icon iq-bg-primary">
-                                                                                          <i className="ri-account-box-line"></i>
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Account settings</h6>
-                                                                                          <p className="mb-0 font-size-12 iq-text">Manage your account parameters.</p>
-                                                                                    </div>
+                                                                        </ul>
+                                                                  </li>
+
+                                                                  <li className="menu-item">
+                                                                        <Link to="#">Blog</Link>
+                                                                        <ul className="sub-menu">
+                                                                              <li className="menu-item">
+                                                                                    <Link to="/blog">Blog</Link>
+                                                                              </li>
+                                                                              <li className="menu-item">
+                                                                                    <Link to="/blog-details">Blog details</Link>
+                                                                              </li>
+                                                                        </ul>
+                                                                  </li>
+                                                                  <li className="menu-item">
+                                                                        <Link to="#">Pages</Link>
+                                                                        <ul className="sub-menu">
+                                                                              <li className="menu-item">
+                                                                                    <Link to="/about-us">About Us</Link>
+                                                                              </li>
+                                                                              <li className="menu-item ">
+                                                                                    <Link to="/contact">Contact</Link>
+                                                                              </li>
+                                                                              <li className="menu-item">
+                                                                                    <Link to="/faq">FAQ</Link>
+                                                                              </li>
+                                                                              <li className="menu-item">
+                                                                                    <Link to="/privacy-policy">Privacy-Policy</Link>
+                                                                              </li>
+                                                                              <li className="menu-item">
+                                                                                    <Link to="#">Pricing</Link>
+                                                                                    <ul className="sub-menu">
+                                                                                          <li className="menu-item">
+                                                                                                <Link to="/pricing-plan-1">
+                                                                                                      Pricing Plan 1
+                                                                                                </Link>
+                                                                                          </li>
+                                                                                          <li className="menu-item">
+                                                                                                <Link to="/pricing-plan-2">
+                                                                                                      Pricing Plan 2
+                                                                                                </Link>
+                                                                                          </li>
+                                                                                    </ul>
+                                                                              </li>
+                                                                        </ul>
+                                                                  </li>
+                                                            </Nav>
+                                                      </div>
+                                                </Navbar.Collapse>
+                                                <div className="navbar-right menu-right">
+                                                      <ul className="d-flex align-items-center list-inline m-0">
+                                                            <Dropdown as="li" className="nav-item nav-icon">
+                                                                  <Dropdown.Toggle
+                                                                        as={CustomToggle}
+                                                                        href="#"
+                                                                        variant="search-toggle device-search"
+                                                                  >
+                                                                        <i className="ri-search-line"></i>
+                                                                  </Dropdown.Toggle>
+                                                                  <Dropdown.Menu
+                                                                        className="search-box iq-search-bar d-search p-0 m-0"
+                                                                        align="right"
+                                                                  >
+                                                                        <Form action="#" className="searchbox">
+                                                                              <div className="position-relative">
+                                                                                    <input
+                                                                                          type="text"
+                                                                                          className="text search-input font-size-12"
+                                                                                          placeholder="type here to search..."
+                                                                                    />
+                                                                                    <i className="search-link ri-search-line"></i>
                                                                               </div>
-                                                                        </Link>
-                                                                        <Link to="/user-privacy-setting" className="iq-sub-card iq-bg-primary-hover">
-                                                                              <div className="media align-items-center">
-                                                                                    <div className="rounded iq-card-icon iq-bg-primary">
-                                                                                          <i className="ri-lock-line"></i>
-                                                                                    </div>
-                                                                                    <div className="media-body ml-3">
-                                                                                          <h6 className="mb-0 ">Privacy Settings</h6>
-                                                                                          <p className="mb-0 font-size-12 iq-text">Control your privacy parameters.</p>
-                                                                                    </div>
-                                                                              </div>
-                                                                        </Link>
-                                                                        <div className="d-inline-block w-100 text-center p-3">
-                                                                              <Link className="bg-primary iq-sign-btn" to="/auth/sign-in" role="button">Sign out<i className="ri-login-box-line ml-2"></i></Link>
-                                                                        </div>
-                                                                  </Card.Body>
-                                                            </Card>
-                                                      </Dropdown.Menu>
-                                                </Dropdown>
-                                          </Nav>
-                                    </Navbar.Collapse>
-                              </Navbar>
-                        </div>
+                                                                        </Form>
+                                                                  </Dropdown.Menu>
+                                                            </Dropdown>
+                                                            {/* {token != null ?
+                                                                  (
+                                                                        <>
+                                                                              <Dropdown as="li" className="nav-item">
+                                                                                    <Dropdown.Toggle
+                                                                                          href="#"
+                                                                                          as={CustomToggle}
+                                                                                          variant="search-toggle position-relative"
+                                                                                    >
+                                                                                          <svg
+                                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                width="22"
+                                                                                                height="22"
+                                                                                                className="noti-svg"
+                                                                                          >
+                                                                                                <path fill="none" d="M0 0h24v24H0z" />
+                                                                                                <path d="M18 10a6 6 0 1 0-12 0v8h12v-8zm2 8.667l.4.533a.5.5 0 0 1-.4.8H4a.5.5 0 0 1-.4-.8l.4-.533V10a8 8 0 1 1 16 0v8.667zM9.5 21h5a2.5 2.5 0 1 1-5 0z" />
+                                                                                          </svg>
+                                                                                          <span className="bg-danger dots"></span>
+                                                                                    </Dropdown.Toggle>
+                                                                                    <Dropdown.Menu
+                                                                                          className="iq-sub-dropdown"
+                                                                                          align="right"
+                                                                                    >
+                                                                                          <Card className="shadow-none m-0">
+                                                                                                <Card.Body>
+                                                                                                      <Link to="#" className="iq-sub-card">
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <img
+                                                                                                                        src={thumb1}
+                                                                                                                        className="img-fluid mr-3"
+                                                                                                                        alt="streamit"
+                                                                                                                  />
+                                                                                                                  <div className="media-body">
+                                                                                                                        <h6 className="mb-0 ">Boot Bitty</h6>
+                                                                                                                        <small className="font-size-12">
+                                                                                                                              {" "}
+                                                                                                                              just now
+                                                                                                                        </small>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                      <Link to="#" className="iq-sub-card">
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <img
+                                                                                                                        src={thumb2}
+                                                                                                                        className="img-fluid mr-3"
+                                                                                                                        alt="streamit"
+                                                                                                                  />
+                                                                                                                  <div className="media-body">
+                                                                                                                        <h6 className="mb-0 ">The Last Breath</h6>
+                                                                                                                        <small className="font-size-12">
+                                                                                                                              15 minutes ago
+                                                                                                                        </small>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                      <Link to="#" className="iq-sub-card">
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <img
+                                                                                                                        src={thumb3}
+                                                                                                                        className="img-fluid mr-3"
+                                                                                                                        alt="streamit"
+                                                                                                                  />
+                                                                                                                  <div className="media-body">
+                                                                                                                        <h6 className="mb-0 ">The Hero Camp</h6>
+                                                                                                                        <small className="font-size-12">
+                                                                                                                              1 hour ago
+                                                                                                                        </small>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                </Card.Body>
+                                                                                          </Card>
+                                                                                    </Dropdown.Menu>
+                                                                              </Dropdown>
+                                                                              <Dropdown as="li" className="nav-item nav-icon">
+                                                                                    <Dropdown.Toggle
+                                                                                          href="#"
+                                                                                          as={CustomToggle}
+                                                                                          variant="search-toggle"
+                                                                                    >
+                                                                                          <div
+                                                                                                className="iq-user-dropdown search-toggle p-0 d-flex align-items-center active"
+                                                                                                data-toggle="search-toggle"
+                                                                                          >
+                                                                                                <img
+                                                                                                      src={user}
+                                                                                                      className="img-fluid avatar-40 rounded-circle"
+                                                                                                      alt="user"
+                                                                                                />
+                                                                                          </div>
+                                                                                    </Dropdown.Toggle>
+                                                                                    <Dropdown.Menu
+                                                                                          className="iq-sub-dropdown iq-user-dropdown "
+                                                                                          align="right"
+                                                                                    >
+                                                                                          <Card className="shadow-none m-0">
+                                                                                                <Card.Body className="p-0 pl-3 pr-3 ">
+                                                                                                      <Link
+                                                                                                            to="/usersetting"
+                                                                                                            className="iq-sub-card setting-dropdown"
+                                                                                                      >
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <div className="right-icon">
+                                                                                                                        <i className="ri-file-user-line text-primary"></i>
+                                                                                                                  </div>
+                                                                                                                  <div className="media-body ml-3">
+                                                                                                                        <h6 className="my-0 ">Manage Profile</h6>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                      <Link
+                                                                                                            to="/user"
+                                                                                                            className="iq-sub-card setting-dropdown"
+                                                                                                      >
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <div className="right-icon">
+                                                                                                                        <i className="ri-settings-4-line text-primary"></i>
+                                                                                                                  </div>
+                                                                                                                  <div className="media-body ml-3">
+                                                                                                                        <h6 className="my-0 ">Settings</h6>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                      <Link
+                                                                                                            to="/pricing-plan-1"
+                                                                                                            className="iq-sub-card setting-dropdown"
+                                                                                                      >
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <div className="right-icon">
+                                                                                                                        <i className="ri-settings-4-line text-primary"></i>
+                                                                                                                  </div>
+                                                                                                                  <div className="media-body ml-3">
+                                                                                                                        <h6 className="my-0 ">Pricing Plan</h6>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                      <Link
+                                                                                                            to="/extra-pages/login"
+                                                                                                            className="iq-sub-card setting-dropdown"
+                                                                                                      >
+                                                                                                            <div className="media align-items-center">
+                                                                                                                  <div className="right-icon">
+                                                                                                                        <i className="ri-logout-circle-line text-primary"></i>
+                                                                                                                  </div>
+                                                                                                                  <div className="media-body ml-3">
+                                                                                                                        <h6 className="my-0 ">Logout</h6>
+                                                                                                                  </div>
+                                                                                                            </div>
+                                                                                                      </Link>
+                                                                                                </Card.Body>
+                                                                                          </Card>
+                                                                                    </Dropdown.Menu>
+                                                                              </Dropdown>
+                                                                        </>
+                                                                  ) : (
+                                                                        <>
+                                                                              <li className="menu-item ">
+                                                                                    <Link to="/login">Login</Link>
+                                                                                    <Link to="/register">Register</Link>
+                                                                              </li>
+                                                                        </>
+                                                                  )} */}
+
+                                                      </ul>
+                                                </div>
+                                          </Navbar>
+                                    </Col>
+                              </Row>
+                        </Container>
                   </div>
-            </>
+            </header>    
       )
 }
 

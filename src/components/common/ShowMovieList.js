@@ -7,19 +7,17 @@ const ShowMovieList = ({ movieList }) => {
     const navigate = useNavigate();
     const [list, setList] = useState(movieList);
     const redirectToWathchingMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/watch-movie/${newName}`)
     }
     const redirectToDetailMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/movie-detail/${newName}`)
     }
 
     const fetchDeleteFavoriteMovie = async (id) =>{
         await favoriteApi.deleteFavoriteMovie(id)
     }
-
-    // console.log(list);
     return (
         <>
             <main id="main" className="site-main">

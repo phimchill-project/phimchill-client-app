@@ -13,3 +13,15 @@ export const findByName = async (name) => {
     }
     return result?.data;
 };
+
+export const findMoviesByName = async (name) => {
+    let result = null;
+    try {
+        result = await axios.get(`${API}search?name=${name}&type=all`, {
+            headers: { }
+        });
+    } catch (e) {
+        console.log("Find books API error: " + e);
+    }
+    return result?.data;
+};

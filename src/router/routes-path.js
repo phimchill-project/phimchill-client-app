@@ -15,5 +15,6 @@ const routes = {
     movieDetail : "/movie-detail/:name",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries"
+    search : "/search",
 }
 export default routes;
