@@ -1,12 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import categoryApi from "../../api/category/exportCategoryApi";
+import React, { useState, useEffect } from 'react'
+import ShowTvSeriesList  from '../../../components/common/ShowTvSeriesList'
+import favoriteApi from "../../../api/favorite/exportFavorite";
+import {Link} from "react-router-dom";
 
-const ShowTvSeriesList = ({tvSeriesList}) => {
-    const [list, setList] = useState(tvSeriesList);
+function FavoriteTvSeries() {
+    const [list, setList] = useState(null);
+    const fetchFavoriteTvSeries = async () => {
+        let result = await favoriteApi.getFavoriteTvSeries();
+        console.log(result);
+        if (result == null) {
+            return;
+        }
+        setList(result);
+    }
+    console.log(list);
+    useEffect(() => {
+        setList(null);
+        fetchFavoriteTvSeries();
+    }, []);
 
+    const fetchDeleteFavoriteTVSeries = async (id) =>{
+        await favoriteApi.deleteFavoriteTVSeries(id);
+        fetchFavoriteTvSeries();
+    }
     return (
-        <>
+        <div>
             <main id="main" className="site-main">
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
@@ -40,12 +58,30 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                                                 Play Now
                                             </Link>
                                         </div>
+                                        <div className="hover-buttons">
+                                            <Link
+                                                className="btn btn-hover"
+                                                to={`/movie/${tvseries.id}`}
+                                            >
+                                                <i className="fa fa-play mr-1" aria-hidden="true" />
+                                                More detaills
+                                            </Link>
+                                        </div>
+                                        <div className="hover-buttons">
+                                            <Link role="button" className="btn btn-hover" onClick={(e) => {
+                                                e.preventDefault();
+                                                fetchDeleteFavoriteTVSeries(tvseries?.id)
+                                            }}>
+                                                <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                Delete
+                                            </Link>
+                                        </div>
                                     </div>
                                     <div className="block-social-info">
                                         <ul className="list-inline p-0 m-0 music-play-lists">
                                             <li className="share">
                                                 <span>
-                                                    <i className="ri-share-fill" />n  
+                                                    <i className="ri-share-fill" />n
                                                 </span>
                                                 <div className="share-box">
                                                     <div className="d-flex align-items-center">
@@ -57,7 +93,7 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                                                             tabIndex={0}
                                                         >
                                                             <i className="ri-facebook-fill" />
-                                                       </Link>
+                                                        </Link>
                                                         <Link
                                                             to="https://twitter.com/intent/tweet?text=Currentlyreading"
                                                             target="_blank"
@@ -66,7 +102,7 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                                                             tabIndex={0}
                                                         >
                                                             <i className="ri-twitter-fill" />
-                                                       </Link>
+                                                        </Link>
                                                         <Link
                                                             to="#"
                                                             data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
@@ -74,7 +110,7 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                                                             tabIndex={0}
                                                         >
                                                             <i className="ri-links-fill" />
-                                                       </Link>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </li>
@@ -97,7 +133,8 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                     </ul>
                 </div>
             </main>
-        </>
+        </div>
     )
 }
-export default ShowTvSeriesList;
+
+export default FavoriteTvSeries;

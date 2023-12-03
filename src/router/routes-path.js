@@ -5,7 +5,7 @@ const routes = {
     userdetail:"/user",
     UserProfile :"/usersetting",
     categoryMovie : "/category/:id/show-movies",
-    showTvSeries : "/category/:id/show-tvseries",
+    categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
     addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
@@ -13,6 +13,8 @@ const routes = {
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
+    favoriteMovies : "/favorite-movies",
+    favoriteTvSeries : "/favorite-tvseries"
     search : "/search",
 }
 export default routes;

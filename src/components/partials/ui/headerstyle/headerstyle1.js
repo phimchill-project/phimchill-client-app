@@ -16,7 +16,7 @@ import publicApi from '../../../../api/publicApi/exportPublicApi';
 
 //img
 
-import logo from "../../../../assets/ui/images/logo.png";
+import  logo from "../../../../assets/ui/images/logo.png";
 import thumb1 from "../../../../assets/ui/images/notify/thumb-1.jpg";
 import thumb2 from "../../../../assets/ui/images/notify/thumb-2.jpg";
 import thumb3 from "../../../../assets/ui/images/notify/thumb-3.jpg";
@@ -275,7 +275,7 @@ const HeaderStyle1 = (props) => {
                           </ul>
                         </li>
                         <li className="menu-item">
-                          <Link to="/tvseries">Tv Show</Link>
+                          <Link to="/tvseries">tv series </Link>
                           <ul className="sub-menu" style={{ width: "500px" }}>
                             <div className="col-12 row">
                               {categoryList?.map((category, index) => (
@@ -286,18 +286,20 @@ const HeaderStyle1 = (props) => {
                             </div>
                           </ul>
                         </li>
-
-                        <li className="menu-item">
-                          <Link to="#">Blog</Link>
-                          <ul className="sub-menu">
+                        {token != null ?
                             <li className="menu-item">
-                              <Link to="/blog">Blog</Link>
+                              <Link to="#">Favorite</Link>
+                              <ul className="sub-menu">
+                                <li className="menu-item">
+                                  <Link to="/favorite-movies">favorite movies</Link>
+                                </li>
+                                <li className="menu-item">
+                                  <Link to="/favorite-tvseries">favorite tv series</Link>
+                                </li>
+                              </ul>
                             </li>
-                            <li className="menu-item">
-                              <Link to="/blog-details">Blog details</Link>
-                            </li>
-                          </ul>
-                        </li>
+                            :""
+                        }
                         <li className="menu-item">
                           <Link to="#">Pages</Link>
                           <ul className="sub-menu">

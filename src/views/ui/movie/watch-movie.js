@@ -59,10 +59,10 @@ const WatchMovie = () => {
                             height="360px"
                             playing={true}
                             controls={true}
-                           
+
                         />
                         </div> */}
-                        
+
                     </div>
                     <div className="main-content movi">
                         <section className="movie-detail container-fluid">
