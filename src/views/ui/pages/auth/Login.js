@@ -35,9 +35,11 @@ function Login(){
             email: Email,
             password : Pass,
         });
+        console.log(data);
         if(data?.statusCode === 200){
             localStorage.setItem("token",data?.data.token);
-            localStorage.setItem("user",data?.data);
+            localStorage.setItem("user",JSON.stringify(data?.data));
+            console.log( localStorage.getItem("user"));
             navigate("/");
         }else {
             navigate("/login")

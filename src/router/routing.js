@@ -12,7 +12,7 @@ import WatchMovie from "../views/ui/movie/watch-movie";
 import WatchTvSeries from "../views/ui/tvshow/watch-tvshow";
 import Error404 from "../views/ui/error/error404";
 import ShowTvseries from "../components/ListFilm/ShowTvSeries";
-import MovieDetail from '../components/common/ShowDetail';
+import MovieDetail from '../components/common/MovieDetail ';
 import UserSetting from "../views/ui/pages/user/usersetting";
 import Search from "../views/ui/search/search";
 
