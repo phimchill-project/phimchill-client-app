@@ -13,9 +13,10 @@ import WatchMovie from "../views/ui/movie/watch-movie";
 import WatchTvSeries from "../views/ui/tvshow/watch-tvshow";
 import Error404 from "../views/ui/error/error404";
 import ShowTvseries from "../components/ListFilm/ShowTvSeries";
-import MovieDetail from '../components/common/ShowDetail';
 import FavoriteMovie from "../views/ui/movie/FavoriteMovie";
 import FavoriteTvSeries from "../views/ui/tvshow/FavoriteTvSeries";
+import MovieDetail from '../components/common/MovieDetail ';
+import Search from "../views/ui/search/search";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -34,8 +35,8 @@ const publicRoutes = [
     { path: routes.movieDetail, component: MovieDetail, layout: Layouts.DefaultLayout},
     { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
     { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
+    { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
 ]
-
 const privateRoutes = [
 ]
 export { publicRoutes, privateRoutes }
