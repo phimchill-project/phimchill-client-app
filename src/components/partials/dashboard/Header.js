@@ -19,7 +19,7 @@ import user03 from '../../../assets/dashboard/images/dashboard/03.jpg'
 import user04 from '../../../assets/dashboard/images/dashboard/04.jpg'
 import user05 from '../../../assets/dashboard/images/dashboard/05.jpg'
 //img
-import logo from '../../../assets/ui/images/logo-icon.png'
+import logo from '../../../assets/ui/images/logo.png'
 import thumb1 from "../../../assets/ui/images/notify/thumb-1.jpg";
 import thumb2 from "../../../assets/ui/images/notify/thumb-2.jpg";
 import thumb3 from "../../../assets/ui/images/notify/thumb-3.jpg";

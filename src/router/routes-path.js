@@ -4,8 +4,8 @@ const routes = {
     home :"/",
     userdetail:"/user",
     UserProfile :"/usersetting",
-    showMovie : "/category/:id/show-movies",
-    showTvSeries : "/category/:id/show-tvseries",
+    categoryMovie : "/category/:id/show-movies",
+    categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
     addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
@@ -14,6 +14,9 @@ const routes = {
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
     test :"/dashBoard",
-    home2: "/home2"
+    home2: "/home2",
+    favoriteMovies : "/favorite-movies",
+    favoriteTvSeries : "/favorite-tvseries",
+    search : "/search"
 }
 export default routes;

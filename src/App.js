@@ -5,6 +5,10 @@ import './assets/ui/css/bootstrap.min.css'
 import './assets/ui/css/typography.css'
 import './assets/ui/css/style.css'
 import './assets/ui/css/responsive.css'
+
+import './assets/ui/css/line-awesome.min.css'
+import './assets/ui/css/fontawesome.css'
+
 function App() {
   return (
     <div className="App">

@@ -70,7 +70,6 @@ export const getMoviesByCategoryId = async (id) => {
         console.log("Find Check API error: " + e);
         return null;
     }
-    console.log(result.data.data);
     return result?.data.data;
 }
 

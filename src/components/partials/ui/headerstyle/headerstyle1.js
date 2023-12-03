@@ -8,7 +8,7 @@ import {
   Form,
   Nav,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../../components/Card";
 
 import CustomToggle from "../../../../components/dropdowns";
@@ -16,7 +16,7 @@ import publicApi from '../../../../api/publicApi/exportPublicApi';
 
 //img
 
-import logo from "../../../../assets/ui/images/logo.png";
+import  logo from "../../../../assets/ui/images/logo.png";
 import thumb1 from "../../../../assets/ui/images/notify/thumb-1.jpg";
 import thumb2 from "../../../../assets/ui/images/notify/thumb-2.jpg";
 import thumb3 from "../../../../assets/ui/images/notify/thumb-3.jpg";
@@ -25,6 +25,19 @@ import user from "../../../../assets/ui/images/user/user.jpg";
 const HeaderStyle1 = (props) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [categoryList, setCategoryList] = useState();
+
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+
+    // Thay đổi route mỗi khi giá trị input thay đổi
+    navigate(`/search?q=${newValue}`);
+  };
+
+
   const fetchApiAllCategory = async () => {
     const result = await publicApi.getAllCategory();
     setCategoryList(result);
@@ -262,7 +275,7 @@ const HeaderStyle1 = (props) => {
                           </ul>
                         </li>
                         <li className="menu-item">
-                          <Link to="/tvseries">Tv Show</Link>
+                          <Link to="/tvseries">tv series </Link>
                           <ul className="sub-menu" style={{ width: "500px" }}>
                             <div className="col-12 row">
                               {categoryList?.map((category, index) => (
@@ -273,18 +286,20 @@ const HeaderStyle1 = (props) => {
                             </div>
                           </ul>
                         </li>
-
-                        <li className="menu-item">
-                          <Link to="#">Blog</Link>
-                          <ul className="sub-menu">
+                        {token != null ?
                             <li className="menu-item">
-                              <Link to="/blog">Blog</Link>
+                              <Link to="#">Favorite</Link>
+                              <ul className="sub-menu">
+                                <li className="menu-item">
+                                  <Link to="/favorite-movies">favorite movies</Link>
+                                </li>
+                                <li className="menu-item">
+                                  <Link to="/favorite-tvseries">favorite tv series</Link>
+                                </li>
+                              </ul>
                             </li>
-                            <li className="menu-item">
-                              <Link to="/blog-details">Blog details</Link>
-                            </li>
-                          </ul>
-                        </li>
+                            :""
+                        }
                         <li className="menu-item">
                           <Link to="#">Pages</Link>
                           <ul className="sub-menu">
@@ -339,7 +354,9 @@ const HeaderStyle1 = (props) => {
                               <input
                                 type="text"
                                 className="text search-input font-size-12"
-                                placeholder="type here to search..."
+                                placeholder="Type here to search..."
+                                value={inputValue}
+                                onChange={handleChange}
                               />
                               <i className="search-link ri-search-line"></i>
                             </div>

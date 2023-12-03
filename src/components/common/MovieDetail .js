@@ -3,15 +3,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import movieApi from "../../api/movie/exportMovieApi";
 import logo from "../../assets/ui/images/logo.png"
-import ShowComments from "../../components/common/Comments"
+import ShowComments from "./Comments"
 
 function MovieDetail() {
     let navigate = useNavigate();
     let { name } = useParams();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const [movie, setMovie] = useState({});
-
+    const [movie, setMovie] = useState(null);
     useEffect(() => {
         findByName();
     }, []);
@@ -20,7 +17,7 @@ function MovieDetail() {
         setMovie(data?.data);
     };
     const redirectToWathchingMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/watch-movie/${newName}`)
     }
     const [toggler3, setToggler3] = useState(false);
@@ -37,7 +34,7 @@ function MovieDetail() {
                             </Link>
                             <h1 className="slider-text big-title title text-uppercase" data-iq-gsap="onStart" data-iq-position-x="-200">{movie?.name}</h1>
                             <div className="d-flex flex-wrap align-items-center">
-                                <div className="slider-ratting d-flex align-items-center mr-4 mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
+                                <div className="slider-ratting d-flex align-items-cent`er mr-4 mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
                                     <ul className="ratting-start p-0 m-0 list-inline text-primary d-flex align-items-center justify-content-left">
                                         <li>
                                             <i className="fa fa-star" aria-hidden="true"></i>
@@ -107,7 +104,7 @@ function MovieDetail() {
                     </Row>
                 </div>
             </Container>
-            <ShowComments movieId={movie?.id} />
+            {movie != null ? <ShowComments movieId={movie?.id} /> : ""}
         </div>
     )
 }
