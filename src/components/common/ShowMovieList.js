@@ -14,7 +14,6 @@ const ShowMovieList = ({ movieList }) => {
         let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/movie-detail/${newName}`)
     }
-
     return (
         <>
             <main id="main" className="site-main">
