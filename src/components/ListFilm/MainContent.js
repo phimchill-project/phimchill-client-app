@@ -2,7 +2,6 @@ import React from "react";
 import {  Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 function MainContent({TvSeriesResponse}) {
     return (
@@ -33,7 +32,7 @@ function MainContent({TvSeriesResponse}) {
                                 className="favorites-slider list-inline  row p-0 m-0 iq-rtl-direction">
 
 
-                                {TvSeriesResponse.listTVSeries.map((element) => (
+                                {TvSeriesResponse.listTVSeries?.map((element) => (
                                     <div key={element.id}>
                                         <SwiperSlide className="slide-item">
                                             <div className="block-images1 block-images position-relative">

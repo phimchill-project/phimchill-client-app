@@ -13,5 +13,7 @@ const routes = {
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
+    test :"/dashBoard",
+    home2: "/home2"
 }
 export default routes;
