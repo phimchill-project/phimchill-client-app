@@ -1,11 +1,23 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import favoriteApi from "../../api/favorite/exportFavorite";
+import React, { useState, useEffect } from 'react'
+import favoriteApi from "../../../api/favorite/exportFavorite";
+import {Link, useNavigate} from "react-router-dom";
 
-const ShowMovieList = ({ movieList }) => {
+function FavoriteMovie() {
+    const [list, setList] = useState(null);
     const navigate = useNavigate();
-    const [list, setList] = useState(movieList);
+
+    const fetchFavoriteMovie = async () => {
+        let result = await favoriteApi.getFavoriteMovies();
+        console.log(result);
+        if (result == null) {
+            return;
+        }
+        setList(result);
+    }
+    useEffect(() => {
+        setList(null);
+        fetchFavoriteMovie();
+    }, []);
     const redirectToWathchingMoviePage = (name) => {
         let newName = name.replace(/ /g, "-");
         navigate(`/watch-movie/${newName}`)
@@ -16,12 +28,11 @@ const ShowMovieList = ({ movieList }) => {
     }
 
     const fetchDeleteFavoriteMovie = async (id) =>{
-        await favoriteApi.deleteFavoriteMovie(id)
+        await favoriteApi.deleteFavoriteMovie(id);
+        fetchFavoriteMovie();
     }
-
-    // console.log(list);
     return (
-        <>
+        <div>
             <main id="main" className="site-main">
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
@@ -128,11 +139,12 @@ const ShowMovieList = ({ movieList }) => {
                                     </div>
                                 </li>
                             ))}
-                        </ul> 
-                    : ""}
+                        </ul>
+                        : ""}
                 </div>
             </main>
-        </>
+        </div>
     )
 }
-export default ShowMovieList;
+
+export default FavoriteMovie;

@@ -4,8 +4,8 @@ const routes = {
     home :"/",
     userdetail:"/user",
     UserProfile :"/usersetting",
-    showMovie : "/category/:id/show-movies",
-    showTvSeries : "/category/:id/show-tvseries",
+    categoryMovie : "/category/:id/show-movies",
+    categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
     addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
@@ -13,5 +13,7 @@ const routes = {
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
+    favoriteMovies : "/favorite-movies",
+    favoriteTvSeries : "/favorite-tvseries"
 }
 export default routes;

@@ -1,15 +1,12 @@
-import { getAllCommentsByMovieId } from "./commentApi";
+import { getAllCommentsByMovieId, postCommentMovie, postSubCommet, getAllSubCommentsByCommentId } from "./commentApi";
 
 const commentApi = {
       getAllCommentsByMovieId,
+      postCommentMovie,
+      postSubCommet,
+      getAllSubCommentsByCommentId
 }
 
 export default commentApi;
-
-function exportCommentApi() {
-  return (
-    <div> </div>
-  )
-}
 
 // export default exportCommentApi
