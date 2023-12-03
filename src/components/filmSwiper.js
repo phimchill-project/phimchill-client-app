@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Swiper, SwiperSlide} from "swiper/react";
 
-import fav1 from "../assets/images/favorite/01.jpg";
+import fav1 from "../assets/ui/images/favorite/01.jpg";
 function FilmSwiper({ flims, name }){
     const [list, setList] = useState();
 

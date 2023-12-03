@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import favoriteApi from "../../api/favorite/exportFavorite";
 
 const ShowMovieList = ({ movieList }) => {
     const navigate = useNavigate();
@@ -13,10 +12,6 @@ const ShowMovieList = ({ movieList }) => {
     const redirectToDetailMoviePage = (name) => {
         let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/movie-detail/${newName}`)
-    }
-
-    const fetchDeleteFavoriteMovie = async (id) =>{
-        await favoriteApi.deleteFavoriteMovie(id)
     }
     return (
         <>
@@ -61,15 +56,6 @@ const ShowMovieList = ({ movieList }) => {
                                                 }}>
                                                     <i className="fa fa-play mr-1" aria-hidden="true"></i>
                                                     More details
-                                                </Link>
-                                            </div>
-                                            <div className="hover-buttons">
-                                                <Link role="button" className="btn btn-hover" onClick={(e) => {
-                                                    e.preventDefault();
-                                                    fetchDeleteFavoriteMovie(movie?.id)
-                                                }}>
-                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                    Delete
                                                 </Link>
                                             </div>
                                         </div>
