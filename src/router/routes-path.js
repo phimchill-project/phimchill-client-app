@@ -13,6 +13,7 @@ const routes = {
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
+    test :"/dashBoard",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
     search : "/search"
