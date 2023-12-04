@@ -14,7 +14,6 @@ const routes = {
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
     test :"/dashBoard",
-    home2: "/home2",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
     search : "/search"
