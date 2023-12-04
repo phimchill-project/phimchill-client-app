@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import ReactPlayer from 'react-player';
 
 import Start from "../../../components/movie/Start";
 import trending from '../../../assets/ui/images/trending/trending-label.png'

@@ -3,7 +3,6 @@ import Login from "../views/ui/pages/auth/Login";
 import Register from '../views/ui/pages/auth/Register';
 import Layouts from "../layouts/Layouts";
 import UserProfile from '../views/ui/pages/user/userprofile';
-import UserSetting from '../views/ui/pages/user/Usersetting';
 import CategoryMovie from '../views/ui/movie/CategoryMovie';
 import ShowTvSeriesList from '../components/common/ShowTvSeriesList';
 import MoviePage from '../views/ui/pages/MoviePage';
@@ -14,6 +13,7 @@ import WatchTvSeries from "../views/ui/tvshow/watch-tvshow";
 import Error404 from "../views/ui/error/error404";
 import ShowTvseries from "../components/ListFilm/ShowTvSeries";
 import MovieDetail from '../components/common/ShowDetail';
+import UserSetting from "../views/ui/pages/user/usersetting";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
