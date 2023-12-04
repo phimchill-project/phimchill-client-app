@@ -25,7 +25,7 @@ const WatchMovie = () => {
     let navigate = useNavigate();
     let { name } = useParams();
     const [isLoading, setIsLoading] = useState(true);
-    const [movie, setMovie] = useState(null);
+    const [movie, setMovie] = useState();
     const playerRef = useRef();
     const [timeToStart, setTimeToStart] =  useState(0);
     const findByName = async () => {
@@ -33,12 +33,13 @@ const WatchMovie = () => {
         if (data?.statusCode === 404) {
             navigate(routes.error404);
         } else if (data?.statusCode === 200) {
-            setIsLoading(false);
+            localStorage.setItem("movie", JSON.stringify(data?.data))
+            fetchDuration();
+            setTimeout(() => {
+                setMovie(data)
+                setIsLoading(false);
+            }, 3000)
         }
-        localStorage.setItem("movie", JSON.stringify(data?.data))
-        setMovie(data);
-        console.log(data);
-        fetchDuration();
     };
     const onReady = React.useCallback(() => {
         playerRef?.current.seekTo(timeToStart, 'seconds');
@@ -93,11 +94,12 @@ const WatchMovie = () => {
         findByName();
     }, []);
     useEffect(() => {
-        if(movie != null){
+    
             return () => {
                 fetchSaveCurrentTimeVideo();
+                localStorage.removeItem("savedTime");
             }
-        }
+        
     });
     return (
         <>
@@ -113,7 +115,7 @@ const WatchMovie = () => {
                             <ReactPlayer
                                 id='movie'
                                 ref={playerRef}
-                                url={movie.data.url}
+                                url={movie?.data.url}
                                 width="100%"
                                 height="100%"
                                 playing
