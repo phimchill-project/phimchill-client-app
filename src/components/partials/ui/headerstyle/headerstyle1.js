@@ -37,7 +37,6 @@ const HeaderStyle1 = (props) => {
     navigate(`/search?q=${newValue}`);
   };
 
-
   const fetchApiAllCategory = async () => {
     const result = await publicApi.getAllCategory();
     setCategoryList(result);
@@ -45,6 +44,9 @@ const HeaderStyle1 = (props) => {
   useEffect(() => {
     fetchApiAllCategory();
   }, [])
+  useEffect(() => {
+    
+  })
   return (
     <>
       <header id="main-header" >

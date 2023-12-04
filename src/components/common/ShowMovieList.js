@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import favoriteApi from "../../api/favorite/exportFavorite";
 
 const ShowMovieList = ({ movieList }) => {
     const navigate = useNavigate();
