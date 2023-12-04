@@ -187,7 +187,7 @@ const Home =()=>{
                 <div id="next" className="swiper-button swiper-button-next"><i className="ri-arrow-right-s-line"></i>
                 </div>
                 <Swiper
-                    slidesPerView={2}
+                    slidesPerView={1}
                     spaceBetween={0}
                     centeredSlides={true}
                     navigation={{
@@ -196,7 +196,6 @@ const Home =()=>{
                     }}
                     loop={true}
                     className="swiper-container">
-                    {}
                     {imdbSeries?.listTVSeries?.map((element) => (
                         <SwiperSlide key={element.id} className="slide slick-bg s-bg-1" >
 
