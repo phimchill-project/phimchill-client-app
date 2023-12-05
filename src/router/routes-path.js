@@ -9,13 +9,17 @@ const routes = {
     movie : "/movie",
     addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
-    watchTvShow : "/watch-tvshow/:name/:season_episode",
+    watchTvShow : "/watch-tvshow/:id",
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
     test :"/dashBoard",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
-    search : "/search"
+    search : "/search",
+    registerVip : "/register-membership",
+    bank : "/payment/",
+    error401: "/error401",
+    tvSeriesDetail : "/tvseries-detail/:name",
 }
 export default routes;

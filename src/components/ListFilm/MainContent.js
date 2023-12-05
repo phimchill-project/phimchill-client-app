@@ -1,9 +1,14 @@
 import React from "react";
-import {  Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-function MainContent({TvSeriesResponse}) {
+function MainContent({ TvSeriesResponse }) {
+    const navigate = useNavigate();
+    const redirectToDetailTvSeriesPage = (name) => {
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
+        navigate(`/tvseries-detail/${newName}`)
+    }
     return (
 
         TvSeriesResponse &&
@@ -17,8 +22,7 @@ function MainContent({TvSeriesResponse}) {
                         <div id="favorites-contens">
 
                             <Swiper
-                                slidesPerView={4}
-                                spaceBetween={20}
+                                slidesPerView={4} spaceBetween={20}
                                 navigation={{
                                     prevEl: '#prev1',
                                     nextEl: '#next1'
@@ -31,14 +35,12 @@ function MainContent({TvSeriesResponse}) {
                                     1400: { slidesPerView: 4 },
                                 }}
                                 className="favorites-slider list-inline  row p-0 m-0 iq-rtl-direction">
-
-
-                                {TvSeriesResponse.listTVSeries?.map((element) => (
-                                    <div key={element.id}>
+                                {TvSeriesResponse.listTVSeries?.map((element, index) => (
+                                    <div key={index}>
                                         <SwiperSlide className="slide-item">
                                             <div className="block-images1 block-images position-relative">
-                                                <div className="img-box" style={{ height: '215px', width:'370px' }}>
-                                                    <img src={element.image} className="img-fluid" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={element.name}/>
+                                                <div className="img-box" style={{ height: '215px', width: '370px' }}>
+                                                    <img src={element.image} className="img-fluid" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={element.name} />
                                                 </div>
                                                 <div className="block-description">
                                                     <h6 className="iq-title">{element.name}</h6>
@@ -52,7 +54,16 @@ function MainContent({TvSeriesResponse}) {
                                                             Play Now
                                                         </Link>
                                                     </div>
-
+                                                    <div className="hover-buttons">
+                                                        <Link role="button" className="btn btn-hover"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                redirectToDetailTvSeriesPage(element?.name)
+                                                            }}>
+                                                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                            More details
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                                 <div className="block-social-info">
                                                     <ul className="list-inline p-0 m-0 music-play-lists">

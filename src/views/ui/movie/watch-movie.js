@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { Link, json, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import ReactPlayer from 'react-player';
@@ -29,6 +29,7 @@ const WatchMovie = () => {
     const playerRef = useRef();
     const [timeToStart, setTimeToStart] =  useState(0);
     const findByName = async () => {
+        
         const data = await movieApi.findByName(name);
         if (data?.statusCode === 404) {
             navigate(routes.error404);
@@ -91,8 +92,12 @@ const WatchMovie = () => {
         localStorage.setItem("savedTime", e?.playedSeconds);
     }
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(!user?.member){
+            navigate("/error401");
+        }
         findByName();
-    }, []);
+    }, [name]);
     useEffect(() => {
     
             return () => {

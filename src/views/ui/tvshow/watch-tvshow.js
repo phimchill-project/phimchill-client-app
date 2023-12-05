@@ -9,21 +9,24 @@ import routes from "../../../router/routes-path";
 const WatchTvSeries = () => {
 
     let navigate = useNavigate();
-    let { name, season_episode } = useParams();
+    let { id } = useParams();
     const [seasonNumber, setSeasonNumber] = useState("");
     const [episodeNumber, setEpisodeNumber] = useState("");
     const [episode, setEpisode] = useState({});
     const [episodes, setEpisodes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     const [tvShow, setTvShow] = useState({});
 
     useEffect(() => {
-        findByName();
-    }, [ name, season_episode ]);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(!user?.member){
+            navigate("/error401");
+        }
+        findById();
+    }, [ id ]);
 
-    const findByName = async () => {
-        const data = await tvshowApi.findByName(name);
+    const findById = async () => {
+        const data = await tvshowApi.findById(id);
         if (data.statusCode === 404){
             navigate(routes.error404);
         }else if (data.statusCode === 200){
@@ -48,7 +51,7 @@ const WatchTvSeries = () => {
 
     return (
         <>
-            {isLoading ? (
+            {/* {isLoading ? (
                 <Loading></Loading>
             ) : (
                 <div>
@@ -108,7 +111,7 @@ const WatchTvSeries = () => {
                         </section>
                     </div>
                 </div>
-            )}
+            )} */}
         </>
 
     )

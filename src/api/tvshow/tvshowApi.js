@@ -25,3 +25,22 @@ export const findManyTvSeries = async (name) => {
     }
     return result?.data;
 };
+
+export const findById = async (id) => {
+    let token = localStorage.getItem("token");
+    let result = null;
+    try {
+        result = await axios.get(`${API}${id}`,
+            {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + token
+                }
+            })
+    } catch (e) {
+        console.log("Find Get TvSeries API error: " + e);
+        return null;
+    }
+    return result?.data;
+}
