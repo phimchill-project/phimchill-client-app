@@ -1,9 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import categoryApi from "../../api/category/exportCategoryApi";
 
 const ShowTvSeriesList = ({tvSeriesList}) => {
+    const { id } = useParams();
+
     const [list, setList] = useState(tvSeriesList);
+    const [sort, setSort] = useState();
+
+    const fetchTvSeriesByCategoryId = async () => {
+        let result = await categoryApi.getTvSeriesByCategoryId(id);
+
+        if(result == null){
+            setList([]);
+            return;
+        }
+
+        switch (sort) {
+            case "1": result.sort((a, b) => b.year - a.year); break;
+            case "2": result.sort((a, b) => a.year - b.year); break;
+            case "3": result.sort((a, b) => b.imdb - a.imdb); break;
+            case "4": result.sort((a, b) => a.imdb - b.imdb); break;
+            default: break;
+        }
+
+        setList(result);
+    }
+
+    useEffect(() => {
+        fetchTvSeriesByCategoryId();
+    }, [sort]);
 
     return (
         <>
@@ -11,6 +37,13 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">TV Series</h4>
+                        <select onChange={(event) => { setSort(event.target.value)}} className="form-control-sm mb-3 text-white" style={{ backgroundColor : "#141414"}}>
+                            <option defaultValue value="0">Popular</option>
+                            <option value="1">Year Down</option>
+                            <option value="2">Year Up</option>
+                            <option value="3">Imdb Down</option>
+                            <option value="4">Imdb Up</option>
+                        </select>
                     </div>
                     <ul className=" row list-inline  mb-0 iq-rtl-direction ">
                         { list?.map( (tvseries, index) => (
