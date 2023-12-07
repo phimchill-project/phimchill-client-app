@@ -1,6 +1,7 @@
-import {fetchCreateNewMoive, fetchNewTvSeries} from "./adminApi"
+import {fetchCreateNewMoive, fetchNewTvSeries, fetchUpdateTvSeries} from "./adminApi"
 const adminApi = {
       fetchCreateNewMoive,
-      fetchNewTvSeries
+      fetchNewTvSeries,
+      fetchUpdateTvSeries
 }
 export default adminApi;

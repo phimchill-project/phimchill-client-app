@@ -17,7 +17,8 @@ const routes = {
     favoriteTvSeries : "/favorite-tvseries",
     search : "/search",
 
-    addMovie : "/add-movie",
-    addTvSeries: "/add-tvSeries",
+    addMovie : "/admin/add-movie",
+    addTvSeries: "/admin/add-tvSeries",
+    updateTvSeries: '/admin/update-tvSeries/:name'
 }
 export default routes;

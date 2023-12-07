@@ -20,7 +20,22 @@ export const fetchCreateNewMoive = async (newMovie) => {
 export const fetchNewTvSeries = async (newFilm) => {
     let result = null;
     try {
-        result = await axios.post(`${ADMIN_API}tvSeries/new`,newFilm, {
+        result = await axios.post(`${ADMIN_API}tvSeries`,newFilm, {
+            headers: {
+                Accept: 'application/json',
+                "Content-Type": 'application/json',
+            },
+        });
+    } catch (e) {
+        console.log("Create Movie API error: " + e);
+    }
+    return result?.data;
+}
+
+export const fetchUpdateTvSeries = async (newFilm) => {
+    let result = null;
+    try {
+        result = await axios.put(`${ADMIN_API}tvSeries`,newFilm, {
             headers: {
                 Accept: 'application/json',
                 "Content-Type": 'application/json',

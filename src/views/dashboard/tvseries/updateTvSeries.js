@@ -1,29 +1,34 @@
-import React, {useEffect, useState} from 'react'
-import {Row, Col, Form, Button, Container} from 'react-bootstrap'
-import  Card from './../../../components/Card'
+import {useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import tvshowApi from "../../../api/tvshow/exportMovieApi";
+import routes from "../../../router/routes-path";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import Card from "../../../components/Card";
+import clsx from "clsx";
+import styles from "./AddTvSeries.module.scss";
 import publicApi from "../../../api/category/exportCategoryApi";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../../config/firebase";
-import styles from './AddTvSeries.module.scss';
-import clsx from "clsx";
-import adminApi from "../../../api/dashboard/exportAdminApi";
-import routes from "../../../router/routes-path";
-import {useNavigate} from "react-router-dom";
 import Loading from "../../../components/common/Loading";
+import adminApi from "../../../api/dashboard/exportAdminApi";
+import {fetchNewTvSeries, fetchUpdateTvSeries} from "../../../api/dashboard/adminApi";
 
-function AddTvSeries() {
+
+function UpdateTvSeries(){
 
     let navigate = useNavigate();
-
-    const [categoryList, setCategoryList] = useState([]);
+    const { name } = useParams();
 
     const [image, setImage] = useState();
+
+    const [categoryList, setCategoryList] = useState([]);
 
     const [isClick, setIsClick] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
 
     const [tvSeries, setTvSeries] = useState({
+        id: "",
         name: "",
         description: "",
         year: "",
@@ -52,16 +57,6 @@ function AddTvSeries() {
         categoryList: false,
     })
 
-    const fetchApiAllCategory = async () => {
-        const result = await publicApi.getAllCategory();
-        if (result !== null)
-            setCategoryList(result);
-            setIsLoading(false);
-    }
-    useEffect(() => {
-        fetchApiAllCategory();
-    }, [])
-
     const handleFieldChange = (fieldName, newValue) => {
         setTvSeries((prevState) => ({
             ...prevState,
@@ -75,6 +70,23 @@ function AddTvSeries() {
             [fieldName]: newValue,
         }));
     };
+
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
+
+    const fetchApiAllCategory = async () => {
+        const result = await publicApi.getAllCategory();
+        if (result !== null)
+            setCategoryList(result);
+    }
+
+    useEffect(() => {
+        findByName();
+        fetchApiAllCategory();
+    }, [name]);
 
     useEffect(() => {
         for (let field in focusTvSeries) {
@@ -91,25 +103,47 @@ function AddTvSeries() {
             setIsClick(false);
         }
         async function newTvSeries (tvSeries) {
-            const data =await adminApi.fetchNewTvSeries(tvSeries);
-            if (data.statusCode === 404){
+            const data =await adminApi.fetchUpdateTvSeries(tvSeries);
+            console.log(data)
+            if (data.statusCode === 400){
                 navigate(routes.error404);
             }
         }
     }, [errorTvSeries, tvSeries]);
 
-    const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
+    const findByName = async () => {
+        const data = await tvshowApi.findByName(name);
+        if (data.statusCode === 404){
+            navigate(routes.error404);
+        }else if (data.statusCode === 200){
+            if (data.data === null || data.data === undefined)
+                navigate(routes.error404);
+            setTvSeries(data.data);
+            setIsLoading(false);
         }
     };
+
+    const uploadImage = async () => {
+        if (image === null || image === '' || image === undefined) {
+            console.log('aaa')
+            checkValue('image')
+            return;
+        }
+        const imageRef = ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - Avatar`);
+        await uploadBytes(imageRef, image).then(() => {
+        })
+        await getDownloadURL(ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - Avatar`))
+            .then((url) => {
+                handleFieldChange('image', url);
+            })
+    }
 
     const checkValueAll = () => {
         for (let field in tvSeries) {
             if (field !== 'image')
                 checkValue(field);
         }
-    }
+    };
 
     const checkValue = (field) => {
         if (tvSeries[field] === null || tvSeries[field] === '' || tvSeries[field].length === 0 || tvSeries[field] === undefined) {
@@ -125,19 +159,9 @@ function AddTvSeries() {
         }
     };
 
-    const uploadImage = async () => {
-        if (image === null || image === '' || image === undefined) {
-            checkValue('image')
-            return;
-        }
-        const imageRef = ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - Avatar`);
-        await uploadBytes(imageRef, image).then(() => {
-        })
-        await getDownloadURL(ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - Avatar`))
-            .then((url) => {
-                handleFieldChange('image', url);
-            })
-    }
+    const isIdSelected = (id) => {
+        return tvSeries.categoryList.some(category => category.id === id);
+    };
 
     const handleCheckboxChange = (e, categoryId) => {
         const isChecked = e.target.checked;
@@ -206,8 +230,8 @@ function AddTvSeries() {
                                                                     <input
                                                                         className="form-check-input"
                                                                         type="checkbox"
-                                                                        defaultValue={category.id}
-                                                                        id="flexCheckDefault"
+                                                                        value={category.id}
+                                                                        checked={isIdSelected(category.id)}
                                                                         onChange={(e) => {handleCheckboxChange(e, category.id)}}
                                                                     />
                                                                     <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -262,4 +286,4 @@ function AddTvSeries() {
     )
 }
 
-export default AddTvSeries;
+export default UpdateTvSeries;
