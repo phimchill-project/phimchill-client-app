@@ -16,6 +16,7 @@ const routes = {
     test :"/dashBoard",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
-    search : "/search"
+    search : "/search",
+    movieHistory : "/movieHistory"
 }
 export default routes;

@@ -11,7 +11,7 @@ function MovieDetail() {
     const [movie, setMovie] = useState(null);
     useEffect(() => {
         findByName();
-    }, []);
+    }, [name]);
     const findByName = async () => {
         const data = await movieApi.findByName(name);
         setMovie(data?.data);
