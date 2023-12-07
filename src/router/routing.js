@@ -18,11 +18,12 @@ import FavoriteMovie from "../views/ui/movie/FavoriteMovie";
 import FavoriteTvSeries from "../views/ui/tvshow/FavoriteTvSeries";
 import MovieDetail from '../components/common/MovieDetail ';
 import Search from "../views/ui/search/search";
+import AdminMoviesList from "../views/dashboard/movie/AdminMoviesList";
+import UpdateMovies from "../views/dashboard/movie/UpdateMovies";
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
     { path: routes.register, component: Register, layout: null },
-
     { path: routes.userdetail, component: UserProfile, layout: Layouts.DefaultLayout },
     { path: routes.UserProfile, component: UserSetting, layout: Layouts.DefaultLayout },
     { path: routes.categoryMovie, component: CategoryMovie, layout: Layouts.DefaultLayout },
@@ -35,10 +36,14 @@ const publicRoutes = [
     { path: routes.tvSeries, component: ShowTvseries, layout: Layouts.DefaultLayout},
     { path: routes.movieDetail, component: MovieDetail, layout: Layouts.DefaultLayout},
     {path: routes.home,component:Home, layout: Layouts.DefaultLayout},
-
     { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
     { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
     { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
+    {path: routes.allMovies, component: AdminMoviesList, layout: Layouts.DashBoardLayout},
+    {path: routes.updateMovies, component: UpdateMovies, layout: Layouts.DashBoardLayout},
+    {path: routes.deleteMovies, component: UpdateMovies, layout: Layouts.DashBoardLayout},
+
+
 ]
 const privateRoutes = [
 ]

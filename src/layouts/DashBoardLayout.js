@@ -11,7 +11,7 @@ const DashBoardLayout = ({ children }) => {
         <>
             <div className="wrapper">
                 <SideBar />
-                <Header />
+                {/*<Header />*/}
                 {/* <div className="content-page" id="content-page"> */}
                     <div class="col main pt-5 mt-3" >
                         {children}

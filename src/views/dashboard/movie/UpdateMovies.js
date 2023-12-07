@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {Container, Row, Col, Form, Button} from 'react-bootstrap'
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Card from '../../../components/Card'
 import {storage} from '../../../config/firebase'
 import {getDownloadURL, ref, uploadBytes, uploadBytesResumable} from 'firebase/storage';
 import {v4} from 'uuid';
 import publicApi from '../../../api/category/exportCategoryApi';
 import adminApi from '../../../api/dashboard/exportAdminApi';
+import movieApi from "../../../api/movie/exportMovieApi";
+import routes from "../../../router/routes-path";
 
 
 const regexName = /^[a-zA-Z0-9]+$/;
 var categories = [];
 
-function AddMovie() {
+function UpdateMovies() {
+    const {movieName} = useParams();
+    const [movie, setMovie] = useState({});
     const [name, setName] = useState();
     const [image, setImage] = useState();
     const [description, setDescription] = useState();
@@ -28,6 +32,14 @@ function AddMovie() {
     const [isNameValid, setIsNameVadid] = useState(true);
     const [isVideoUploadSucces, setIsVideoUploadSuccess] = useState(false);
     const navigate = useNavigate();
+    console.log(movie)
+    const findByName = async () => {
+        const data = await movieApi.findByName(movieName);
+        if (data?.statusCode === 404) {
+            navigate(routes.error404);
+        }
+        setMovie(data?.data);
+    };
     const handleChangeName = (e) => {
         const value = e.target.value;
         setName(value);
@@ -110,7 +122,7 @@ function AddMovie() {
             categoryList: categories,
         }
         console.log(newMovie);
-        const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
+        const isCreateSuccess = await adminApi.fetchUpdateMovie(newMovie);
         if (isCreateSuccess) {
             alert("Create Movie Success");
             navigate("/add-movie")
@@ -127,7 +139,8 @@ function AddMovie() {
     }
     useEffect(() => {
         fetchApiAllCategory();
-    }, [])
+        findByName();
+    }, [name])
     return (
         <>
             <Container fluid>
@@ -146,7 +159,7 @@ function AddMovie() {
                                             <Row>
                                                 <Form.Group className="col-12">
                                                     Name
-                                                    <Form.Control type="text" placeholder="Title"
+                                                    <Form.Control type="text" placeholder="Title" defaultValue={movie?.name}
                                                                   onChange={handleChangeName}/>
                                                 </Form.Group>
                                                 {isNameValid ?
@@ -185,6 +198,7 @@ function AddMovie() {
                                                 <Form.Group className="col-12">
                                                     Description
                                                     <Form.Control as="textarea" id="text" name="text" rows="5"
+                                                                  defaultValue={movie?.description}
                                                                   placeholder="Description" onChange={(e) => {
                                                         setDescription(e.target.value)
                                                     }}></Form.Control>
@@ -207,25 +221,25 @@ function AddMovie() {
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: 10}}>
                                             Release Year
-                                            <Form.Control type="text" placeholder="Release year" onChange={(e) => {
+                                            <Form.Control type="text" placeholder="Release year" defaultValue={movie?.year} onChange={(e) => {
                                                 setYear(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
-                                            Duration
-                                            <Form.Control type="" placeholder="Movie Duration" onChange={(e) => {
+                                            Duration (minutes)
+                                            <Form.Control type="" placeholder="Movie Duration" defaultValue={movie?.duration} onChange={(e) => {
                                                 setDuration(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Imdb
-                                            <Form.Control type="" placeholder="Imdb Point" onChange={(e) => {
+                                            <Form.Control type="" placeholder="Imdb Point" defaultValue={movie?.imdb} onChange={(e) => {
                                                 setImdb(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Date Show
-                                            <input type="date" onChange={(e) => {
+                                            <input type="date" defaultValue={movie?.dateRelease} onChange={(e) => {
                                                 setDateShow(e.target.value);
                                             }}/>
                                         </Col>
@@ -245,4 +259,4 @@ function AddMovie() {
     )
 }
 
-export default AddMovie;
+export default UpdateMovies;

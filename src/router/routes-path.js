@@ -16,6 +16,9 @@ const routes = {
     test :"/dashBoard",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
-    search : "/search"
+    search : "/search",
+    allMovies:"/admin/movies",
+    updateMovies:"admin/movies/update/:movieName",
+    deleteMovies:"admin/movies"
 }
 export default routes;
