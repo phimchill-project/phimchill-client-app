@@ -20,6 +20,8 @@ import MovieDetail from '../components/common/MovieDetail ';
 import Search from "../views/ui/search/search";
 import AddTvSeries from "../views/dashboard/tvseries/addTvSeries";
 import UpdateTvSeries from "../views/dashboard/tvseries/updateTvSeries";
+import MovieHistoryList from '../views/ui/movie/MovieHistoryList';
+
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -40,6 +42,7 @@ const publicRoutes = [
     { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
     { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
     { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
+    { path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
 ]
 const privateRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },

@@ -1,3 +1,4 @@
+
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import categoryApi from "../../api/category/exportCategoryApi";
@@ -157,13 +158,14 @@ const ShowMovieList = ({ movieList, type }) => {
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
-                            ))}
-                        </ul> 
-                    : ""}
+                            </li>
+                        ))}
+                    </ul>
+                    : <p>No movies watched yet.</p>}
                 </div>
             </main>
         </>
-    )
+    );
 }
+
 export default ShowMovieList;
