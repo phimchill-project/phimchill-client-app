@@ -4,6 +4,8 @@ import movieApi from "../../../api/movie/exportMovieApi";
 import {useDebounce} from "../../../hook";
 import tvshowApi from "../../../api/tvshow/exportMovieApi";
 import FilmSwiper from "../../../components/filmSwiper";
+import ShowMovieList from "../../../components/common/ShowMovieList";
+import ShowTvSeriesList from "../../../components/common/ShowTvSeriesList";
 
 function Search(){
     const { search } = useLocation();
@@ -12,8 +14,8 @@ function Search(){
 
     const [searchValue, setSearchValue] = useState('');
 
-    const [movies, setMovies] = useState();
-    const [tvSeries, setTvSeries] = useState();
+    const [movies, setMovies] = useState([]);
+    const [tvSeries, setTvSeries] = useState([]);
 
     const debouncedValue = useDebounce(searchValue, 500);
 
@@ -27,12 +29,15 @@ function Search(){
 
         const findMovies = async () => {
             const data = await movieApi.findMoviesByName(debouncedValue);
+            if (data?.data === null)
+                setMovies([])
             setMovies(data?.data);
         };
 
         const findManyTvSeries = async () => {
             const data = await tvshowApi.findManyTvSeries(debouncedValue);
-            console.log(data)
+            if (data?.data === null)
+                setTvSeries([])
             setTvSeries(data?.data);
         };
 
@@ -42,8 +47,8 @@ function Search(){
 
     return (
         <div className="main-content" >
-            {movies != null ? <FilmSwiper flims={movies} name={"Movies"} /> : ""}
-            {tvSeries != null ? <FilmSwiper flims={tvSeries} name={"TvSeries"} /> : ""}
+            {movies && movies.length > 4 ? <FilmSwiper flims={movies} name={"Movies"} /> : <ShowMovieList movieList={movies} type={"search"} />}
+            {tvSeries && tvSeries.length > 4 ? <FilmSwiper flims={tvSeries} name={"TvSeries"} /> : <ShowTvSeriesList tvSeriesList={tvSeries} type={"search"} />}
         </div>
     )
 }

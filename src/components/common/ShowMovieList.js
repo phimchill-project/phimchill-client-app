@@ -1,72 +1,20 @@
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from "react-router-dom";
-
-function MovieHistoryList() {
-    const [movieHistoryList, setMovieHistoryList] = useState([]);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        fetchMovieHistoryList();
-    }, []);
-
-    const fetchMovieHistoryList = async () => {
-        let token = localStorage.getItem('token');
-        try {
-            const response = await axios.get("http://localhost:8080/api/movies/history/watched-movies", {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    Authorization: "Bearer " + token
-                }
-            });
-
-            if (response.data && Array.isArray(response.data.data)) {
-                setMovieHistoryList(response.data.data);
-            } else {
-                console.error("Expected an array in the response, but received:", response.data);
-            }
-        } catch (e) {
-            console.error("Error fetching movie history list:", e);
-        }
-    };
-
-    const redirectToMovieDetailPage = (movieName) => {
-        let newName = movieName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(/ /g,"-");
-        navigate(`/movie-detail/${newName}`);
-    };
-
-    return (
-        <main id="main" className="site-main">
-            <div className="container-fluid">
-                <div className="iq-main-header d-flex align-items-center justify-content-between">
-                    <h4 className="main-title">Movie History</h4>
-                </div>
-                {movieHistoryList.length > 0 ?
-                    <ul className="row list-inline mb-0">
-                        {movieHistoryList.map((movie, index) => (
-                            <li className="slide-item col-lg-3 mb-4" key={index}>
-                                <div className="block-images position-relative">
-                                    <div className="img-box">
-                                        <img src={movie.movieImg} className="img-fluid" alt={movie.movieName} />
-                                    </div>
-                                    <div className="block-description">
-                                        <h6 className="iq-title">
-                                            <Link to="#" onClick={() => redirectToMovieDetailPage(movie.movieName)}>{movie.movieName}</Link>
-                                        </h6>
-                                        <div className="movie-time d-flex align-items-center my-2">
-                                            <span className="text-white">{movie.duration} hour(s)</span>
-=======
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import categoryApi from "../../api/category/exportCategoryApi";
+import search from "../../views/ui/search/search";
 
-const ShowMovieList = ({ movieList }) => {
+const ShowMovieList = ({ movieList, type }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [list, setList] = useState(movieList);
+    const [list, setList] = useState();
+    const [typeChildren, setTypeChildren] = useState();
     const [sort, setSort] = useState();
+
+    useEffect(() => {
+        setList(movieList)
+        setTypeChildren(type);
+    }, [movieList, type]);
 
     const fetchMoviesByCategoryId = async () => {
         let result = await categoryApi.getMoviesByCategoryId(id);
@@ -97,7 +45,8 @@ const ShowMovieList = ({ movieList }) => {
     }
 
     useEffect(() => {
-        fetchMoviesByCategoryId();
+        if (typeChildren !== "search" && type !== "search")
+            fetchMoviesByCategoryId();
     }, [sort]);
 
     return (
@@ -106,6 +55,7 @@ const ShowMovieList = ({ movieList }) => {
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">Movies</h4>
+                        {typeChildren !== "search" && type !== "search" ?
                         <select onChange={(event) => { setSort(event.target.value)}} className="form-control-sm mb-3 text-white" style={{ backgroundColor : "#141414"}}>
                             <option defaultValue value="0">Popular</option>
                             <option value="1">Year Down</option>
@@ -115,6 +65,8 @@ const ShowMovieList = ({ movieList }) => {
                             <option value="5">Imdb Down</option>
                             <option value="6">Imdb Up</option>
                         </select>
+                            : <Link className="iq-view-all" to="/movie-category">View All</Link>
+                        }
                     </div>
                     {list != null ?
                         <ul className=" row list-inline  mb-0 iq-rtl-direction ">
@@ -206,14 +158,14 @@ const ShowMovieList = ({ movieList }) => {
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
                             </li>
                         ))}
                     </ul>
                     : <p>No movies watched yet.</p>}
-            </div>
-        </main>
+                </div>
+            </main>
+        </>
     );
 }
 
-export default MovieHistoryList;
+export default ShowMovieList;

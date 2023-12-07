@@ -18,7 +18,10 @@ import FavoriteMovie from "../views/ui/movie/FavoriteMovie";
 import FavoriteTvSeries from "../views/ui/tvshow/FavoriteTvSeries";
 import MovieDetail from '../components/common/MovieDetail ';
 import Search from "../views/ui/search/search";
+import AddTvSeries from "../views/dashboard/tvseries/addTvSeries";
+import UpdateTvSeries from "../views/dashboard/tvseries/updateTvSeries";
 import MovieHistoryList from '../views/ui/movie/MovieHistoryList';
+
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -29,7 +32,6 @@ const publicRoutes = [
     { path: routes.categoryMovie, component: CategoryMovie, layout: Layouts.DefaultLayout },
     { path: routes.categoryTvSeries, component: CategoryTvSeries, layout: Layouts.DefaultLayout },
     { path: routes.movie, component: MoviePage, layout: Layouts.DefaultLayout },
-    { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.watchMovie, component: WatchMovie, layout: Layouts.DefaultLayout},
     { path: routes.watchTvShow, component: WatchTvSeries, layout: Layouts.DefaultLayout},
     { path: routes.error404, component: Error404, layout: null},
@@ -43,5 +45,8 @@ const publicRoutes = [
     { path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
 ]
 const privateRoutes = [
+    { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
+    { path: routes.addTvSeries, component : AddTvSeries, layout : Layouts.DashBoardLayout },
+    { path: routes.updateTvSeries, component : UpdateTvSeries, layout : Layouts.DashBoardLayout },
 ]
 export { publicRoutes, privateRoutes }

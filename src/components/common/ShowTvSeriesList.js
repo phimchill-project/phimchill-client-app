@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import categoryApi from "../../api/category/exportCategoryApi";
 
-const ShowTvSeriesList = ({tvSeriesList}) => {
+const ShowTvSeriesList = ({tvSeriesList, type}) => {
     const { id } = useParams();
 
-    const [list, setList] = useState(tvSeriesList);
+    const [list, setList] = useState();
+    const [typeChildren, setTypeChildren] = useState();
+
     const [sort, setSort] = useState();
+
+    useEffect(() => {
+        setList(tvSeriesList)
+        setTypeChildren(type);
+    }, [tvSeriesList, type]);
 
     const fetchTvSeriesByCategoryId = async () => {
         let result = await categoryApi.getTvSeriesByCategoryId(id);
@@ -28,7 +35,8 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
     }
 
     useEffect(() => {
-        fetchTvSeriesByCategoryId();
+        if (typeChildren !== "search" && type !== "search")
+            fetchTvSeriesByCategoryId();
     }, [sort]);
 
     return (
@@ -37,6 +45,7 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">TV Series</h4>
+                        {typeChildren !== "search" && type !== "search" ?
                         <select onChange={(event) => { setSort(event.target.value)}} className="form-control-sm mb-3 text-white" style={{ backgroundColor : "#141414"}}>
                             <option defaultValue value="0">Popular</option>
                             <option value="1">Year Down</option>
@@ -44,6 +53,8 @@ const ShowTvSeriesList = ({tvSeriesList}) => {
                             <option value="3">Imdb Down</option>
                             <option value="4">Imdb Up</option>
                         </select>
+                            : <Link className="iq-view-all" to="/movie-category">View All</Link>
+                        }
                     </div>
                     <ul className=" row list-inline  mb-0 iq-rtl-direction ">
                         { list?.map( (tvseries, index) => (
