@@ -2,11 +2,10 @@ import React from "react";
 import {  Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 function MainContent({TvSeriesResponse}) {
-    console.log("ffffffffffffff"+TvSeriesResponse)
     return (
+
         TvSeriesResponse &&
         <div style={{ height: '300px', overflow: 'hidden' }}>
             <Container fluid>
@@ -34,11 +33,11 @@ function MainContent({TvSeriesResponse}) {
                                 className="favorites-slider list-inline  row p-0 m-0 iq-rtl-direction">
 
 
-                                {TvSeriesResponse.listTVSeries.map((element) => (
+                                {TvSeriesResponse.listTVSeries?.map((element) => (
                                     <div key={element.id}>
                                         <SwiperSlide className="slide-item">
                                             <div className="block-images1 block-images position-relative">
-                                                <div className="img-box">
+                                                <div className="img-box" style={{ height: '215px', width:'370px' }}>
                                                     <img src={element.image} className="img-fluid" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt={element.name}/>
                                                 </div>
                                                 <div className="block-description">
@@ -48,10 +47,12 @@ function MainContent({TvSeriesResponse}) {
                                                         <span className="text-white">2 Seasons</span>
                                                     </div>
                                                     <div className="hover-buttons">
-
-                                                        Play Now
-
+                                                        <Link to={`/watch-tvshow/${element.name}/1`} role="button" className="btn btn-hover">
+                                                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                            Play Now
+                                                        </Link>
                                                     </div>
+
                                                 </div>
                                                 <div className="block-social-info">
                                                     <ul className="list-inline p-0 m-0 music-play-lists">

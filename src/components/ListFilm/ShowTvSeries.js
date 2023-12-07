@@ -27,16 +27,14 @@ const ShowTvseries = () => {
         dispatch(getTvSeriesByNewest());
     }, []);
 
-    //
-    console.log(newestList)
-    //
 
     return(
         <>
             <section id="tvshow" className="iq-main-slider p-0">
+
                 <div id="prev" className="swiper-button swiper-button-prev"><i className= "ri-arrow-left-s-line"></i></div>
                 <div id="next" className="swiper-button swiper-button-next"><i className= "ri-arrow-right-s-line"></i></div>
-                <div style={{ height: '240px', overflow: 'hidden' }}>
+                <div style={{ height: '550px', overflow: 'hidden' }}>
                     <Swiper
                         slidesPerView={2}
 
@@ -50,8 +48,8 @@ const ShowTvseries = () => {
                         className="iq-rtl-direction">
                         { imdbList &&  imdbList.listTVSeries.map((tvSerires) => (
                             <SwiperSlide key={tvSerires.id}>
-                                <div className="shows-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
-                                    <img src={tvSerires.image} className="w-100 img-fluid" alt=""/>
+                                <div className="shows-img" style={{ height: '380px',width:'675px', objectFit: 'cover' }}>
+                                    <img src={tvSerires.image} className="w-100 img-fluid" alt="" style={{ height: '380px',width:'675px', overflow: 'hidden' }}/>
                                     <div className="shows-content">
                                         <h4 className="text-white mb-1">{tvSerires.name}</h4>
                                         <div className="movie-time d-flex align-items-center">

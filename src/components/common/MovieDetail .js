@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import movieApi from "../../api/movie/exportMovieApi";
 import logo from "../../assets/ui/images/logo.png"
-import ShowComments from "../../components/common/Comments"
+import ShowComments from "./Comments"
 
 function MovieDetail() {
     let navigate = useNavigate();
@@ -17,7 +17,7 @@ function MovieDetail() {
         setMovie(data?.data);
     };
     const redirectToWathchingMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/watch-movie/${newName}`)
     }
     const [toggler3, setToggler3] = useState(false);

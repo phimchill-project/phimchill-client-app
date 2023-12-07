@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, json, useNavigate, useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-
+import ReactPlayer from 'react-player';
 import Start from "../../../components/movie/Start";
 import trending from '../../../assets/ui/images/trending/trending-label.png'
 import movie1 from '../../../assets/ui/images/movies/06.jpg'
@@ -19,18 +19,15 @@ import upcoming5 from '../../../assets/ui/images/upcoming/05.jpg'
 import movieApi from "../../../api/movie/exportMovieApi";
 import Loading from "../../../components/common/Loading";
 import routes from "../../../router/routes-path";
+import axios from 'axios';
 
 const WatchMovie = () => {
     let navigate = useNavigate();
     let { name } = useParams();
     const [isLoading, setIsLoading] = useState(true);
-
-    const [movie, setMovie] = useState({});
-
-    useEffect(() => {
-        findByName();
-    }, []);
-
+    const [movie, setMovie] = useState(null);
+    const playerRef = useRef();
+    const [timeToStart, setTimeToStart] =  useState(0);
     const findByName = async () => {
         const data = await movieApi.findByName(name);
         if (data?.statusCode === 404) {
@@ -38,30 +35,96 @@ const WatchMovie = () => {
         } else if (data?.statusCode === 200) {
             setIsLoading(false);
         }
+        localStorage.setItem("movie", JSON.stringify(data?.data))
         setMovie(data);
+        console.log(data);
+        fetchDuration();
     };
-    console.log(movie);
+    const onReady = React.useCallback(() => {
+        playerRef?.current.seekTo(timeToStart, 'seconds');
+    });
+    const fetchDuration = async () => {
+        let movieSaved = JSON.parse(localStorage.getItem("movie"));
+        let token = localStorage.getItem("token");
+        let result = null;
+        try {
+            result = await axios.get(`http://localhost:8080/api/movies/${movieSaved?.id}/duration`,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+        } catch (e) {
+            console.log("Find Post Movie Comment API error: " + e);
+        }
+        console.log(result);
+        if(result?.data == null){
+            setTimeToStart(0);
+        }else{
+            setTimeToStart(result?.data.data.duration)
+        }
+    }
+    const fetchSaveCurrentTimeVideo = async () => {
+        let token = localStorage.getItem("token");
+        let movieSaved = JSON.parse(localStorage.getItem("movie"));
+        let savedTime = JSON.parse(localStorage.getItem("savedTime"));
+        const movieHistoryRequest = {
+            movieID: movieSaved?.id,
+            duration: savedTime
+        }
+        try {
+            await axios.put('http://localhost:8080/api/movies/history/add', movieHistoryRequest,{
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (e) {
+            console.log("Find books API error: " + e);
+        }
+    }
+    const handleProgress = (e) => {
+        localStorage.setItem("savedTime", e?.playedSeconds);
+    }
+    useEffect(() => {
+        findByName();
+    }, []);
+    useEffect(() => {
+        if(movie != null){
+            return () => {
+                fetchSaveCurrentTimeVideo();
+            }
+        }
+    });
     return (
         <>
             {isLoading ? (
                 <Loading></Loading>
             ) : (
                 <>
-                    <div className="video-container iq-main-slider">
-                        <video className="video d-block" controls loop >
-                            <source src={movie.data.url}/>
-                        </video>
-                        {/* <div>
-                        <ReactPlayer
-                            url={movie.data.url}
-                            width="640px"
-                            height="360px"
-                            playing={true}
-                            controls={true}
-                           
-                        />
-                        </div> */}
-                        
+                    <div className="video-container iq-main-slider" style={{ width: "100%", height: "100%" }}>
+                        {/* <video className="video d-block" controls loop id='movie' ref={playerRef} onPlay={onReady}>
+                            <source src={movie?.data.url} />
+                        </video> */}
+                        <div>
+                            <ReactPlayer
+                                id='movie'
+                                ref={playerRef}
+                                url={movie.data.url}
+                                width="100%"
+                                height="100%"
+                                playing
+                                controls={true}
+                                className="video d-block"
+                                style={{ marginTop: -10 }}
+                                onStart={onReady}
+                                onProgress={handleProgress}
+                            />
+                        </div>
+
                     </div>
                     <div className="main-content movi">
                         <section className="movie-detail container-fluid">

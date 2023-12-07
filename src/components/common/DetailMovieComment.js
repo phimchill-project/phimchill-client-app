@@ -4,21 +4,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faCommentDots } from '@fortawesome/free-solid-svg-icons'
 import commentApi from "../../api/comment/exportCommentApi";
 
-function DetailMovieComment({commentDetail}) {
+function DetailMovieComment({ commentDetail }) {
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      const [user, setUser] = useState(currentUser);
       const [comment, setComment] = useState(commentDetail);
       const [subCommnet, setSubComment] = useState("")
       const [iDTagged, setIDTagged] = useState([]);
       const [commetID, setCommentID] = useState();
       const [isShowTextAreaSubCommemt, setIsShowTextAreaSubCommemt] = useState(false);
-      const [isPostSuccess, setIsPostSuccess] = useState(false);
       const [isLiked, setIsLiked] = useState(false);
-      const handleLike = (e) => {
-          setIsLiked(!isLiked);
-          if (isLiked) {
-              document.getElementById("like-button").style.color = "#d7c4b3";
-          } else {
-              document.getElementById("like-button").style.color = "#e50914";
-          }
+      const handleLikeComment = async (id) => {
+            console.log(id);
+            await commentApi.likeMovieComment(id);
+            fetchAllSubCommentsByCommentId();
+      }
+      const handleUnLikeComment = async (id) => {
+            console.log(id);
+            await commentApi.unLikeMovieComment(id);
+            fetchAllSubCommentsByCommentId();
+      }
+      const handleLikeSubComment = async (id) => {
+            console.log(id);
+            await commentApi.likeMovieSubComment(id);
+            fetchAllSubCommentsByCommentId();
+      }
+      const handleUnLikeSubComment = async (id) => {
+            console.log(id);
+            await commentApi.unLikeMovieSubComment(id);
+            fetchAllSubCommentsByCommentId();
       }
       const handleCommnet = (id, commentID) => {
             setIsShowTextAreaSubCommemt(!isShowTextAreaSubCommemt);
@@ -28,7 +41,6 @@ function DetailMovieComment({commentDetail}) {
       const handleChangeSubComment = (e) => {
             setSubComment(e.target.value);
       }
-
       const postSubComment = async () => {
             const request = {
                   comment: subCommnet,
@@ -36,21 +48,22 @@ function DetailMovieComment({commentDetail}) {
                   userID: iDTagged
             };
             const result = await commentApi.postSubCommet(request, commetID)
-            if(result == null){
+            if (result == null) {
                   alert("Post comment fail!!!");
-            }else{
+            } else {
                   setSubComment("");
-                  setIsPostSuccess(!isPostSuccess);
                   fetchAllSubCommentsByCommentId();
+                  setIsShowTextAreaSubCommemt(!isShowTextAreaSubCommemt);
             }
-            
       }
       const fetchAllSubCommentsByCommentId = async () => {
             const result = await commentApi.getAllSubCommentsByCommentId(comment?.id);
             console.log(result);
-            setComment(result);
-      } 
-      // console.log(comment);
+            setComment(result?.data);
+      }
+      // useEffect(() => {
+      //       fetchAllSubCommentsByCommentId();
+      // },[isPostSuccess])
       return (
             <div>
                   <div className="d-flex flex-start" style={{ marginTop: 19 }}>
@@ -73,9 +86,19 @@ function DetailMovieComment({commentDetail}) {
                                           {comment?.comment}
                                     </p>
                                     <div className="small d-flex justify-content-start" style={{ marginTop: 10 }}>
-                                          <div className="d-flex align-items-center me-3" id="like-button" onClick={handleLike}>
-                                                {comment?.subCommentDtoList.size()}<FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />
-                                          </div>
+                                          {comment?.listUserIdLiked.includes(user?.id) ?
+                                                <div className="d-flex align-items-center me-3" id="like-button" style={{color: "#e50914"}} onClick={() => 
+                                                      handleUnLikeComment(comment?.id)
+                                                }>
+                                                      <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25, marginRight: 10 }} />
+                                                      <span> {comment?.totalLike} </span>
+                                                </div> :
+                                                <div className="d-flex align-items-center me-3" id="like-button" style={{color:  "#d7c4b3"}} onClick={() => 
+                                                      handleLikeComment(comment?.id)
+                                                } >
+                                                      <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25, marginRight: 10}} />
+                                                      <span> {comment?.totalLike} </span>
+                                                </div>}
                                           <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(comment?.userDto.id, comment?.id)}>
                                                 <FontAwesomeIcon icon={faCommentDots} size="lg" style={{ height: 25, marginLeft: 20 }} />
                                           </div>
@@ -105,9 +128,18 @@ function DetailMovieComment({commentDetail}) {
                                                       </p>
                                                 </div>
                                                 <div className="small d-flex justify-content-start" style={{ marginTop: 10 }}>
-                                                      <div className="d-flex align-items-center me-3" id="like-button" onClick={handleLike}>
-                                                            <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25 }} />
-                                                      </div>
+                                                      { subComment?.listUserIdLiked.includes(user?.id) ?
+                                                            <div className="d-flex align-items-center me-3" id="like-button" style={{color : "#e50914"}} onClick={() => handleUnLikeSubComment(subComment?.id)}>
+                                                                  <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25, marginRight: 10 }} />
+                                                                  <span> {subComment?.totalLike} </span>
+                                                            </div> :
+                                                            <div className="d-flex align-items-center me-3" id="like-button" style={{color : "#d7c4b3"}} onClick={() => {
+                                                                  handleLikeSubComment(subComment?.id)
+                                                            }}>
+                                                                  <FontAwesomeIcon icon={faThumbsUp} size="lg" style={{ height: 25, marginRight: 10 }} />
+                                                                  <span> {subComment?.totalLike} </span>
+                                                            </div>
+                                                      }
                                                       <div className="d-flex align-items-center me-3" id="comment-button" onClick={() => handleCommnet(subComment?.userDtoComment.id, comment?.id)}>
                                                             <FontAwesomeIcon icon={faCommentDots} size="lg" style={{ height: 25, marginLeft: 20 }} />
                                                       </div>

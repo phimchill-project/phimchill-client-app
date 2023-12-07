@@ -1,125 +1,73 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
-const ShowMovieList = ({ movieList }) => {
+function MovieHistoryList() {
+    const [movieHistoryList, setMovieHistoryList] = useState([]);
     const navigate = useNavigate();
-    const [list, setList] = useState(movieList);
-    const redirectToWathchingMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
-        navigate(`/watch-movie/${newName}`)
-    }
-    const redirectToDetailMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
-        navigate(`/movie-detail/${newName}`)
-    }
 
-    // console.log(list);
+    useEffect(() => {
+        fetchMovieHistoryList();
+    }, []);
+
+    const fetchMovieHistoryList = async () => {
+        let token = localStorage.getItem('token');
+        try {
+            const response = await axios.get("http://localhost:8080/api/movies/history/watched-movies", {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer " + token
+                }
+            });
+
+            if (response.data && Array.isArray(response.data.data)) {
+                setMovieHistoryList(response.data.data);
+            } else {
+                console.error("Expected an array in the response, but received:", response.data);
+            }
+        } catch (e) {
+            console.error("Error fetching movie history list:", e);
+        }
+    };
+
+    const redirectToMovieDetailPage = (movieName) => {
+        let newName = movieName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(/ /g,"-");
+        navigate(`/movie-detail/${newName}`);
+    };
+
     return (
-        <>
-
-            <main id="main" className="site-main">
-                <div className="container-fluid">
-                    <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
-                        <h4 className="main-title">Movies</h4>
-                    </div>
-                    {list != null ?
-                        <ul className=" row list-inline  mb-0 iq-rtl-direction ">
-                            {list?.map((movie, index) => (
-                                <li className="slide-item col-lg-3 mb-4" key={index}>
-                                    <div className="block-images position-relative">
-                                        <div className="img-box">
-                                            <img
-                                                src={movie.image}
-                                                className="img-fluid"
-                                                alt=""
-                                                loading="lazy"
-                                            />
-                                        </div>
-                                        <div className="block-description">
-                                            <h6 className="iq-title">
-                                                <Link to={`/movie/${movie.id}`}>{movie.name}</Link>
-                                            </h6>
-                                            <div className="movie-time d-flex align-items-center my-2">
-                                                <span className="text-white">{movie.duration} minutes</span>
-                                            </div>
-                                            <div className="hover-buttons">
-                                                <Link role="button" className="btn btn-hover" onClick={(e) => {
-                                                    e.preventDefault();
-                                                    redirectToWathchingMoviePage(movie?.name)
-                                                }}>
-                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                    Play Now
-                                                </Link>
-                                            </div>
-                                            <div className="hover-buttons">
-                                                <Link role="button" className="btn btn-hover" onClick={(e) => {
-                                                    e.preventDefault();
-                                                    redirectToDetailMoviePage(movie?.name)
-                                                }}>
-                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
-                                                    More details
-                                                </Link>
-                                            </div>
-                                        </div>
-                                        <div className="block-social-info">
-                                            <ul className="list-inline p-0 m-0 music-play-lists">
-                                                <li className="share">
-                                                    <span>
-                                                        <i className="ri-share-fill" />n
-                                                    </span>
-                                                    <div className="share-box">
-                                                        <div className="d-flex align-items-center">
-                                                            <Link
-                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="share-ico"
-                                                                tabIndex={0}
-                                                            >
-                                                                <i className="ri-facebook-fill" />
-                                                            </Link>
-                                                            <Link
-                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="share-ico"
-                                                                tabIndex={0}
-                                                            >
-                                                                <i className="ri-twitter-fill" />
-                                                            </Link>
-                                                            <Link
-                                                                to="#"
-                                                                data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
-                                                                className="share-ico iq-copy-link"
-                                                                tabIndex={0}
-                                                            >
-                                                                <i className="ri-links-fill" />
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <span>
-                                                        <i className="ri-heart-fill" />
-                                                    </span>
-                                                    <span className="count-box">2+</span>
-                                                </li>
-                                                <li>
-                                                    <span>
-                                                        <i className="ri-add-line" />
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul> 
-                    : ""}
+        <main id="main" className="site-main">
+            <div className="container-fluid">
+                <div className="iq-main-header d-flex align-items-center justify-content-between">
+                    <h4 className="main-title">Movie History</h4>
                 </div>
-            </main> :
-        </>
-    )
+                {movieHistoryList.length > 0 ?
+                    <ul className="row list-inline mb-0">
+                        {movieHistoryList.map((movie, index) => (
+                            <li className="slide-item col-lg-3 mb-4" key={index}>
+                                <div className="block-images position-relative">
+                                    <div className="img-box">
+                                        <img src={movie.movieImg} className="img-fluid" alt={movie.movieName} />
+                                    </div>
+                                    <div className="block-description">
+                                        <h6 className="iq-title">
+                                            <Link to="#" onClick={() => redirectToMovieDetailPage(movie.movieName)}>{movie.movieName}</Link>
+                                        </h6>
+                                        <div className="movie-time d-flex align-items-center my-2">
+                                            <span className="text-white">{movie.duration} hour(s)</span>
+                                        </div>
+                                        {/* Additional buttons and actions */}
+                                    </div>
+                                    {/* Social info and other details, if needed */}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    : <p>No movies watched yet.</p>}
+            </div>
+        </main>
+    );
 }
-export default ShowMovieList;
+
+export default MovieHistoryList;
