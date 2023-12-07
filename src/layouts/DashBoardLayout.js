@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import SideBar from '../components/partials/dashboard/SideBar';
+import React from 'react';
 import Footer from '../components/partials/dashboard/Footer';
 import Header from '../components/partials/dashboard/Header';
-
 
 const DashBoardLayout = ({ children }) => {
 
     return (
         <>
             <div className="wrapper">
+<<<<<<< HEAD
                 <SideBar />
                 {/*<Header />*/}
                 {/* <div className="content-page" id="content-page"> */}
@@ -17,11 +15,16 @@ const DashBoardLayout = ({ children }) => {
                         {children}
                     </div>
                 {/* </div> */}
+=======
+                <Header />
+                <div className="col main pt-5 mt-3" >
+                    {children}
+                </div>
+>>>>>>> 687a795232bdf880cade65b0a58f36616cb3cd61
             </div>
             <Footer />
         </>
     )
-
 }
 
 export default DashBoardLayout; 

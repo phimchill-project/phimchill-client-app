@@ -1,10 +1,40 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
-const ShowMovieList = ({ movieList }) => {
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import categoryApi from "../../api/category/exportCategoryApi";
+import search from "../../views/ui/search/search";
+
+const ShowMovieList = ({ movieList, type }) => {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const [list, setList] = useState(movieList);
+    const [list, setList] = useState();
+    const [typeChildren, setTypeChildren] = useState();
+    const [sort, setSort] = useState();
+
+    useEffect(() => {
+        setList(movieList)
+        setTypeChildren(type);
+    }, [movieList, type]);
+
+    const fetchMoviesByCategoryId = async () => {
+        let result = await categoryApi.getMoviesByCategoryId(id);
+        if (result == null) {
+            return;
+        }
+
+        switch (sort) {
+            case "1": result.sort((a, b) => b.year - a.year); break;
+            case "2": result.sort((a, b) => a.year - b.year); break;
+            case "3": result.sort((a, b) => b.duration - a.duration); break;
+            case "4": result.sort((a, b) => a.duration - b.duration); break;
+            case "5": result.sort((a, b) => b.imdb - a.imdb); break;
+            case "6": result.sort((a, b) => a.imdb - b.imdb); break;
+            default: break;
+        }
+
+        setList(result);
+    }
+
     const redirectToWathchingMoviePage = (name) => {
         let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/watch-movie/${newName}`)
@@ -13,12 +43,30 @@ const ShowMovieList = ({ movieList }) => {
         let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/movie-detail/${newName}`)
     }
+
+    useEffect(() => {
+        if (typeChildren !== "search" && type !== "search")
+            fetchMoviesByCategoryId();
+    }, [sort]);
+
     return (
         <>
             <main id="main" className="site-main">
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">Movies</h4>
+                        {typeChildren !== "search" && type !== "search" ?
+                        <select onChange={(event) => { setSort(event.target.value)}} className="form-control-sm mb-3 text-white" style={{ backgroundColor : "#141414"}}>
+                            <option defaultValue value="0">Popular</option>
+                            <option value="1">Year Down</option>
+                            <option value="2">Year Up</option>
+                            <option value="3">Duration Down</option>
+                            <option value="4">Duration Up</option>
+                            <option value="5">Imdb Down</option>
+                            <option value="6">Imdb Up</option>
+                        </select>
+                            : <Link className="iq-view-all" to="/movie-category">View All</Link>
+                        }
                     </div>
                     {list != null ?
                         <ul className=" row list-inline  mb-0 iq-rtl-direction ">
@@ -110,13 +158,14 @@ const ShowMovieList = ({ movieList }) => {
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
-                            ))}
-                        </ul> 
-                    : ""}
+                            </li>
+                        ))}
+                    </ul>
+                    : <p>No movies watched yet.</p>}
                 </div>
             </main>
         </>
-    )
+    );
 }
+
 export default ShowMovieList;

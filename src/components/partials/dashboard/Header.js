@@ -12,18 +12,14 @@ import {
 } from "react-bootstrap";
 import Card from '../../Card'
 import CustomToggle from '../../dropdowns'
-import user1 from '../../../assets/dashboard/images/dashboard/01.jpg'
-import user01 from '../../../assets/dashboard/images/dashboard/01.jpg'
-import user02 from '../../../assets/dashboard/images/dashboard/02.jpg'
-import user03 from '../../../assets/dashboard/images/dashboard/03.jpg'
-import user04 from '../../../assets/dashboard/images/dashboard/04.jpg'
-import user05 from '../../../assets/dashboard/images/dashboard/05.jpg'
+
 //img
 import logo from '../../../assets/ui/images/logo.png'
 import thumb1 from "../../../assets/ui/images/notify/thumb-1.jpg";
 import thumb2 from "../../../assets/ui/images/notify/thumb-2.jpg";
 import thumb3 from "../../../assets/ui/images/notify/thumb-3.jpg";
 import user from "../../../assets/ui/images/user/user.jpg";
+import routes from "../../../router/routes-path";
 function Header() {
       const minisidbar = () => {
             document.body.classList.toggle('sidebar-main')
@@ -245,72 +241,16 @@ function Header() {
                                                                 <li className="menu-item">
                                                                       <Link to="/">Home</Link>
                                                                 </li>
-                                                                <li className="menu-item ">
-                                                                      <Link to="/movie">Movies</Link>
-                                                                      <ul className="sub-menu" style={{ width: "500px" }}>
-                                                                            <div className="col-12 row">
-                                                                                  {/* {categoryList?.map((category, index) => (
-                                                                                    <li className="menu-item col-5" key={index}>
-                                                                                          <Link to={`/category/${category?.id}/show-movies`}>{category?.name}</Link>
-                                                                                    </li>
-                                                                              ))} */}
-                                                                            </div>
-                                                                      </ul>
-                                                                </li>
                                                                 <li className="menu-item">
-                                                                      <Link to="/tvseries">Tv Show</Link>
-                                                                      <ul className="sub-menu" style={{ width: "500px" }}>
-                                                                            <div className="col-12 row">
-                                                                                  {/* {categoryList?.map((category, index) => (
-                                                                                    <li className="menu-item col-5" key={index}>
-                                                                                          <Link to={`/category/${category?.id}/show-tvseries`}>{category?.name}</Link>
-                                                                                    </li>
-                                                                              ))} */}
-                                                                            </div>
-                                                                      </ul>
-                                                                </li>
-
-                                                                <li className="menu-item">
-                                                                      <Link to="#">Blog</Link>
+                                                                      <Link to="#">Movies</Link>
                                                                       <ul className="sub-menu">
-                                                                            <li className="menu-item">
-                                                                                  <Link to="/blog">Blog</Link>
-                                                                            </li>
-                                                                            <li className="menu-item">
-                                                                                  <Link to="/blog-details">Blog details</Link>
-                                                                            </li>
+                                                                            <li className="menu-item"><Link to={routes.addMovie}>Add Movie</Link></li>
                                                                       </ul>
                                                                 </li>
                                                                 <li className="menu-item">
-                                                                      <Link to="#">Pages</Link>
+                                                                      <Link to={routes.adminTvSeries}>TVSERIES</Link>
                                                                       <ul className="sub-menu">
-                                                                            <li className="menu-item">
-                                                                                  <Link to="/about-us">About Us</Link>
-                                                                            </li>
-                                                                            <li className="menu-item ">
-                                                                                  <Link to="/contact">Contact</Link>
-                                                                            </li>
-                                                                            <li className="menu-item">
-                                                                                  <Link to="/faq">FAQ</Link>
-                                                                            </li>
-                                                                            <li className="menu-item">
-                                                                                  <Link to="/privacy-policy">Privacy-Policy</Link>
-                                                                            </li>
-                                                                            <li className="menu-item">
-                                                                                  <Link to="#">Pricing</Link>
-                                                                                  <ul className="sub-menu">
-                                                                                        <li className="menu-item">
-                                                                                              <Link to="/pricing-plan-1">
-                                                                                                    Pricing Plan 1
-                                                                                              </Link>
-                                                                                        </li>
-                                                                                        <li className="menu-item">
-                                                                                              <Link to="/pricing-plan-2">
-                                                                                                    Pricing Plan 2
-                                                                                              </Link>
-                                                                                        </li>
-                                                                                  </ul>
-                                                                            </li>
+                                                                            <li className="menu-item"><Link to={routes.addTvSeries}>Add TvSeries</Link></li>
                                                                       </ul>
                                                                 </li>
                                                           </Nav>

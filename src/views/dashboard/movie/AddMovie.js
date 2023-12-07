@@ -90,6 +90,7 @@ function AddMovie() {
                     }
                 }
             })
+<<<<<<< HEAD
             setChecked(categories);
         } else {
             categories.push(id);
@@ -152,6 +153,81 @@ function AddMovie() {
                                                 {isNameValid ?
                                                     "" :
                                                     <div>Name not consist of speacial characters</div>}
+=======
+      }
+      const handleChecked = (id) => {
+            const isChecked = categories.includes(id);
+            if (isChecked) {
+                  categories.map(() => {
+                        for (let index = 0; index < categories.length; index++) {
+                              if (categories[index] === id) {
+                                    categories.splice(index, 1);
+                              }
+                        }
+                  })
+                  setChecked(categories);
+            } else {
+                  categories.push(id);
+                  setChecked(categories);
+            }
+      }
+      const handleSubmit = async () => {
+            uploadImage();
+            const newMovie = {
+                  name: name,
+                  description: description,
+                  duration: duration,
+                  year: year,
+                  imdb: imdb,
+                  image: image,
+                  url: videoUrl,
+                  dateRelease: dateShow,
+                  categoryList: categories,
+            }
+            console.log(newMovie);
+            const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
+            if (isCreateSuccess) {
+                  alert("Create Movie Success");
+                  navigate("/add-movie")
+            } else {
+                  alert("Create Movie Fail. Back to add again in 1s");
+                  setTimeout(() => {
+                        navigate("/add-movie")
+                  }, 1000);
+            }
+      }
+      const fetchApiAllCategory = async () => {
+            const result = await publicApi.getAllCategory();
+            setCategoryList(result);
+      }
+      useEffect(() => {
+            fetchApiAllCategory();
+      }, [])
+      return (
+            <>
+                  <Container fluid>
+                        <Row className="d-flex justify-content-between">
+                              <Col sm="12" lg={{ span: 8, offset: 2 }}>
+                                    <Card>
+                                          <Card.Header className="d-flex justify-content-between">
+                                                <Card.Header.Title>
+                                                      <h4 className="card-title">Add Movie</h4>
+                                                </Card.Header.Title>
+                                          </Card.Header>
+                                          <Card.Body>
+                                                <Form>
+                                                      <Row>
+                                                            <Col lg="7">
+                                                                  <Row>
+                                                                        <Form.Group className="col-12">
+                                                                              Name
+                                                                              <Form.Control type="text" placeholder="Title"
+                                                                                    onChange={handleChangeName} />
+                                                                        </Form.Group>
+                                                                        {isNameValid ?
+                                                                              "" :
+                                                                              <div>Name not consist of speacial characters</div>}
+>>>>>>> 687a795232bdf880cade65b0a58f36616cb3cd61
 
                                                 <div className="col-12 form_gallery form-group" style={{marginTop: 10}}>
                                                     <div id="gallery2" htmlFor="form_gallery-upload">Upload Image</div>
