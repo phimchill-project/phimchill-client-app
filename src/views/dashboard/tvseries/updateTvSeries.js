@@ -107,6 +107,8 @@ function UpdateTvSeries(){
             console.log(data)
             if (data.statusCode === 400){
                 navigate(routes.error404);
+            } else if (data.statusCode === 200) {
+                navigate(routes.showListTVSeries);
             }
         }
     }, [errorTvSeries, tvSeries]);
