@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Card from '../../../components/Card';
-import { findAllTVSeries,DeleteTVSeries } from '../../../api/tvSeriesApi/tvSeriesAPI';
+import { findAllTVSeries,DeleteTVSeries,RestoreTVSeries } from '../../../api/tvSeriesApi/tvSeriesAPI';
 import {format} from 'date-fns'
 //img
 import st08 from '../../../assets/dashboard/images/show-thumb/08.jpg';
@@ -27,12 +27,20 @@ const Showlist = () => {
         setShows(null);
         fecthAllShow();
     }, []);
-    const DeleteShow = async (showId) => {
+    const handleDelete = async (showId) => {
         try {
             await DeleteTVSeries(showId);
             fecthAllShow();
         } catch (error) {
             console.error('Error deleting show:', error);
+        }
+    };
+    const handleRestore =async (showId) => {
+        try {
+            await RestoreTVSeries(showId);
+            fecthAllShow();
+        } catch (error) {
+            console.error('Error Restore show:', error);
         }
     };
     return (
@@ -109,15 +117,27 @@ const Showlist = () => {
                                                                 <i className="ri-pencil-line"></i>
                                                             </Link>
                                                         </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="top"
-                                                            overlay={<Tooltip>Delete</Tooltip>}
-                                                        >
-                                                            <Link className="iq-bg-primary" to="#"
-                                                                  onClick={() => DeleteShow(show.id)}>
-                                                                <i className="ri-delete-bin-line"></i>
-                                                            </Link>
-                                                        </OverlayTrigger>
+                                                        {show.isDelete ? (
+                                                            <OverlayTrigger placement="top" overlay={<Tooltip>Restore</Tooltip>}>
+                                                                <Link
+                                                                    className="iq-bg-primary"
+                                                                    to="#"
+                                                                    onClick={() => handleRestore(show.id)}
+                                                                >
+                                                                    <i className="ri-disc-fill"></i>
+                                                                </Link>
+                                                            </OverlayTrigger>
+                                                        ) : (
+                                                            <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
+                                                                <Link
+                                                                    className="iq-bg-primary"
+                                                                    to="#"
+                                                                    onClick={() => handleDelete(show.id)}
+                                                                >
+                                                                    <i className="ri-delete-bin-line"></i>
+                                                                </Link>
+                                                            </OverlayTrigger>
+                                                        )}
                                                     </div>
                                                 </td>
                                             </tr>
