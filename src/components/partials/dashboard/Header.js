@@ -242,13 +242,13 @@ function Header() {
                                                                       <Link to="/">Home</Link>
                                                                 </li>
                                                                 <li className="menu-item">
-                                                                      <Link to="#">Movies</Link>
+                                                                      <Link to={routes.allMovies}>Movies</Link>
                                                                       <ul className="sub-menu">
                                                                             <li className="menu-item"><Link to={routes.addMovie}>Add Movie</Link></li>
                                                                       </ul>
                                                                 </li>
                                                                 <li className="menu-item">
-                                                                      <Link to={routes.adminTvSeries}>TVSERIES</Link>
+                                                                      <Link to={routes.showListTVSeries}>TVSERIES</Link>
                                                                       <ul className="sub-menu">
                                                                             <li className="menu-item"><Link to={routes.addTvSeries}>Add TvSeries</Link></li>
                                                                       </ul>
