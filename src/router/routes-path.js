@@ -7,7 +7,6 @@ const routes = {
     categoryMovie : "/category/:id/show-movies",
     categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
-    addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
     watchTvShow : "/watch-tvshow/:id",
     error404: "/error404",
@@ -21,6 +20,11 @@ const routes = {
     bank : "/payment/",
     error401: "/error401",
     tvSeriesDetail : "/tvseries-detail/:name",
-    chatWindow : "/admin/chat-window"
+    chatWindow : "/admin/chat-window",
+    addMovie : "/admin/add-movie",
+    addTvSeries: "/admin/add-tvSeries",
+    updateTvSeries: '/admin/update-tvSeries/:name',
+    movieHistory : "/movieHistory",
+    showListTVSeries: "/admin/tvseries/showlist"
 }
 export default routes;

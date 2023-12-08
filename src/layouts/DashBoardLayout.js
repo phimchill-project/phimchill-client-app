@@ -4,26 +4,19 @@ import SideBar from '../components/partials/dashboard/SideBar';
 import Footer from '../components/partials/dashboard/Footer';
 import Header from '../components/partials/dashboard/Header';
 
-
 const DashBoardLayout = ({ children }) => {
 
-    return (
+     return (
         <>
             <div className="wrapper">
-                <SideBar />
                 <Header />
-                {/* <div className="content-page" id="content-page"> */}
-                    <div className="col main pt-5 mt-3" >
-                        <br/>
-                        
-                        {children}
-                    </div>
-                {/* </div> */}
+                <div className="col main pt-5 mt-3" >
+                    {children}
+                </div>
             </div>
             {/* <Footer /> */}
         </>
     )
-
 }
 
 export default DashBoardLayout; 
