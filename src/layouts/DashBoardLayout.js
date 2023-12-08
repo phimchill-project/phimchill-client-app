@@ -6,21 +6,17 @@ import Header from '../components/partials/dashboard/Header';
 
 const DashBoardLayout = ({ children }) => {
 
-    return (
+     return (
         <>
             <div className="wrapper">
-                <SideBar />
                 <Header />
-                {/* <div className="content-page" id="content-page"> */}
                 <div className="col main pt-5 mt-3" >
                     {children}
                 </div>
-                {/* </div> */}
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
-
 }
 
 export default DashBoardLayout; 

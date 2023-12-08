@@ -51,7 +51,7 @@ const ShowMovieList = ({ movieList, type }) => {
 
     return (
         <>
-            <main id="main" className="site-main">
+            <main id="main" className="genres-main">
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">Movies</h4>

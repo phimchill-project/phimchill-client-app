@@ -120,7 +120,7 @@ function DetailMovieComment({ commentDetail }) {
                                                       <div className="d-flex justify-content-between align-items-center">
                                                             <p className="mb-1">
                                                                   {subComment?.userDtoComment.name}{" "}
-                                                                  <span className="small">- 3 hours ago</span>
+                                                                  <span className="small">- {subComment?.datePost}{" "}</span>
                                                             </p>
                                                       </div>
                                                       <p className="small mb-0">

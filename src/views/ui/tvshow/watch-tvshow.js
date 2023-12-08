@@ -5,43 +5,47 @@ import tvshowApi from "../../../api/tvshow/exportMovieApi";
 import Loading from "../../../components/common/Loading";
 import Episodes from "./Episodes";
 import routes from "../../../router/routes-path";
+import ReactPlayer from 'react-player';
 
 const WatchTvSeries = () => {
 
     let navigate = useNavigate();
-    let { name, season_episode } = useParams();
+    let { id } = useParams();
     const [seasonNumber, setSeasonNumber] = useState("");
     const [episodeNumber, setEpisodeNumber] = useState("");
     const [episode, setEpisode] = useState({});
     const [episodes, setEpisodes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     const [tvShow, setTvShow] = useState({});
 
     useEffect(() => {
-        findByName();
-    }, [ name, season_episode ]);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(!user?.member){
+            navigate("/error401");
+        }
+        findById();
+    }, [ id ]);
 
-    const findByName = async () => {
-        const data = await tvshowApi.findByName(name);
+    const findById = async () => {
+        const data = await tvshowApi.findById(id);
         if (data.statusCode === 404){
             navigate(routes.error404);
         }else if (data.statusCode === 200){
-            let parts = season_episode.split('-');
+            // let parts = season_episode.split('-');
 
-            setSeasonNumber(parts[1]);
-            setEpisodeNumber(parts[3]);
+            // setSeasonNumber(parts[1]);
+            // setEpisodeNumber(parts[3]);
 
-            const episodesWithLink = data.data.seasonList[parts[1] - 1].episodeList.map((episode, index) => ({
-                ...episode,
-                link: `/watch-tvshow/${name}/season-${parts[1]}-episode-${index + 1}`
-            }));
+            // const episodesWithLink = data.data.seasonList[parts[1] - 1].episodeList.map((episode, index) => ({
+            //     ...episode,
+            //     link: `/watch-tvshow/${name}/season-${parts[1]}-episode-${index + 1}`
+            // }));
 
-            setEpisode(episodesWithLink.splice(parts[3] - 1, 1))
+            // setEpisode(episodesWithLink.splice(parts[3] - 1, 1))
 
-            setEpisodes(episodesWithLink);
+            // setEpisodes(episodesWithLink);
 
-            setIsLoading(false);
+            // setIsLoading(false);
         }
         setTvShow(data);
     };
@@ -52,11 +56,26 @@ const WatchTvSeries = () => {
                 <Loading></Loading>
             ) : (
                 <div>
-                    <div className="video-container iq-main-slider">
-                        <video className="video d-block" controls loop>
-                            <source src="https://firebasestorage.googleapis.com/v0/b/phim-chill.appspot.com/o/videos-movie%2FThor.mp4?alt=media&token=70ce8531-5abb-4694-a63f-5e07c072e562" type="video/mp4"/>
-                        </video>
-                    </div>
+                    <Container >
+                        <div className="video-container  d-flex justify-content-center" style={{ width: "100%", height: "60%", marginTop: -80 }}>
+                            <div>
+                                <ReactPlayer
+                                    id='movie'
+                                    // ref={playerRef}
+                                    url={""}
+                                    width="100%"
+                                    height="100%"
+                                    playing
+                                    controls={true}
+                                    className="video d-block"
+                                    style={{ marginTop: -10 }}
+                                    // onStart={onReady}
+                                    // onProgress={handleProgress}
+                                />
+                            </div>
+
+                        </div>
+                    </Container>
                     <div className="main-content">
                         <section className="movie-detail container-fluid">
                             <Row>
