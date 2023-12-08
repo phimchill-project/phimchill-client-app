@@ -92,8 +92,10 @@ function AddTvSeries() {
         }
         async function newTvSeries (tvSeries) {
             const data =await adminApi.fetchNewTvSeries(tvSeries);
-            if (data.statusCode === 404){
+            if (data.statusCode === 400){
                 navigate(routes.error404);
+            } else if (data.statusCode === 200) {
+                navigate(routes.showListTVSeries);
             }
         }
     }, [errorTvSeries, tvSeries]);

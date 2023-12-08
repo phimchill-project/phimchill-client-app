@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import  movieApi from "../../../api/movie/exportMovieApi";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../../assets/ui/css/styless.css"
+import './../../../assets/ui/css/style.css'
 
 function AdminMoviesList() {
     const [movieList, setMovieList] = useState([]);

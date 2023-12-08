@@ -55,16 +55,16 @@ const publicRoutes = [
     { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
     { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
     { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
-    {path: routes.allMovies, component: AdminMoviesList, layout: Layouts.DashBoardLayout},
-    {path: routes.updateMovies, component: UpdateMovies, layout: Layouts.DashBoardLayout},
-    { path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
+    {path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
 ]
 
 const privateRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.addTvSeries, component : AddTvSeries, layout : Layouts.DashBoardLayout },
     { path: routes.updateTvSeries, component : UpdateTvSeries, layout : Layouts.DashBoardLayout },
+    { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
     { path: routes.showListTVSeries, component : ShowListTvSeries, layout : Layouts.DashBoardLayout },
-
+    { path: routes.allMovies, component: AdminMoviesList, layout: Layouts.DashBoardLayout},
+    { path: routes.updateMovies, component: UpdateMovies, layout: Layouts.DashBoardLayout},
 ]
 export { publicRoutes, privateRoutes }

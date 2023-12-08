@@ -10,7 +10,6 @@ import './assets/ui/css/line-awesome.min.css'
 import './assets/ui/css/fontawesome.css'
 
 import './assets/chatwindow/style.css'
-import './assets/common/style.css'
 
 function App() {
   return (

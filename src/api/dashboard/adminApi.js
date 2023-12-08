@@ -26,12 +26,10 @@ export const fetchNewTvSeries = async (newFilm) => {
                 "Content-Type": 'application/json',
             },
         });
-
-        return response.data; // hoặc response.data.success tùy thuộc vào cấu trúc phản hồi của API
     } catch (e) {
         console.log("Update Movie API error: " + e);
-        return false;
     }
+    return result?.data;
 }
 export const fetchUpdateTvSeries = async (newFilm) => {
     let result = null;
