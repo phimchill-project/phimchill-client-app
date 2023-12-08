@@ -25,6 +25,8 @@ const routes = {
     addTvSeries: "/admin/add-tvSeries",
     updateTvSeries: '/admin/update-tvSeries/:name',
     movieHistory : "/movieHistory",
-    showListTVSeries: "/admin/tvseries/showlist"
+    showListTVSeries: "/admin/tvseries/showlist",
+    allMovies: "/admin/movies",
+    updateMovies: "/admin/movies/update/:movieName"
 }
 export default routes;

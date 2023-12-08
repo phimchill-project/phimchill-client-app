@@ -17,14 +17,16 @@ import FavoriteMovie from "../views/ui/movie/FavoriteMovie";
 import FavoriteTvSeries from "../views/ui/tvshow/FavoriteTvSeries";
 import MovieDetail from '../components/common/MovieDetail ';
 import Search from "../views/ui/search/search";
-import AddTvSeries from "../views/dashboard/tvseries/addTvSeries";
-import UpdateTvSeries from "../views/dashboard/tvseries/updateTvSeries";
-import MovieHistoryList from '../views/ui/movie/MovieHistoryList';
 import RegisterMemberShip from '../views/ui/payment/RegisterMemberShip';
 import Bank from '../views/ui/payment/Bank';
 import Error401 from '../views/ui/error/error401';
 import TvSeriesDetail from '../components/common/TvSeriesDetail';
 import ChatWindow from '../views/dashboard/chatwindow/ChatWindow';
+import AdminMoviesList from "../views/dashboard/movie/AdminMoviesList";
+import UpdateMovies from "../views/dashboard/movie/UpdateMovie";
+import AddTvSeries from "../views/dashboard/tvseries/addTvSeries";
+import UpdateTvSeries from "../views/dashboard/tvseries/updateTvSeries";
+import MovieHistoryList from '../views/ui/movie/MovieHistoryList';
 import ShowListTvSeries from '../views/dashboard/tvseries/showlist'
 
 const publicRoutes = [
@@ -48,13 +50,21 @@ const publicRoutes = [
     { path: routes.bank, component: Bank, layout: Layouts.DefaultLayout},
     { path: routes.error401, component: Error401, layout: null},
     { path: routes.tvSeriesDetail, component: TvSeriesDetail, layout: Layouts.DefaultLayout},
-    { path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
+    { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
+    {path: routes.home,component:Home, layout: Layouts.DefaultLayout},
+    { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
+    { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
+    { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
+    {path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
 ]
+
 const privateRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.addTvSeries, component : AddTvSeries, layout : Layouts.DashBoardLayout },
     { path: routes.updateTvSeries, component : UpdateTvSeries, layout : Layouts.DashBoardLayout },
-     { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
-     { path: routes.showListTVSeries, component : ShowListTvSeries, layout : Layouts.DashBoardLayout }
+    { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
+    { path: routes.showListTVSeries, component : ShowListTvSeries, layout : Layouts.DashBoardLayout },
+    { path: routes.allMovies, component: AdminMoviesList, layout: Layouts.DashBoardLayout},
+    { path: routes.updateMovies, component: UpdateMovies, layout: Layouts.DashBoardLayout},
 ]
 export { publicRoutes, privateRoutes }
