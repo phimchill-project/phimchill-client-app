@@ -7,7 +7,6 @@ const routes = {
     categoryMovie : "/category/:id/show-movies",
     categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
-    addMovie : "/add-movie",
     watchMovie : "/watch-movie/:name",
     watchTvShow : "/watch-tvshow/:name/:season_episode",
     error404: "/error404",
@@ -16,6 +15,10 @@ const routes = {
     test :"/dashBoard",
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
-    search : "/search"
+    search : "/search",
+    addMovie : "/admin/add-movie",
+    addTvSeries: "/admin/add-tvSeries",
+    updateTvSeries: '/admin/update-tvSeries/:name',
+    movieHistory : "/movieHistory"
 }
 export default routes;

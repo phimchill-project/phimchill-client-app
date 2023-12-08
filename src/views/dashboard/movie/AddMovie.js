@@ -130,8 +130,8 @@ function AddMovie() {
       return (
             <>
                   <Container fluid>
-                        <Row>
-                              <Col sm="12">
+                        <Row className="d-flex justify-content-between">
+                              <Col sm="12" lg={{ span: 8, offset: 2 }}>
                                     <Card>
                                           <Card.Header className="d-flex justify-content-between">
                                                 <Card.Header.Title>

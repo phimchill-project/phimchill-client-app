@@ -1,12 +1,20 @@
+
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import categoryApi from "../../api/category/exportCategoryApi";
+import search from "../../views/ui/search/search";
 
-const ShowMovieList = ({ movieList }) => {
+const ShowMovieList = ({ movieList, type }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [list, setList] = useState(movieList);
+    const [list, setList] = useState();
+    const [typeChildren, setTypeChildren] = useState();
     const [sort, setSort] = useState();
+
+    useEffect(() => {
+        setList(movieList)
+        setTypeChildren(type);
+    }, [movieList, type]);
 
     const fetchMoviesByCategoryId = async () => {
         let result = await categoryApi.getMoviesByCategoryId(id);
@@ -37,7 +45,8 @@ const ShowMovieList = ({ movieList }) => {
     }
 
     useEffect(() => {
-        fetchMoviesByCategoryId();
+        if (typeChildren !== "search" && type !== "search")
+            fetchMoviesByCategoryId();
     }, [sort]);
 
     return (
@@ -46,6 +55,7 @@ const ShowMovieList = ({ movieList }) => {
                 <div className="container-fluid">
                     <div className="iq-main-header d-flex align-items-center justify-content-between mt-5 mt-lg-0">
                         <h4 className="main-title">Movies</h4>
+                        {typeChildren !== "search" && type !== "search" ?
                         <select onChange={(event) => { setSort(event.target.value)}} className="form-control-sm mb-3 text-white" style={{ backgroundColor : "#141414"}}>
                             <option defaultValue value="0">Popular</option>
                             <option value="1">Year Down</option>
@@ -55,6 +65,8 @@ const ShowMovieList = ({ movieList }) => {
                             <option value="5">Imdb Down</option>
                             <option value="6">Imdb Up</option>
                         </select>
+                            : <Link className="iq-view-all" to="/movie-category">View All</Link>
+                        }
                     </div>
                     {list != null ?
                         <ul className=" row list-inline  mb-0 iq-rtl-direction ">
@@ -146,13 +158,14 @@ const ShowMovieList = ({ movieList }) => {
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
-                            ))}
-                        </ul> 
-                    : ""}
+                            </li>
+                        ))}
+                    </ul>
+                    : <p>No movies watched yet.</p>}
                 </div>
             </main>
         </>
-    )
+    );
 }
+
 export default ShowMovieList;
