@@ -59,7 +59,7 @@ function Bank() {
                       })
                       console.log( result);
               } catch (e) {
-                  console.log e);
+                  console.log (e);
                   return null;
             }
             if(transactionStatus == "OO"){
