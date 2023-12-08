@@ -29,16 +29,12 @@ function MovieHistoryList() {
         }
     };
     const handleDelete = async (movieId) => {
-        // Logic to delete movie from history
         console.log("Delete movie with ID:", movieId);
-        // Update the state to remove the deleted movie
         setMovieHistoryList(currentList => currentList.filter(movie => movie.id !== movieId));
     };
 
     const handleContinueWatching = (movieId) => {
-        // Logic to continue watching
         console.log("Continue watching movie with ID:", movieId);
-        // Add any navigation logic if needed
     };
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
