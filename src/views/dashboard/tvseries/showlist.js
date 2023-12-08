@@ -6,6 +6,7 @@ import { findAllTVSeries,DeleteTVSeries } from '../../../api/tvSeriesApi/tvSerie
 
 //img
 import st08 from '../../../assets/dashboard/images/show-thumb/08.jpg';
+import routes from "../../../router/routes-path";
 
 const Showlist = () => {
     const [shows, setShows] = useState([]);
@@ -41,7 +42,7 @@ const Showlist = () => {
                                     <h4 className="card-title">Show Lists</h4>
                                 </Card.Header.Title>
                                 <div className="iq-card-header-toolbar d-flex align-items-center">
-                                    <Link to="/add-show" className="btn btn-primary">
+                                    <Link to={routes.addTvSeries} className="btn btn-primary">
                                         Add Show
                                     </Link>
                                 </div>
