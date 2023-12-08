@@ -21,6 +21,7 @@ import Search from "../views/ui/search/search";
 import AddTvSeries from "../views/dashboard/tvseries/addTvSeries";
 import UpdateTvSeries from "../views/dashboard/tvseries/updateTvSeries";
 import MovieHistoryList from '../views/ui/movie/MovieHistoryList';
+import ShowListTvSeries from '../views/dashboard/tvseries/showlist'
 
 
 const publicRoutes = [
@@ -48,5 +49,7 @@ const privateRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.addTvSeries, component : AddTvSeries, layout : Layouts.DashBoardLayout },
     { path: routes.updateTvSeries, component : UpdateTvSeries, layout : Layouts.DashBoardLayout },
+    { path: routes.showListTVSeries, component : ShowListTvSeries, layout : Layouts.DashBoardLayout },
+
 ]
 export { publicRoutes, privateRoutes }
