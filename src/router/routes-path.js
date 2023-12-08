@@ -16,9 +16,13 @@ const routes = {
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
     search : "/search",
+    allMovies:"/admin/movies",
+    updateMovies:"admin/movies/update/:movieName",
+    deleteMovies:"admin/movies",
     addMovie : "/admin/add-movie",
     addTvSeries: "/admin/add-tvSeries",
     updateTvSeries: '/admin/update-tvSeries/:name',
-    movieHistory : "/movieHistory"
+    movieHistory : "/movieHistory",
+    showListTVSeries: "/admin/tvseries/showlist"
 }
 export default routes;
