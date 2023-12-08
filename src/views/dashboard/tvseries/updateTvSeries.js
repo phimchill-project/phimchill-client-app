@@ -190,6 +190,10 @@ function UpdateTvSeries(){
         checkValueAll();
     }
 
+    const handleCancel = () => {
+        navigate(routes.showListTVSeries);
+    }
+
     return(
         <>
             {isLoading ? (
@@ -275,7 +279,7 @@ function UpdateTvSeries(){
                                                 <div hidden={!errorTvSeries.dateRelease} style={{color: '#e87c03'}}>Please enter correct Date.</div>
                                             </Form.Group>
                                             <Button type="button" variant="btn btn-primary" onClick={handleSubmit}>Submit</Button>{' '}
-                                            <Button type="button" variant="btn btn-danger">cancel</Button>
+                                            <Button type="button" variant="btn btn-danger" onClick={handleCancel}>cancel</Button>
                                         </Form>
                                     </Card.Body>
                                 </Card>
