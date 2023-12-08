@@ -16,15 +16,38 @@ var categories = [];
 
 function UpdateMovies() {
     const {movieName} = useParams();
-    const [movie, setMovie] = useState({});
-    const [name, setName] = useState();
-    const [image, setImage] = useState();
-    const [description, setDescription] = useState();
-    const [videoUrl, setVideoaUrl] = useState();
-    const [year, setYear] = useState();
-    const [duration, setDuration] = useState();
-    const [imdb, setImdb] = useState();
-    const [dateShow, setDateShow] = useState();
+    const [movie, setMovie] = useState({
+        id: "",
+        name: "",
+        description: "",
+        year: "",
+        imdb: "",
+        duration : "",
+        url : "",
+        image: "",
+        dateRelease: "",
+        categoryList: [],
+    });
+
+    const [errorMovie, setErrorMovie] = useState({
+        name: false,
+        description: false,
+        year: false,
+        imdb: false,
+        duration : false,
+        url : false,
+        image: false,
+        dateRelease: false,
+        categoryList: false,
+        trailer: false,
+        userIdListLiked: false,
+        views: false
+    })
+
+    const [isClick, setIsClick] = useState(false);
+
+    const [videoUrl, setVideoUrl] = useState()
+    const [image, setImage] = useState()
     const [checked, setChecked] = useState(categories);
     const [imageFile, setImageFile] = useState(null);
     const [video, setVideo] = useState(null);
@@ -40,15 +63,69 @@ function UpdateMovies() {
         setMovie(data?.data);
     };
 
-    const handleChangeName = (e) => {
-        const value = e.target.value;
-        setName(value);
-        if (regexName.test(value)) {
-            setIsNameVadid(true);
-        } else {
-            setIsNameVadid(false);
+    const handleFieldChange = (fieldName, newValue) => {
+        setMovie((prevState) => ({
+            ...prevState,
+            [fieldName]: newValue,
+        }));
+    };
+
+    const checkValueAll = () => {
+        for (let field in movie) {
+            if (field === 'image' || field === 'url' || field === 'trailer' || field === 'userIdListLiked' || field === 'views')
+                continue;
+            checkValue(field);
         }
-    }
+    };
+
+    const checkValue = (field) => {
+        if (movie[field] === null || movie[field] === '' || movie[field].length === 0 || movie[field] === undefined) {
+            setErrorMovie((prevState) => ({
+                ...prevState,
+                [field]: true
+            }))
+        }else {
+            setErrorMovie((prevState) => ({
+                ...prevState,
+                [field]: false
+            }))
+        }
+    };
+
+    useEffect(  () => {
+        if (isClick && !Object.values(errorMovie).some(value => value === true)){
+            updateMovie(movie);
+            setIsClick(false);
+        }
+        async function updateMovie (movie) {
+            const data =await movieApi.updateMovies(movie);
+            if (data.statusCode === 400){
+                navigate(routes.error404);
+            } else if (data.statusCode === 200) {
+                navigate(routes.allMovies);
+            }
+        }
+    }, [errorMovie, movie, isClick]);
+
+    const handleCheckboxChange = (e, categoryId) => {
+        const isChecked = e.target.checked;
+        const category = { id: categoryId };
+
+        setMovie(prevState => {
+            let newCategoryList = [...prevState.categoryList];
+
+            if (isChecked) {
+                if (!newCategoryList.some(item => item.id === categoryId)) {
+                    newCategoryList.push(category);
+                }
+            } else {
+                newCategoryList = newCategoryList.filter(item => item.id !== categoryId);
+            }
+
+            return { ...prevState, categoryList: newCategoryList };
+        });
+    };
+
     const handleChangeImage = (e) => {
         setImageFile(e.target.files[0]);
 
@@ -57,7 +134,6 @@ function UpdateMovies() {
         let imageName = imageFile.name + v4();
         const imageRef = ref(storage, `images-movie/${imageName}`);
         await uploadBytes(imageRef, imageFile).then(() => {
-            console.log("upload image success");
         })
         await getDownloadURL(ref(storage, `images-movie/${imageName}`))
             .then((url) => {
@@ -77,63 +153,31 @@ function UpdateMovies() {
 
         await getDownloadURL(ref(storage, `videos-movie/${videoName}`))
             .then((url) => {
-                setVideoaUrl(url);
+                setVideoUrl(url);
             })
     }
-    const handleChecked = (id) => {
-        const isChecked = categories.includes(id);
-        if (isChecked) {
-            categories.map(() => {
-                for (let index = 0; index < categories.length; index++) {
-                    if (categories[index] === id) {
-                        categories.splice(index, 1);
-                    }
-                }
-            })
-            setChecked(categories);
-        } else {
-            categories.push(id);
-            setChecked(categories);
-        }
-    }
-    const handleSubmit = async () => {
-        const newMovie = {
-            name: name,
-            description: description,
-            duration: duration,
-            year: year,
-            imdb: imdb,
-            image: image,
-            url: videoUrl,
-            dateRelease: dateShow,
-            categoryList: categories,
-        }
-        console.log(newMovie);
-        if (videoUrl != null) {
-            const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
-            if (isCreateSuccess) {
-                alert("Update Movie Success");
-                navigate("/add-movie")
-            } else {
-                alert("Update Movie Fail. Back to update again in 1s");
-                setTimeout(() => {
-                    navigate("/add-movie")
-                }, 1000);
-            }
-        }else{
-            alert("Movie not upload finish");
-        }
 
+    const handleSubmit = async () => {
+        setIsClick(true)
+        checkValueAll();
     }
     const fetchApiAllCategory = async () => {
         const result = await publicApi.getAllCategory();
         setCategoryList(result);
     }
 
+    const handleCancel = () => {
+        navigate(routes.allMovies);
+    }
+
+    const isIdSelected = (id) => {
+        return movie.categoryList.some(category => category.id === id);
+    };
+
     useEffect(() => {
         fetchApiAllCategory();
         findByName();
-    }, [name])
+    }, [movieName])
 
     useEffect(() => {
         if (video != null) {
@@ -165,7 +209,7 @@ function UpdateMovies() {
                                                     Name
                                                     <Form.Control type="text" placeholder="Title"
                                                                   defaultValue={movie?.name}
-                                                                  onChange={handleChangeName}/>
+                                                                  onChange={(e) => handleFieldChange('name', e.target.value)}/>
                                                 </Form.Group>
                                                 {isNameValid ?
                                                     "" :
@@ -187,9 +231,10 @@ function UpdateMovies() {
                                                                     <input
                                                                         className="form-check-input"
                                                                         type="checkbox"
-                                                                        defaultValue={category.id}
+                                                                        value={category.id}
+                                                                        checked={isIdSelected(category.id)}
                                                                         id="flexCheckDefault"
-                                                                        onChange={() => handleChecked(category.id)}
+                                                                        onChange={(e) => {handleCheckboxChange(e, category.id)}}
                                                                     />
                                                                     <label className="form-check-label"
                                                                            htmlFor="flexCheckDefault">
@@ -203,10 +248,10 @@ function UpdateMovies() {
                                                 <Form.Group className="col-12">
                                                     Description
                                                     <Form.Control as="textarea" id="text" name="text" rows="5"
-                                                                  defaultValue={movie?.description}
-                                                                  placeholder="Description" onChange={(e) => {
-                                                        setDescription(e.target.value)
-                                                    }}></Form.Control>
+                                                                  value={movie?.description}
+                                                                  placeholder="Description"
+                                                                  onChange={(e) => handleFieldChange('description', e.target.value)}>
+                                                    </Form.Control>
                                                 </Form.Group>
                                             </Row>
                                         </Col>
@@ -219,40 +264,34 @@ function UpdateMovies() {
                                                     <input type="file" accept="video/mp4,video/x-m4v,video/*"
                                                            onClick={(e) => handleChangeVideo(e)}/>
                                                 </div>
-
                                             </div>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: 10}}>
                                             Release Year
                                             <Form.Control type="text" placeholder="Release year"
-                                                          defaultValue={movie?.year} onChange={(e) => {
-                                                setYear(e.target.value);
-                                            }}/>
+                                                          value={movie?.year}
+                                                          onChange={(e) => handleFieldChange('year', e.target.value)}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Duration (minutes)
                                             <Form.Control type="" placeholder="Movie Duration"
-                                                          defaultValue={movie?.duration} onChange={(e) => {
-                                                setDuration(e.target.value);
-                                            }}/>
+                                                          value={movie?.duration}
+                                                          onChange={(e) => handleFieldChange('duration', e.target.value)}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Imdb
-                                            <Form.Control type="" placeholder="Imdb Point" defaultValue={movie?.imdb}
-                                                          onChange={(e) => {
-                                                              setImdb(e.target.value);
-                                                          }}/>
+                                            <Form.Control type="" placeholder="Imdb Point" value={movie?.imdb}
+                                                          onChange={(e) => handleFieldChange('imdb', e.target.value)}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Date Show
-                                            <input type="date" defaultValue={movie?.dateRelease} onChange={(e) => {
-                                                setDateShow(e.target.value);
-                                            }}/>
+                                            <input type="date" value={movie?.dateRelease}
+                                                   onChange={(e) => handleFieldChange('dateRelease', e.target.value)}/>
                                         </Col>
                                         <Form.Group className="col-12">
                                             <Button type="button" variant="primary"
                                                     onClick={handleSubmit}>Submit</Button>{' '}
-                                            <Button type="reset" variant="danger">Cancel</Button>
+                                            <Button type="button" variant="btn btn-danger" onClick={handleCancel}>cancel</Button>
                                         </Form.Group>
                                     </Row>
                                 </Form>

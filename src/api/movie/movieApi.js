@@ -41,12 +41,11 @@ export const findAllMovies = async () => {
 export const updateMovies = async (movieData) => {
     let result = null;
     try {
-        result = await axios.put(`${API}/update`, movieData, {
+        result = await axios.put(`${API}update/${movieData.id}`, movieData, {
         });
     } catch (e) {
         console.log("Update movies API error: " + e);
     }
-    console.log(result)
     return result?.data;
 };
 
