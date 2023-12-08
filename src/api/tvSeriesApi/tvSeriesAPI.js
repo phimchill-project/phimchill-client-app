@@ -1,4 +1,12 @@
 import axios from "axios";
+export const RestoreTVSeries = async (showId) => {
+    try {
+        const response = await axios.put(`http://localhost:8080/api/tvseries/${showId}/restore`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 export const DeleteTVSeries = async (showId) => {
     try {
         const response = await axios.delete(`http://localhost:8080/api/tvseries/${showId}`);
