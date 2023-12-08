@@ -6,6 +6,7 @@ import { findAllTVSeries,DeleteTVSeries,RestoreTVSeries } from '../../../api/tvS
 import {format} from 'date-fns'
 //img
 import st08 from '../../../assets/dashboard/images/show-thumb/08.jpg';
+import routes from "../../../router/routes-path";
 
 const Showlist = () => {
     const [shows, setShows] = useState([]);
@@ -35,6 +36,7 @@ const Showlist = () => {
             console.error('Error deleting show:', error);
         }
     };
+
     const handleRestore =async (showId) => {
         try {
             await RestoreTVSeries(showId);
@@ -43,6 +45,13 @@ const Showlist = () => {
             console.error('Error Restore show:', error);
         }
     };
+
+    function normalizeName(s) {
+        let temp = s.normalize("NFD");
+        let pattern = /[\u0300-\u036f]/g;
+        return "/admin/update-tvSeries/" + temp.replace(pattern, "").replace(":", "").replace("-", " ").toLowerCase();
+    }
+
     return (
         <>
             <Container fluid>
@@ -54,7 +63,7 @@ const Showlist = () => {
                                     <h4 className="card-title">Show Lists</h4>
                                 </Card.Header.Title>
                                 <div className="iq-card-header-toolbar d-flex align-items-center">
-                                    <Link to="/add-show" className="btn btn-primary">
+                                    <Link to={routes.addTvSeries} className="btn btn-primary">
                                         Add Show
                                     </Link>
                                 </div>
@@ -113,7 +122,7 @@ const Showlist = () => {
                                                             placement="top"
                                                             overlay={<Tooltip>Edit</Tooltip>}
                                                         >
-                                                            <Link className="iq-bg-success" to="#">
+                                                            <Link className="iq-bg-success" to={normalizeName(show.name)}>
                                                                 <i className="ri-pencil-line"></i>
                                                             </Link>
                                                         </OverlayTrigger>

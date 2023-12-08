@@ -1,6 +1,9 @@
-import {findByName, findMoviesByName} from "./movieApi"
+import {findByName, findMoviesByName,findAllMovies,updateMovies,deleteMovie} from "./movieApi"
 const movieApi = {
     findByName,
-    findMoviesByName
+    findMoviesByName,
+    findAllMovies,
+    updateMovies,
+    deleteMovie
 }
 export default movieApi;

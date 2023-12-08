@@ -170,30 +170,6 @@ const Userprofile = () => {
                     )}
                   </Col>
                 </Row>
-                <Row className="align-items-center justify-content-between mb-3">
-                  <Col md="8">
-                    <span className="text-light font-size-13">
-                      Date of Birth
-                    </span>
-                    <p className="mb-0">08-03-1995</p>
-                  </Col>
-                  <Col md="4" className="text-md-right text-left">
-                    <Link to="#" className="text-primary">
-                      Change
-                    </Link>
-                  </Col>
-                </Row>
-                <Row className="align-items-center justify-content-between">
-                  <Col md="8">
-                    <span className="text-light font-size-13">Language</span>
-                    <p className="mb-0">English</p>
-                  </Col>
-                  <Col md="4" className="text-md-right text-left">
-                    <Link to="#" className="text-primary">
-                      Change
-                    </Link>
-                  </Col>
-                </Row>
                 <h5 className="mb-3 mt-4 pb-3 a-border">Billing Details</h5>
                 <Row className="justify-content-between mb-3">
                   <Col md="8" className="r-mb-15">

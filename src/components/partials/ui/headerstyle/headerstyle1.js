@@ -312,7 +312,15 @@ const HeaderStyle1 = (props) => {
                                       </div>
                                     </Link>
                                     <Link
-                                      to="/extra-pages/login"
+                                      type="button" onClick={(e) => {
+                                        e.preventDefault();
+                                        localStorage.removeItem("token");
+                                        localStorage.removeItem("user");
+                                        localStorage.removeItem("savedTime");
+                                        localStorage.removeItem("movie");
+                                        localStorage.removeItem("tvseries");
+                                        window.location.replace("http://localhost:3000/");
+                                      }}
                                       className="iq-sub-card setting-dropdown"
                                     >
                                       <div className="media align-items-center">

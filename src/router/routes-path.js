@@ -8,7 +8,7 @@ const routes = {
     categoryTvSeries : "/category/:id/show-tvseries",
     movie : "/movie",
     watchMovie : "/watch-movie/:name",
-    watchTvShow : "/watch-tvshow/:name/:season_episode",
+    watchTvShow : "/watch-tvshow/:id",
     error404: "/error404",
     tvSeries : "/tvSeries",
     movieDetail : "/movie-detail/:name",
@@ -16,10 +16,17 @@ const routes = {
     favoriteMovies : "/favorite-movies",
     favoriteTvSeries : "/favorite-tvseries",
     search : "/search",
+    registerVip : "/register-membership",
+    bank : "/payment/",
+    error401: "/error401",
+    tvSeriesDetail : "/tvseries-detail/:name",
+    chatWindow : "/admin/chat-window",
     addMovie : "/admin/add-movie",
     addTvSeries: "/admin/add-tvSeries",
     updateTvSeries: '/admin/update-tvSeries/:name',
     movieHistory : "/movieHistory",
-    showListTVSeries: "/admin/tvseries/showlist"
+    showListTVSeries: "/admin/tvseries/showlist",
+    allMovies: "/admin/movies",
+    updateMovies: "/admin/movies/update/:movieName"
 }
 export default routes;

@@ -1,6 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 function TvSeries(tvSeries) {
+    // const redirectToDetailTvSeriesPage = (name) => {
+    //     let newName = name.replace(/ /g, "-");
+    //     navigate(`/tvseries-detail/${newName}`)
+    // }
+    
     return (
         <div>
             <div className="block-images1 block-images position-relative">
@@ -18,6 +23,16 @@ function TvSeries(tvSeries) {
                             Play Now
                         </Link>
                     </div>
+                    {/* <div className="hover-buttons">
+                        <Link role="button" className="btn btn-hover"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                redirectToDetailTvSeriesPage(tvSeries.name)
+                            }}>
+                            <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                            More details
+                        </Link>
+                    </div> */}
                 </div>
                 <div className="block-social-info">
                     <ul className="list-inline p-0 m-0 music-play-lists">

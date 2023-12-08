@@ -1,8 +1,9 @@
-import {findByName, findManyTvSeries} from "./tvshowApi";
+import {findByName, findManyTvSeries, findById} from "./tvshowApi";
 
 
 const tvshowApi = {
     findByName,
-    findManyTvSeries
+    findManyTvSeries,
+    findById
 }
 export default tvshowApi;

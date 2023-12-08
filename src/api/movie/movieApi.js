@@ -25,3 +25,36 @@ export const findMoviesByName = async (name) => {
     }
     return result?.data;
 };
+export const findAllMovies = async () => {
+    let result = null;
+    try {
+        result = await axios.get(`${API}all`, {
+            headers: { }
+        });
+    } catch (e) {
+        console.log("Find books API error: " + e);
+    }
+    console.log(result)
+    return result?.data;
+};
+
+export const updateMovies = async (movieData) => {
+    let result = null;
+    try {
+        result = await axios.put(`${API}/update`, movieData, {
+        });
+    } catch (e) {
+        console.log("Update movies API error: " + e);
+    }
+    console.log(result)
+    return result?.data;
+};
+
+export const deleteMovie = async (movieId) => {
+    try {
+        const response = await axios.delete(`${API}${movieId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Delete movie API error: " + error);
+    }
+};

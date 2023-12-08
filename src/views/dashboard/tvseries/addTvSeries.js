@@ -92,8 +92,10 @@ function AddTvSeries() {
         }
         async function newTvSeries (tvSeries) {
             const data =await adminApi.fetchNewTvSeries(tvSeries);
-            if (data.statusCode === 404){
+            if (data.statusCode === 400){
                 navigate(routes.error404);
+            } else if (data.statusCode === 200) {
+                navigate(routes.showListTVSeries);
             }
         }
     }, [errorTvSeries, tvSeries]);
@@ -162,6 +164,10 @@ function AddTvSeries() {
         setIsClick(true)
         await uploadImage();
         checkValueAll();
+    }
+
+    const handleCancel = () => {
+        navigate(routes.showListTVSeries);
     }
 
     return(
@@ -249,7 +255,7 @@ function AddTvSeries() {
                                                 <div hidden={!errorTvSeries.dateRelease} style={{color: '#e87c03'}}>Please enter correct Date.</div>
                                             </Form.Group>
                                             <Button type="button" variant="btn btn-primary" onClick={handleSubmit}>Submit</Button>{' '}
-                                            <Button type="button" variant="btn btn-danger">cancel</Button>
+                                            <Button type="button" variant="btn btn-danger" onClick={handleCancel}>cancel</Button>
                                         </Form>
                                     </Card.Body>
                                 </Card>

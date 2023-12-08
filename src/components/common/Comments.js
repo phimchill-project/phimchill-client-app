@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import commentApi from "../../api/comment/exportCommentApi";
 import { useNavigate } from "react-router-dom";
 import DetailMovieComment from "./DetailMovieComment";
+import moment from "moment/moment";
 
 
 // const props = 1;
@@ -27,11 +28,14 @@ const ShowComments = ({ movieId }) => {
         return await commentApi.postCommentMovie(request);
   }
     const postComment = () => {
+        const datePost = moment(new Date).format('YYYY-MM-DD HH:mm:ss');
+        // const datePost = new Date();
         const request = {
             comment: comment,
-            datePost: new Date(),
+            datePost: datePost,
             movieId: id
         };
+        console.log(request);
         const result = fetchPostMovieComment(request).then(() => {
             setComments("");
             setIsPostSuccess(!isPostSuccess);
