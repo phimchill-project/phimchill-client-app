@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Card from '../../../components/Card';
-import { findAllTVSeries,DeleteTVSeries } from '../../../api/tvSeriesApi/tvSeriesAPI';
-
+import { findAllTVSeries,DeleteTVSeries,RestoreTVSeries } from '../../../api/tvSeriesApi/tvSeriesAPI';
+import {format} from 'date-fns'
 //img
 import st08 from '../../../assets/dashboard/images/show-thumb/08.jpg';
 import routes from "../../../router/routes-path";
@@ -16,19 +16,33 @@ const Showlist = () => {
         if (result == null) {
             return;
         }
-        setShows(result.data.listTVSeries);
+        const formattedShows = result.data.listTVSeries.map((show) => ({
+            ...show,
+            dateRelease: show.dateRelease ? format(new Date(show.dateRelease), 'dd/MM/yyyy') : null,
+        }));
+
+        setShows(formattedShows);
         console.log(shows)
     };
     useEffect(() => {
         setShows(null);
         fecthAllShow();
     }, []);
-    const DeleteShow = async (showId) => {
+    const handleDelete = async (showId) => {
         try {
             await DeleteTVSeries(showId);
             fecthAllShow();
         } catch (error) {
             console.error('Error deleting show:', error);
+        }
+    };
+
+    const handleRestore =async (showId) => {
+        try {
+            await RestoreTVSeries(showId);
+            fecthAllShow();
+        } catch (error) {
+            console.error('Error Restore show:', error);
         }
     };
 
@@ -61,6 +75,8 @@ const Showlist = () => {
                                         <tr>
                                             <th>Show</th>
                                             <th>Seasons</th>
+                                            <th>Category</th>
+                                            <th>Date Release</th>
                                             <th>Is Delete</th>
                                             <th style={{ width: '20%' }}>Description</th>
                                             <th>Action</th>
@@ -74,7 +90,7 @@ const Showlist = () => {
                                                         <div className="iq-movie">
                                                             <Link to="#">
                                                                 <img
-                                                                    src={st08}
+                                                                    src={show.image}
                                                                     className="img-border-radius avatar-40 img-fluid"
                                                                     alt=""
                                                                 />
@@ -86,6 +102,8 @@ const Showlist = () => {
                                                     </div>
                                                 </td>
                                                 <td>{show.seasonList.length} Seasons</td>
+                                                <td>{show.categoryList.map((category) => category.name).join(', ')}</td>
+                                                <td>{show.dateRelease}</td>
                                                 <td>{show.isDelete ? 'Deleted' : 'Active'}</td>
                                                 <td>
                                                     <p>{show.description}</p>
@@ -108,15 +126,27 @@ const Showlist = () => {
                                                                 <i className="ri-pencil-line"></i>
                                                             </Link>
                                                         </OverlayTrigger>
-                                                        <OverlayTrigger
-                                                            placement="top"
-                                                            overlay={<Tooltip>Delete</Tooltip>}
-                                                        >
-                                                            <Link className="iq-bg-primary" to="#"
-                                                                  onClick={() => DeleteShow(show.id)}>
-                                                                <i className="ri-delete-bin-line"></i>
-                                                            </Link>
-                                                        </OverlayTrigger>
+                                                        {show.isDelete ? (
+                                                            <OverlayTrigger placement="top" overlay={<Tooltip>Restore</Tooltip>}>
+                                                                <Link
+                                                                    className="iq-bg-primary"
+                                                                    to="#"
+                                                                    onClick={() => handleRestore(show.id)}
+                                                                >
+                                                                    <i className="ri-disc-fill"></i>
+                                                                </Link>
+                                                            </OverlayTrigger>
+                                                        ) : (
+                                                            <OverlayTrigger placement="top" overlay={<Tooltip>Delete</Tooltip>}>
+                                                                <Link
+                                                                    className="iq-bg-primary"
+                                                                    to="#"
+                                                                    onClick={() => handleDelete(show.id)}
+                                                                >
+                                                                    <i className="ri-delete-bin-line"></i>
+                                                                </Link>
+                                                            </OverlayTrigger>
+                                                        )}
                                                     </div>
                                                 </td>
                                             </tr>
