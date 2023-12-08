@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 function MovieHistoryList() {
+    const navigate = useNavigate();
     const [movieHistoryList, setMovieHistoryList] = useState([]);
 
     useEffect(() => {
@@ -33,8 +35,9 @@ function MovieHistoryList() {
         setMovieHistoryList(currentList => currentList.filter(movie => movie.id !== movieId));
     };
 
-    const handleContinueWatching = (movieId) => {
-        console.log("Continue watching movie with ID:", movieId);
+    const handleContinueWatching = (name) => {
+        let newName = name?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
+        navigate(`/watch-movie/${newName}`)
     };
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -42,22 +45,21 @@ function MovieHistoryList() {
             <table style={{ width: '80%', borderCollapse: 'collapse', margin: 'auto', fontSize: '18px' }}>
                 <thead>
                 <tr>
-                    <th>Image</th>
+                    <th>Index</th>
                     <th>Name</th>
-                    <th>Duration (hours)</th>
+                    {/*<th>Duration (minites)</th>*/}
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {movieHistoryList.map((movie, index) => (
                     <tr key={index}>
-                        <td><img src={movie.movieImg} alt={movie.movieName} style={{ width: '50px', height: 'auto' }} /></td>
+                        <td>{index}</td>
                         <td>{movie.movieName}</td>
                         {/*<td>{movie.duration}</td>*/}
                         <td>
-                            <button onClick={() => handleContinueWatching(movie.id)}>Continue Watching</button>
-                            <button onClick={() => handleDelete(movie.id)} style={{ marginLeft: '10px' }}>Delete</button>
-                        </td>
+                            <button onClick={() => handleContinueWatching(movie?.name)}>Continue Watching</button>
+                            </td>
                     </tr>
                 ))}
                 </tbody>

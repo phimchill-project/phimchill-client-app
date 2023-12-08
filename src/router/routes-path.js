@@ -24,7 +24,7 @@ const routes = {
     addMovie : "/admin/add-movie",
     addTvSeries: "/admin/add-tvSeries",
     updateTvSeries: '/admin/update-tvSeries/:name',
-    movieHistory : "/movieHistory",
+    history : "/history",
     showListTVSeries: "/admin/tvseries/showlist",
     allMovies: "/admin/movies",
     updateMovies: "/admin/movies/update/:movieName"
