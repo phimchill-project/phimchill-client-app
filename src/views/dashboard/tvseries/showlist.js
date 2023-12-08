@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Card from '../../../components/Card';
 import { findAllTVSeries,DeleteTVSeries } from '../../../api/tvSeriesApi/tvSeriesAPI';
-
+import {format} from 'date-fns'
 //img
 import st08 from '../../../assets/dashboard/images/show-thumb/08.jpg';
 
@@ -15,7 +15,12 @@ const Showlist = () => {
         if (result == null) {
             return;
         }
-        setShows(result.data.listTVSeries);
+        const formattedShows = result.data.listTVSeries.map((show) => ({
+            ...show,
+            dateRelease: show.dateRelease ? format(new Date(show.dateRelease), 'dd/MM/yyyy') : null,
+        }));
+
+        setShows(formattedShows);
         console.log(shows)
     };
     useEffect(() => {
@@ -53,6 +58,8 @@ const Showlist = () => {
                                         <tr>
                                             <th>Show</th>
                                             <th>Seasons</th>
+                                            <th>Category</th>
+                                            <th>Date Release</th>
                                             <th>Is Delete</th>
                                             <th style={{ width: '20%' }}>Description</th>
                                             <th>Action</th>
@@ -66,7 +73,7 @@ const Showlist = () => {
                                                         <div className="iq-movie">
                                                             <Link to="#">
                                                                 <img
-                                                                    src={st08}
+                                                                    src={show.image}
                                                                     className="img-border-radius avatar-40 img-fluid"
                                                                     alt=""
                                                                 />
@@ -78,6 +85,8 @@ const Showlist = () => {
                                                     </div>
                                                 </td>
                                                 <td>{show.seasonList.length} Seasons</td>
+                                                <td>{show.categoryList.map((category) => category.name).join(', ')}</td>
+                                                <td>{show.dateRelease}</td>
                                                 <td>{show.isDelete ? 'Deleted' : 'Active'}</td>
                                                 <td>
                                                     <p>{show.description}</p>
