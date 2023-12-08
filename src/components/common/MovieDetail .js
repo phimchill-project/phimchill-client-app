@@ -87,7 +87,9 @@ function MovieDetail() {
                                 </Link>
                             </div>
                         </Col>
+
                         <Col xl="5" lg="12" md="12" className="trailor-video  text-center">
+
                             <Link onClick={() => setToggler3(!toggler3)} to="/" className="video-open playbtn">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                                     x="0px" y="0px" width="80px" height="80px" viewBox="0 0 213.7 213.7"
@@ -98,6 +100,7 @@ function MovieDetail() {
                                     <circle className='circle' fill="none" strokeWidth="7" strokeLinecap="round"
                                         strokeLinejoin="round" strokeMiterlimit="10" cx="106.8" cy="106.8" r="103.3" />
                                 </svg>
+
                                 <span className="w-trailor">Watch Trailer</span>
                             </Link>
                         </Col>

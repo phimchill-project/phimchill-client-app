@@ -55,7 +55,7 @@ const publicRoutes = [
     { path: routes.favoriteMovies, component: FavoriteMovie, layout: Layouts.DefaultLayout},
     { path: routes.favoriteTvSeries, component: FavoriteTvSeries, layout: Layouts.DefaultLayout},
     { path: routes.search, component: Search, layout: Layouts.DefaultLayout},
-    {path: routes.movieHistory, component: MovieHistoryList, layout: Layouts.DefaultLayout},
+    {path: routes.history, component: MovieHistoryList, layout: Layouts.DefaultLayout},
 ]
 
 const privateRoutes = [

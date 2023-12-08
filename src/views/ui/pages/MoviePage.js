@@ -44,11 +44,11 @@ const MoviePage = () => {
         fetchApiTopMoviesByViews();
     }, [])
     const redirectToWathchingMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/watch-movie/${newName}`)
     }
     const redirectToDetailMoviePage = (name) => {
-        let newName = name.replace(/ /g, "-");
+        let newName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(":","").replace(" ","-");
         navigate(`/movie-detail/${newName}`)
     }
     return (

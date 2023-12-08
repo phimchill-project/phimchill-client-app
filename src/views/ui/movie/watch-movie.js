@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, {useEffect, useState, useRef} from 'react'
+import {Container, Row, Col} from 'react-bootstrap'
+import {Link, useNavigate, useParams} from 'react-router-dom'
+import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import ReactPlayer from 'react-player';
 import Start from "../../../components/movie/Start";
@@ -23,11 +23,30 @@ import axios from 'axios';
 
 const WatchMovie = () => {
     let navigate = useNavigate();
-    let { name } = useParams();
+    let {name} = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [movie, setMovie] = useState();
     const playerRef = useRef();
     const [timeToStart, setTimeToStart] = useState(0);
+    const [isMember, setIsMember] = useState(true);
+    console.log(isMember)
+    const fetchCheckMember = async () => {
+        let token = localStorage.getItem("token");
+        let result = null;
+        try {
+            result = await axios.get(`http://localhost:8080/api/users/check-member`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            setIsMember(result?.data)
+        } catch (e) {
+            console.log("Find Post Movie Comment API error: " + e);
+        }
+
+    }
+    console.log(isMember)
     const findByName = async () => {
 
         const data = await movieApi.findByName(name);
@@ -92,12 +111,13 @@ const WatchMovie = () => {
         localStorage.setItem("savedTime", e?.playedSeconds);
     }
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (!user?.member) {
-            navigate("/error401");
+        fetchCheckMember();
+        if (!isMember) {
+            navigate("/register-membership");
         }
         findByName();
-    }, [name]);
+
+    }, [name, isMember]);
     useEffect(() => {
 
         return () => {
@@ -112,8 +132,9 @@ const WatchMovie = () => {
                 <Loading></Loading>
             ) : (
                 <>
-                    <Container >
-                        <div className="video-container  d-flex justify-content-center" style={{ width: "100%", height: "60%", marginTop: -80 }}>
+                    <Container>
+                        <div className="video-container  d-flex justify-content-center"
+                             style={{width: "100%", height: "60%", marginTop: -80}}>
                             <div>
                                 <ReactPlayer
                                     id='movie'
@@ -124,7 +145,7 @@ const WatchMovie = () => {
                                     playing
                                     controls={true}
                                     className="video d-block"
-                                    style={{ marginTop: -10 }}
+                                    style={{marginTop: -10}}
                                     onStart={onReady}
                                     onProgress={handleProgress}
                                 />
@@ -138,8 +159,9 @@ const WatchMovie = () => {
                             <Row>
                                 <Col lg="12">
                                     <div className="trending-info g-border">
-                                        <h1 className="trending-text big-title text-uppercase mt-0 fadeInLeft animated d-inline-block" data-animation-in="fadeInLeft" data-delay-in="0.6">{movie.data.name}</h1>
-                                        <Start imdb={movie?.data.imdb} />
+                                        <h1 className="trending-text big-title text-uppercase mt-0 fadeInLeft animated d-inline-block"
+                                            data-animation-in="fadeInLeft" data-delay-in="0.6">{movie.data.name}</h1>
+                                        <Start imdb={movie?.data.imdb}/>
                                         <ul className="p-0 list-inline d-flex align-items-center movie-content">
                                             <li className="trending-list">
                                                 <a className="text-primary" href="/">Action</a>
@@ -157,7 +179,7 @@ const WatchMovie = () => {
                                             <span className="trending-year">2020</span>
                                         </div>
                                         <div className="d-flex align-items-center series mb-4">
-                                            <Link to="#"><img src={trending} className="img-fluid" alt="" /></Link>
+                                            <Link to="#"><img src={trending} className="img-fluid" alt=""/></Link>
                                             <span className="text-gold ml-3">#2 in Series Today</span>
                                         </div>
                                         <p className="trending-dec w-100 mb-0">{movie?.data.description}</p>
@@ -172,9 +194,12 @@ const WatchMovie = () => {
                                                 <span><i className="ri-share-fill"></i></span>
                                                 <div className="share-box">
                                                     <div className="d-flex align-items-center">
-                                                        <Link to="#" className="share-ico"><i className="ri-facebook-fill"></i></Link>
-                                                        <Link to="#" className="share-ico"><i className="ri-twitter-fill"></i></Link>
-                                                        <Link to="#" className="share-ico"><i className="ri-links-fill"></i></Link>
+                                                        <Link to="#" className="share-ico"><i
+                                                            className="ri-facebook-fill"></i></Link>
+                                                        <Link to="#" className="share-ico"><i
+                                                            className="ri-twitter-fill"></i></Link>
+                                                        <Link to="#" className="share-ico"><i
+                                                            className="ri-links-fill"></i></Link>
                                                     </div>
                                                 </div>
                                             </li>
@@ -191,8 +216,10 @@ const WatchMovie = () => {
                                             <h4 className="main-title"><Link to="#">More Like This</Link></h4>
                                         </div>
                                         <div id="favorites-contens">
-                                            <div id="prev1" className="swiper-button swiper-button-prev"><i className="fa fa-chevron-left"></i></div>
-                                            <div id="next1" className="swiper-button swiper-button-next"><i className="fa fa-chevron-right"></i></div>
+                                            <div id="prev1" className="swiper-button swiper-button-prev"><i
+                                                className="fa fa-chevron-left"></i></div>
+                                            <div id="next1" className="swiper-button swiper-button-next"><i
+                                                className="fa fa-chevron-right"></i></div>
                                             <Swiper
                                                 slidesPerView={4}
                                                 spaceBetween={20}
@@ -202,25 +229,28 @@ const WatchMovie = () => {
                                                 }}
                                                 loop={true}
                                                 breakpoints={{
-                                                    320: { slidesPerView: 1 },
-                                                    550: { slidesPerView: 2 },
-                                                    991: { slidesPerView: 3 },
-                                                    1400: { slidesPerView: 4 },
+                                                    320: {slidesPerView: 1},
+                                                    550: {slidesPerView: 2},
+                                                    991: {slidesPerView: 3},
+                                                    1400: {slidesPerView: 4},
                                                 }}
                                                 className="list-inline favorites-slider row p-0 m-0">
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images1 block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie1} className="img-fluid" alt="" />
+                                                            <img src={movie1} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
-                                                            <h6 className="iq-title"><Link to="#">The Lost Journey</Link></h6>
+                                                            <h6 className="iq-title"><Link to="#">The Lost
+                                                                Journey</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">20+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">20+
+                                                                </div>
                                                                 <span className="text-white">2h 15m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -231,9 +261,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -251,16 +295,18 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie2} className="img-fluid" alt="" />
+                                                            <img src={movie2} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Boop Bitty</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">11+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">11+
+                                                                </div>
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -271,9 +317,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -291,16 +351,19 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie3} className="img-fluid" alt="" />
+                                                            <img src={movie3} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
-                                                            <h6 className="iq-title"><Link to="#">Unknown Land</Link></h6>
+                                                            <h6 className="iq-title"><Link to="#">Unknown Land</Link>
+                                                            </h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">17+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">17+
+                                                                </div>
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -311,9 +374,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -331,16 +408,19 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie4} className="img-fluid" alt="" />
+                                                            <img src={movie4} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
-                                                            <h6 className="iq-title"><Link to="#">Blood Block</Link></h6>
+                                                            <h6 className="iq-title"><Link to="#">Blood Block</Link>
+                                                            </h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">13+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">13+
+                                                                </div>
                                                                 <span className="text-white">2h 40m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -351,9 +431,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -371,16 +465,18 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className=" block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={movie5} className="img-fluid" alt="" />
+                                                            <img src={movie5} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Champions</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">13+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">13+
+                                                                </div>
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -391,9 +487,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -422,8 +532,10 @@ const WatchMovie = () => {
                                             <h4 className="main-title"><Link to="#">Upcoming Movies</Link></h4>
                                         </div>
                                         <div id="upcoming-contens">
-                                            <div id="prev2" className="swiper-button swiper-button-prev"><i className="fa fa-chevron-left"></i></div>
-                                            <div id="next2" className="swiper-button swiper-button-next"><i className="fa fa-chevron-right"></i></div>
+                                            <div id="prev2" className="swiper-button swiper-button-prev"><i
+                                                className="fa fa-chevron-left"></i></div>
+                                            <div id="next2" className="swiper-button swiper-button-next"><i
+                                                className="fa fa-chevron-right"></i></div>
                                             <Swiper
                                                 slidesPerView={4}
                                                 spaceBetween={20}
@@ -433,25 +545,27 @@ const WatchMovie = () => {
                                                 }}
                                                 loop={true}
                                                 breakpoints={{
-                                                    320: { slidesPerView: 1 },
-                                                    550: { slidesPerView: 2 },
-                                                    991: { slidesPerView: 3 },
-                                                    1400: { slidesPerView: 4 },
+                                                    320: {slidesPerView: 1},
+                                                    550: {slidesPerView: 2},
+                                                    991: {slidesPerView: 3},
+                                                    1400: {slidesPerView: 4},
                                                 }}
                                                 className="favorites-slider list-inline  row p-0 m-0">
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images1 block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming1} className="img-fluid" alt="" />
+                                                            <img src={upcoming1} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
-                                                            <h6 className="iq-title"><Link to="#">The Last Breath</Link></h6>
+                                                            <h6 className="iq-title"><Link to="#">The Last Breath</Link>
+                                                            </h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
                                                                 <div className="badge badge-secondary p-1 mr-2">5+</div>
                                                                 <span className="text-white">2h 30m</span>
                                                             </div>
                                                             <div className="hover-buttons">
-                                                                <span className="btn btn-hover"><i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                <span className="btn btn-hover"><i
+                                                                    className="fa fa-play mr-1" aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -462,9 +576,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -482,17 +610,19 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming2} className="img-fluid" alt="" />
+                                                            <img src={upcoming2} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Last Night</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">22+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">22+
+                                                                </div>
                                                                 <span className="text-white">2h 15m</span>
                                                             </div>
                                                             <div className="hover-buttons">
                                                                 <span className="btn btn-hover">
-                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    <i className="fa fa-play mr-1"
+                                                                       aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -503,9 +633,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -523,17 +667,19 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming3} className="img-fluid" alt="" />
+                                                            <img src={upcoming3} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">1980</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">25+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">25+
+                                                                </div>
                                                                 <span className="text-white">3h</span>
                                                             </div>
                                                             <div className="hover-buttons">
                                                                 <span className="btn btn-hover">
-                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    <i className="fa fa-play mr-1"
+                                                                       aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -544,9 +690,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -564,17 +724,19 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming4} className="img-fluid" alt="" />
+                                                            <img src={upcoming4} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Looters</Link></h6>
                                                             <div className="movie-time d-flex align-items-center my-2">
-                                                                <div className="badge badge-secondary p-1 mr-2">11+</div>
+                                                                <div className="badge badge-secondary p-1 mr-2">11+
+                                                                </div>
                                                                 <span className="text-white">2h 45m</span>
                                                             </div>
                                                             <div className="hover-buttons">
                                                                 <span className="btn btn-hover">
-                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    <i className="fa fa-play mr-1"
+                                                                       aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -585,9 +747,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -605,7 +781,7 @@ const WatchMovie = () => {
                                                 <SwiperSlide className="slide-item">
                                                     <div className="block-images position-relative">
                                                         <div className="img-box">
-                                                            <img src={upcoming5} className="img-fluid" alt="" />
+                                                            <img src={upcoming5} className="img-fluid" alt=""/>
                                                         </div>
                                                         <div className="block-description">
                                                             <h6 className="iq-title"><Link to="#">Vugotronic</Link></h6>
@@ -615,7 +791,8 @@ const WatchMovie = () => {
                                                             </div>
                                                             <div className="hover-buttons">
                                                                 <span className="btn btn-hover">
-                                                                    <i className="fa fa-play mr-1" aria-hidden="true"></i>
+                                                                    <i className="fa fa-play mr-1"
+                                                                       aria-hidden="true"></i>
                                                                     Play Now
                                                                 </span>
                                                             </div>
@@ -626,9 +803,23 @@ const WatchMovie = () => {
                                                                     <span><i className="ri-share-fill"></i></span>
                                                                     <div className="share-box">
                                                                         <div className="d-flex align-items-center">
-                                                                            <Link to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-facebook-fill"></i></Link>
-                                                                            <Link to="https://twitter.com/intent/tweet?text=Currentlyreading" target="_blank" rel="noopener noreferrer" className="share-ico" tabIndex="0"><i className="ri-twitter-fill"></i></Link>
-                                                                            <Link to="#" data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/" className="share-ico iq-copy-link" tabIndex="0"><i className="ri-links-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://www.facebook.com/sharer?u=https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-facebook-fill"></i></Link>
+                                                                            <Link
+                                                                                to="https://twitter.com/intent/tweet?text=Currentlyreading"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="share-ico" tabIndex="0"><i
+                                                                                className="ri-twitter-fill"></i></Link>
+                                                                            <Link to="#"
+                                                                                  data-link="https://iqonic.design/wp-themes/streamit_wp/movie/shadow/"
+                                                                                  className="share-ico iq-copy-link"
+                                                                                  tabIndex="0"><i
+                                                                                className="ri-links-fill"></i></Link>
                                                                         </div>
                                                                     </div>
                                                                 </li>

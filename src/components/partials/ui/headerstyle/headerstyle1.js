@@ -109,38 +109,6 @@ const HeaderStyle1 = (props) => {
                             </li>
                             :""
                         }
-                        <li className="menu-item">
-                          <Link to="#">Pages</Link>
-                          <ul className="sub-menu">
-                            <li className="menu-item">
-                              <Link to="/about-us">About Us</Link>
-                            </li>
-                            <li className="menu-item ">
-                              <Link to="/contact">Contact</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="/faq">FAQ</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="/privacy-policy">Privacy-Policy</Link>
-                            </li>
-                            <li className="menu-item">
-                              <Link to="#">Pricing</Link>
-                              <ul className="sub-menu">
-                                <li className="menu-item">
-                                  <Link to="/pricing-plan-1">
-                                    Pricing Plan 1
-                                  </Link>
-                                </li>
-                                <li className="menu-item">
-                                  <Link to="/pricing-plan-2">
-                                    Pricing Plan 2
-                                  </Link>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </li>
                       </Nav>
                     </div>
                   </Navbar.Collapse>
@@ -273,7 +241,7 @@ const HeaderStyle1 = (props) => {
                                 <Card className="shadow-none m-0">
                                   <Card.Body className="p-0 pl-3 pr-3 ">
                                     <Link
-                                      to="/usersetting"
+                                      to="/user"
                                       className="iq-sub-card setting-dropdown"
                                     >
                                       <div className="media align-items-center">
@@ -286,7 +254,7 @@ const HeaderStyle1 = (props) => {
                                       </div>
                                     </Link>
                                     <Link
-                                      to="/user"
+                                      to="/history"
                                       className="iq-sub-card setting-dropdown"
                                     >
                                       <div className="media align-items-center">
@@ -294,7 +262,7 @@ const HeaderStyle1 = (props) => {
                                           <i className="ri-settings-4-line text-primary"></i>
                                         </div>
                                         <div className="media-body ml-3">
-                                          <h6 className="my-0 ">Settings</h6>
+                                          <h6 className="my-0 ">History</h6>
                                         </div>
                                       </div>
                                     </Link>
