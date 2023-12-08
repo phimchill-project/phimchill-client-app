@@ -25,6 +25,7 @@ import Bank from '../views/ui/payment/Bank';
 import Error401 from '../views/ui/error/error401';
 import TvSeriesDetail from '../components/common/TvSeriesDetail';
 import ChatWindow from '../views/dashboard/chatwindow/ChatWindow';
+import ShowListTvSeries from '../views/dashboard/tvseries/showlist'
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -53,6 +54,7 @@ const privateRoutes = [
     { path: routes.addMovie, component : AddMovie, layout : Layouts.DashBoardLayout },
     { path: routes.addTvSeries, component : AddTvSeries, layout : Layouts.DashBoardLayout },
     { path: routes.updateTvSeries, component : UpdateTvSeries, layout : Layouts.DashBoardLayout },
-    { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
+     { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
+     { path: routes.showListTVSeries, component : ShowListTvSeries, layout : Layouts.DashBoardLayout }
 ]
 export { publicRoutes, privateRoutes }
