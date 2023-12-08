@@ -159,7 +159,8 @@ function UpdateMovies() {
                                             <Row>
                                                 <Form.Group className="col-12">
                                                     Name
-                                                    <Form.Control type="text" placeholder="Title" defaultValue={movie?.name}
+                                                    <Form.Control type="text" placeholder="Title"
+                                                                  defaultValue={movie?.name}
                                                                   onChange={handleChangeName}/>
                                                 </Form.Group>
                                                 {isNameValid ?
@@ -221,21 +222,24 @@ function UpdateMovies() {
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: 10}}>
                                             Release Year
-                                            <Form.Control type="text" placeholder="Release year" defaultValue={movie?.year} onChange={(e) => {
+                                            <Form.Control type="text" placeholder="Release year"
+                                                          defaultValue={movie?.year} onChange={(e) => {
                                                 setYear(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Duration (minutes)
-                                            <Form.Control type="" placeholder="Movie Duration" defaultValue={movie?.duration} onChange={(e) => {
+                                            <Form.Control type="" placeholder="Movie Duration"
+                                                          defaultValue={movie?.duration} onChange={(e) => {
                                                 setDuration(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Imdb
-                                            <Form.Control type="" placeholder="Imdb Point" defaultValue={movie?.imdb} onChange={(e) => {
-                                                setImdb(e.target.value);
-                                            }}/>
+                                            <Form.Control type="" placeholder="Imdb Point" defaultValue={movie?.imdb}
+                                                          onChange={(e) => {
+                                                              setImdb(e.target.value);
+                                                          }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Date Show

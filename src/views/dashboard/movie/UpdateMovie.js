@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import {Container, Row, Col, Form, Button} from 'react-bootstrap'
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Card from '../../../components/Card'
 import {storage} from '../../../config/firebase'
 import {getDownloadURL, ref, uploadBytes, uploadBytesResumable} from 'firebase/storage';
 import {v4} from 'uuid';
 import publicApi from '../../../api/category/exportCategoryApi';
 import adminApi from '../../../api/dashboard/exportAdminApi';
+import movieApi from "../../../api/movie/exportMovieApi";
+import routes from "../../../router/routes-path";
 
 
 const regexName = /^[a-zA-Z0-9]+$/;
 var categories = [];
 
-function AddMovie() {
+function UpdateMovies() {
+    const {movieName} = useParams();
+    const [movie, setMovie] = useState({});
     const [name, setName] = useState();
     const [image, setImage] = useState();
     const [description, setDescription] = useState();
@@ -28,6 +32,14 @@ function AddMovie() {
     const [isNameValid, setIsNameVadid] = useState(true);
     const [isVideoUploadSucces, setIsVideoUploadSuccess] = useState(false);
     const navigate = useNavigate();
+    const findByName = async () => {
+        const data = await movieApi.findByName(movieName);
+        if (data?.statusCode === 404) {
+            navigate(routes.error404);
+        }
+        setMovie(data?.data);
+    };
+
     const handleChangeName = (e) => {
         const value = e.target.value;
         setName(value);
@@ -39,11 +51,9 @@ function AddMovie() {
     }
     const handleChangeImage = (e) => {
         setImageFile(e.target.files[0]);
+
     }
     const uploadImage = async () => {
-        if (imageFile === null) {
-            return;
-        }
         let imageName = imageFile.name + v4();
         const imageRef = ref(storage, `images-movie/${imageName}`);
         await uploadBytes(imageRef, imageFile).then(() => {
@@ -58,27 +68,17 @@ function AddMovie() {
     const handleChangeVideo = (e) => {
         const file = e.target.files[0];
         setVideo(file);
-    }
-    const handleSubmitVideo = () => {
-        if (video === null) {
-            return;
-        }
-        const videoRef = ref(storage, `videos-movie/${video?.name + v4()}`)
-        const uploadTask = uploadBytesResumable(videoRef, video)
 
-        uploadTask.on('state_changed', (snapshot) => {
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            console.log(progress)
-        }, (error) => {
-            console.log("error " + error)
-        }, () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-                    setVideoaUrl(downloadURL);
-                    setIsVideoUploadSuccess(true);
-                    console.log(downloadURL);
-                }
-            )
-        })
+    }
+    const uploadMovie = async () => {
+        const videoName = video?.name + v4();
+        const videoRef = ref(storage, `videos-movie/${videoName}`)
+        await uploadBytesResumable(videoRef, video);
+
+        await getDownloadURL(ref(storage, `videos-movie/${videoName}`))
+            .then((url) => {
+                setVideoaUrl(url);
+            })
     }
     const handleChecked = (id) => {
         const isChecked = categories.includes(id);
@@ -97,7 +97,6 @@ function AddMovie() {
         }
     }
     const handleSubmit = async () => {
-        uploadImage();
         const newMovie = {
             name: name,
             description: description,
@@ -110,24 +109,42 @@ function AddMovie() {
             categoryList: categories,
         }
         console.log(newMovie);
-        const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
-        if (isCreateSuccess) {
-            alert("Create Movie Success");
-            navigate("/add-movie")
-        } else {
-            alert("Create Movie Fail. Back to add again in 1s");
-            setTimeout(() => {
+        if (videoUrl != null) {
+            const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
+            if (isCreateSuccess) {
+                alert("Update Movie Success");
                 navigate("/add-movie")
-            }, 1000);
+            } else {
+                alert("Update Movie Fail. Back to update again in 1s");
+                setTimeout(() => {
+                    navigate("/add-movie")
+                }, 1000);
+            }
+        }else{
+            alert("Movie not upload finish");
         }
+
     }
     const fetchApiAllCategory = async () => {
         const result = await publicApi.getAllCategory();
         setCategoryList(result);
     }
+
     useEffect(() => {
         fetchApiAllCategory();
-    }, [])
+        findByName();
+    }, [name])
+
+    useEffect(() => {
+        if (video != null) {
+            uploadMovie();
+            setVideo(null);
+        }
+        if (imageFile != null) {
+            uploadImage();
+            setImageFile(null);
+        }
+    }, [video, imageFile])
     return (
         <>
             <Container fluid>
@@ -147,6 +164,7 @@ function AddMovie() {
                                                 <Form.Group className="col-12">
                                                     Name
                                                     <Form.Control type="text" placeholder="Title"
+                                                                  defaultValue={movie?.name}
                                                                   onChange={handleChangeName}/>
                                                 </Form.Group>
                                                 {isNameValid ?
@@ -185,6 +203,7 @@ function AddMovie() {
                                                 <Form.Group className="col-12">
                                                     Description
                                                     <Form.Control as="textarea" id="text" name="text" rows="5"
+                                                                  defaultValue={movie?.description}
                                                                   placeholder="Description" onChange={(e) => {
                                                         setDescription(e.target.value)
                                                     }}></Form.Control>
@@ -200,32 +219,33 @@ function AddMovie() {
                                                     <input type="file" accept="video/mp4,video/x-m4v,video/*"
                                                            onClick={(e) => handleChangeVideo(e)}/>
                                                 </div>
-                                                {isVideoUploadSucces ? <div>Video Upload Success</div> : ""}
-                                                <Button type="button" variant="primary"
-                                                        onClick={handleSubmitVideo}>Upload</Button>
+
                                             </div>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: 10}}>
                                             Release Year
-                                            <Form.Control type="text" placeholder="Release year" onChange={(e) => {
+                                            <Form.Control type="text" placeholder="Release year"
+                                                          defaultValue={movie?.year} onChange={(e) => {
                                                 setYear(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
-                                            Duration
-                                            <Form.Control type="" placeholder="Movie Duration" onChange={(e) => {
+                                            Duration (minutes)
+                                            <Form.Control type="" placeholder="Movie Duration"
+                                                          defaultValue={movie?.duration} onChange={(e) => {
                                                 setDuration(e.target.value);
                                             }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Imdb
-                                            <Form.Control type="" placeholder="Imdb Point" onChange={(e) => {
-                                                setImdb(e.target.value);
-                                            }}/>
+                                            <Form.Control type="" placeholder="Imdb Point" defaultValue={movie?.imdb}
+                                                          onChange={(e) => {
+                                                              setImdb(e.target.value);
+                                                          }}/>
                                         </Col>
                                         <Col sm="7" className="form-group" style={{marginTop: -5}}>
                                             Date Show
-                                            <input type="date" onChange={(e) => {
+                                            <input type="date" defaultValue={movie?.dateRelease} onChange={(e) => {
                                                 setDateShow(e.target.value);
                                             }}/>
                                         </Col>
@@ -244,5 +264,4 @@ function AddMovie() {
         </>
     )
 }
-
-export default AddMovie;
+export default UpdateMovies;
