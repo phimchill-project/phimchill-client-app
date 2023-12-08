@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import Card from '../../../components/Card'
@@ -38,11 +38,9 @@ function AddMovie() {
       }
       const handleChangeImage = (e) => {
             setImageFile(e.target.files[0]);
+
       }
       const uploadImage = async () => {
-            if (imageFile === null) {
-                  return;
-            }
             let imageName = imageFile.name + v4();
             const imageRef = ref(storage, `images-movie/${imageName}`);
             await uploadBytes(imageRef, imageFile).then(() => {
@@ -57,27 +55,17 @@ function AddMovie() {
       const handleChangeVideo = (e) => {
             const file = e.target.files[0];
             setVideo(file);
-      }
-      const handleSubmitVideo = () => {
-            if (video === null) {
-                  return;
-            }
-            const videoRef = ref(storage, `videos-movie/${video?.name + v4()}`)
-            const uploadTask = uploadBytesResumable(videoRef, video)
 
-            uploadTask.on('state_changed', (snapshot) => {
-                  let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                  console.log(progress)
-            }, (error) => {
-                  console.log("error " + error)
-            }, () => {
-                  getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-                        setVideoaUrl(downloadURL);
-                        setIsVideoUploadSuccess(true);
-                        console.log(downloadURL);
-                  }
-                  )
-            })
+      }
+      const uploadMovie = async () => {
+            const videoName = video?.name + v4();
+            const videoRef = ref(storage, `videos-movie/${videoName}`)
+            await uploadBytesResumable(videoRef, video);
+
+            await getDownloadURL(ref(storage, `videos-movie/${videoName}`))
+                  .then((url) => {
+                        setVideoaUrl(url);
+                  })
       }
       const handleChecked = (id) => {
             const isChecked = categories.includes(id);
@@ -96,7 +84,6 @@ function AddMovie() {
             }
       }
       const handleSubmit = async () => {
-            uploadImage();
             const newMovie = {
                   name: name,
                   description: description,
@@ -109,16 +96,21 @@ function AddMovie() {
                   categoryList: categories,
             }
             console.log(newMovie);
-            const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
-            if (isCreateSuccess) {
-                  alert("Create Movie Success");
-                  navigate("/add-movie")
-            } else {
-                  alert("Create Movie Fail. Back to add again in 1s");
-                  setTimeout(() => {
+            if (videoUrl != null) {
+                  const isCreateSuccess = await adminApi.fetchCreateNewMoive(newMovie);
+                  if (isCreateSuccess) {
+                        alert("Create Movie Success");
                         navigate("/add-movie")
-                  }, 1000);
+                  } else {
+                        alert("Create Movie Fail. Back to add again in 1s");
+                        setTimeout(() => {
+                              navigate("/add-movie")
+                        }, 1000);
+                  }
+            }else{
+                  alert("Movie not upload finish");
             }
+
       }
       const fetchApiAllCategory = async () => {
             const result = await publicApi.getAllCategory();
@@ -127,6 +119,18 @@ function AddMovie() {
       useEffect(() => {
             fetchApiAllCategory();
       }, [])
+      useEffect(() => {
+            if (video != null) {
+                  uploadMovie();
+                  setVideo(null);
+            }
+            if (imageFile != null) {
+                  uploadImage();
+                  setImageFile(null);
+            }
+      }, [video, imageFile])
+      console.log("video" + videoUrl);
+      console.log("image" + image);
       return (
             <>
                   <Container fluid>
@@ -195,10 +199,10 @@ function AddMovie() {
                                                                         <div>Upload video</div>
                                                                         <div className="form_video-upload">
                                                                               <input type="file" accept="video/mp4,video/x-m4v,video/*"
-                                                                                    onClick={(e) => handleChangeVideo(e)} />
+                                                                                    onChange={(e) => handleChangeVideo(e)} />
                                                                         </div>
-                                                                        {isVideoUploadSucces ? <div>Video Upload Success</div> : ""}
-                                                                        <Button type="button" variant="primary" onClick={handleSubmitVideo}>Upload</Button>
+                                                                        {/* {isVideoUploadSucces ? <div>Video Upload Success</div> : ""}
+                                                                        <Button type="button" variant="primary" onClick={handleSubmitVideo}>Upload</Button> */}
                                                                   </div>
                                                             </Col>
                                                             <Col sm="7" className="form-group" style={{ marginTop: 10 }}>

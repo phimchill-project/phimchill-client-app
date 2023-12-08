@@ -21,5 +21,6 @@ const routes = {
     bank : "/payment/",
     error401: "/error401",
     tvSeriesDetail : "/tvseries-detail/:name",
+    chatWindow : "/admin/chat-window"
 }
 export default routes;

@@ -21,6 +21,7 @@ import RegisterMemberShip from '../views/ui/payment/RegisterMemberShip';
 import Bank from '../views/ui/payment/Bank';
 import Error401 from '../views/ui/error/error401';
 import TvSeriesDetail from '../components/common/TvSeriesDetail';
+import ChatWindow from '../views/dashboard/chatwindow/ChatWindow';
 
 const publicRoutes = [
     { path: routes.login, component: Login, layout: null },
@@ -44,6 +45,7 @@ const publicRoutes = [
     { path: routes.bank, component: Bank, layout: Layouts.DefaultLayout},
     { path: routes.error401, component: Error401, layout: null},
     { path: routes.tvSeriesDetail, component: TvSeriesDetail, layout: Layouts.DefaultLayout},
+    { path: routes.chatWindow, component: ChatWindow, layout: Layouts.DashBoardLayout},
 ]
 const privateRoutes = [
 ]

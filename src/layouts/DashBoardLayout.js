@@ -13,12 +13,14 @@ const DashBoardLayout = ({ children }) => {
                 <SideBar />
                 <Header />
                 {/* <div className="content-page" id="content-page"> */}
-                    <div class="col main pt-5 mt-3" >
+                    <div className="col main pt-5 mt-3" >
+                        <br/>
+                        
                         {children}
                     </div>
                 {/* </div> */}
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 

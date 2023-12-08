@@ -27,9 +27,9 @@ const WatchMovie = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [movie, setMovie] = useState();
     const playerRef = useRef();
-    const [timeToStart, setTimeToStart] =  useState(0);
+    const [timeToStart, setTimeToStart] = useState(0);
     const findByName = async () => {
-        
+
         const data = await movieApi.findByName(name);
         if (data?.statusCode === 404) {
             navigate(routes.error404);
@@ -62,9 +62,9 @@ const WatchMovie = () => {
             console.log("Find Post Movie Comment API error: " + e);
         }
         console.log(result);
-        if(result?.data == null){
+        if (result?.data == null) {
             setTimeToStart(0);
-        }else{
+        } else {
             setTimeToStart(result?.data.data.duration)
         }
     }
@@ -77,7 +77,7 @@ const WatchMovie = () => {
             duration: savedTime
         }
         try {
-            await axios.put('http://localhost:8080/api/movies/history/add', movieHistoryRequest,{
+            await axios.put('http://localhost:8080/api/movies/history/add', movieHistoryRequest, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
@@ -93,18 +93,18 @@ const WatchMovie = () => {
     }
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        if(!user?.member){
+        if (!user?.member) {
             navigate("/error401");
         }
         findByName();
     }, [name]);
     useEffect(() => {
-    
-            return () => {
-                fetchSaveCurrentTimeVideo();
-                localStorage.removeItem("savedTime");
-            }
-        
+
+        return () => {
+            fetchSaveCurrentTimeVideo();
+            localStorage.removeItem("savedTime");
+        }
+
     });
     return (
         <>
@@ -112,27 +112,27 @@ const WatchMovie = () => {
                 <Loading></Loading>
             ) : (
                 <>
-                    <div className="video-container iq-main-slider" style={{ width: "100%", height: "100%" }}>
-                        {/* <video className="video d-block" controls loop id='movie' ref={playerRef} onPlay={onReady}>
-                            <source src={movie?.data.url} />
-                        </video> */}
-                        <div>
-                            <ReactPlayer
-                                id='movie'
-                                ref={playerRef}
-                                url={movie?.data.url}
-                                width="100%"
-                                height="100%"
-                                playing
-                                controls={true}
-                                className="video d-block"
-                                style={{ marginTop: -10 }}
-                                onStart={onReady}
-                                onProgress={handleProgress}
-                            />
-                        </div>
+                    <Container >
+                        <div className="video-container  d-flex justify-content-center" style={{ width: "100%", height: "60%", marginTop: -80 }}>
+                            <div>
+                                <ReactPlayer
+                                    id='movie'
+                                    ref={playerRef}
+                                    url={movie?.data.url}
+                                    width="100%"
+                                    height="100%"
+                                    playing
+                                    controls={true}
+                                    className="video d-block"
+                                    style={{ marginTop: -10 }}
+                                    onStart={onReady}
+                                    onProgress={handleProgress}
+                                />
+                            </div>
 
-                    </div>
+                        </div>
+                    </Container>
+
                     <div className="main-content movi">
                         <section className="movie-detail container-fluid">
                             <Row>
