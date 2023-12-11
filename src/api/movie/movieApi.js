@@ -25,16 +25,20 @@ export const findMoviesByName = async (name) => {
     }
     return result?.data;
 };
-export const findAllMovies = async () => {
+export const findAllMovies = async (pageNumber = 0, pageSize = 7) => {
     let result = null;
     try {
-        result = await axios.get(`${API}all`, {
+        const params = new URLSearchParams({
+            pageNumber,
+            pageSize
+        }).toString();
+        result = await axios.get(`${API}all?${params}`, {
             headers: { }
         });
     } catch (e) {
-        console.log("Find books API error: " + e);
+        console.log("Find all movies API error: ", e);
     }
-    console.log(result)
+    console.log(result);
     return result?.data;
 };
 
