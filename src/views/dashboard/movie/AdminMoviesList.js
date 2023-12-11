@@ -20,7 +20,6 @@ function AdminMoviesList() {
             setMovieList(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (error) {
-
         }
     };
 
