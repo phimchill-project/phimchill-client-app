@@ -44,7 +44,6 @@ const WatchMovie = () => {
         } catch (e) {
             console.log("Find Post Movie Comment API error: " + e);
         }
-
     }
     console.log(isMember)
     const findByName = async () => {

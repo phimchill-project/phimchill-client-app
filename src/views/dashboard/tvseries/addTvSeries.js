@@ -18,6 +18,10 @@ function AddTvSeries() {
     const [categoryList, setCategoryList] = useState([]);
 
     const [image, setImage] = useState();
+    const [moreImage, setMoreImage] = useState([]);
+
+    const [imageSucces, setImageSucces] = useState(false)
+    const [moreImageSucces, setMoreImageSucces] = useState(false)
 
     const [isClick, setIsClick] = useState(false);
 
@@ -31,6 +35,7 @@ function AddTvSeries() {
         image: "",
         dateRelease: "",
         categoryList: [],
+        moreImage: [],
     })
 
     const [errorTvSeries, setErrorTvSeries] = useState({
@@ -39,6 +44,7 @@ function AddTvSeries() {
         year: false,
         imdb: false,
         image: false,
+        moreImage: false,
         dateRelease: false,
         categoryList: false,
     })
@@ -85,10 +91,11 @@ function AddTvSeries() {
     }, [focusTvSeries, tvSeries]);
 
     useEffect(  () => {
-        if (isClick && !Object.values(errorTvSeries).some(value => value === true)){
-            console.log(tvSeries)
+        if (isClick && imageSucces && moreImageSucces && !Object.values(errorTvSeries).some(value => value === true)){
             newTvSeries(tvSeries);
             setIsClick(false);
+            setImageSucces(false);
+            setMoreImageSucces(false);
         }
         async function newTvSeries (tvSeries) {
             const data =await adminApi.fetchNewTvSeries(tvSeries);
@@ -98,7 +105,7 @@ function AddTvSeries() {
                 navigate(routes.showListTVSeries);
             }
         }
-    }, [errorTvSeries, tvSeries]);
+    }, [errorTvSeries, tvSeries, imageSucces, moreImageSucces]);
 
     const handleImageChange = (e) => {
         if (e.target.files[0]) {
@@ -106,9 +113,15 @@ function AddTvSeries() {
         }
     };
 
+    const handleMoreImageChange = (e) => {
+        if (e.target.files) {
+            setMoreImage(e.target.files);
+        }
+    };
+
     const checkValueAll = () => {
         for (let field in tvSeries) {
-            if (field !== 'image')
+            if (field !== 'image' && field !== 'moreImage')
                 checkValue(field);
         }
     }
@@ -139,6 +152,23 @@ function AddTvSeries() {
             .then((url) => {
                 handleFieldChange('image', url);
             })
+        setImageSucces(true);
+    }
+
+    const uploadMoreImage = async () => {
+        if (moreImage === null || moreImage === [] || moreImage === undefined) {
+            checkValue('moreImage')
+            return;
+        }
+        let moreImageNew = [];
+        for (const image of moreImage) {
+            const imageRef = ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - More/${image.name}`);
+            await uploadBytes(imageRef, image);
+            const url = await getDownloadURL(ref(storage, `images-movie/${tvSeries.name}/${tvSeries.name} - More/${image.name}`));
+            moreImageNew.push(url);
+        }
+        handleFieldChange('moreImage', moreImageNew);
+        setMoreImageSucces(true);
     }
 
     const handleCheckboxChange = (e, categoryId) => {
@@ -163,6 +193,7 @@ function AddTvSeries() {
     const handleSubmit = async () => {
         setIsClick(true)
         await uploadImage();
+        await uploadMoreImage();
         checkValueAll();
     }
 
@@ -195,11 +226,19 @@ function AddTvSeries() {
                                                 <div hidden={!errorTvSeries.name} style={{color: '#e87c03'}}>Please enter correct Email.</div>
                                             </Form.Group>
                                             <Form.Group className="form-group">
-                                                <Form.Label>Upload image</Form.Label>
+                                                <Form.Label>Upload cover image</Form.Label>
                                                 <div className="custom-file">
                                                     <Form.Control onChange={handleImageChange} type="file" className="custom-file-input"/>
                                                     <Form.Label className={clsx("custom-file-label", styles.main)}>Choose file</Form.Label>
-                                                    <div hidden={!errorTvSeries.image} style={{color: '#e87c03'}}>Please upload image before submit.</div>
+                                                    <div hidden={!errorTvSeries.image} style={{color: '#e87c03'}}>Please upload cover image before submit.</div>
+                                                </div>
+                                            </Form.Group>
+                                            <Form.Group className="form-group">
+                                                <Form.Label>Upload more image</Form.Label>
+                                                <div className="custom-file">
+                                                    <Form.Control onChange={handleMoreImageChange} type="file" className="custom-file-input" multiple/>
+                                                    <Form.Label className={clsx("custom-file-label", styles.main)}>Choose file</Form.Label>
+                                                    <div hidden={!errorTvSeries.moreImage} style={{color: '#e87c03'}}>Please upload more image before submit.</div>
                                                 </div>
                                             </Form.Group>
                                             <Form.Group className="form-group">
