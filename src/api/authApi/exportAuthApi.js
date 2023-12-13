@@ -1,6 +1,7 @@
-import {login, register, isEmailExist} from "./authApi"
+import {login, loginGoogle, register, isEmailExist} from "./authApi"
 const authApi = {
     login,
+    loginGoogle,
     register,
     isEmailExist
 }

@@ -18,6 +18,21 @@ export const login = async (user) => {
     return null;
 };
 
+export const loginGoogle = async (user) => {
+    let result = null;
+    try {
+        result = await axios.post(`${AUTH_API}login-google`, user, {
+            headers: {
+                Accept: 'application/json',
+                "Content-Type": 'application/json',
+            },
+        });
+    } catch (e) {
+        console.log("Find books API error: " + e);
+    }
+    return result?.data;
+};
+
 export const register = async (user) => {
     let result = null;
     try {

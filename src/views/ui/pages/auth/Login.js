@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import authApi from "../../../../api/authApi/exportAuthApi";
 import {Link, useNavigate} from 'react-router-dom'
@@ -15,6 +16,8 @@ function Login(){
     const [focusPass, setFocusPass] = useState(false);
     const [focusPassNow, setFocusPassNow] = useState(false);
     const [typePass, setTypePass] = useState(true);
+
+    const [erroLogin, setErrorLogin] = useState(false);
 
     useEffect(() => {
         if (focusEmail){
@@ -49,6 +52,21 @@ function Login(){
     const handleBlurPass = () => {
         setFocusPass(true)
         setFocusPassNow(false)
+    }
+
+    const loginGoogle = async (credential) => {
+        const data = await authApi.loginGoogle({
+            credential: credential,
+        });
+        if (data === null || data === undefined){
+            setErrorLogin(true);
+        }else if (data?.statusCode === 200){
+            localStorage.setItem("token",data?.data.token);
+            localStorage.setItem("user",JSON.stringify(data?.data));
+            navigate("/");
+        }else {
+            navigate("/login")
+        }
     }
 
     return (
@@ -108,10 +126,33 @@ function Login(){
                                                     <label className="custom-control-label" htmlFor="customCheck">Remember Me</label>
                                                 </div>
                                             </div>
+                                            <br/>
+                                            <div>
+                                                <GoogleLogin
+                                                    theme="filled_black"
+                                                    text="signin_with"
+                                                    locale={"en"}
+                                                    cancel_on_tap_outside={true}
+                                                    onSuccess={credentialResponse => {
+                                                        if (credentialResponse === null || credentialResponse === undefined){
+                                                            setErrorLogin(true);
+                                                            return;
+                                                        }
+                                                        loginGoogle(credentialResponse.credential)
+                                                    }}
+                                                    onError={() => {
+                                                        setErrorLogin(true);
+                                                    }}
+                                                />
+                                            </div>
                                         </Form>
                                     </div>
                                 </div>
+
                                 <div className="mt-3">
+                                    <div className={"d-flex justify-content-center"}>
+                                        <div style={{color: '#e87c03'}} hidden={!erroLogin}>Login failed!</div>
+                                    </div>
                                     <div className="d-flex justify-content-center links">
                                         Don't have an account?
                                         <Link to="/register" className="text-primary ml-2">Sign Up</Link>

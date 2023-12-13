@@ -3,18 +3,24 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import tvshowApi from "../../api/tvshow/exportMovieApi";
 import logo from "../../assets/ui/images/logo.png"
-import ShowComments from "./Comments"
+import ImageSwiper from "./../../components/imageSwiper";
+import ImageList from "../imageList";
 
 function TvSeriesDetail() {
       let navigate = useNavigate();
       let { name } = useParams();
       const [tvseries, setTvSeries] = useState({});
+
+      const [moreImage, setMoreImage] = useState([]);
+
       useEffect(() => {
           findByName();
       }, []);
       const findByName = async () => {
           const data = await tvshowApi.findByName(name);
           setTvSeries(data?.data);
+          if (data?.data !== null && data?.data.moreImage !== null)
+            setMoreImage(data?.data.moreImage.split("|"));
       };
       const redirectToWathchingTvSeriesPage = (id) => {
           navigate(`/watch-tvshow/${id}`)
@@ -53,10 +59,6 @@ function TvSeriesDetail() {
                                       </ul>
                                       <span className="text-white ml-2">{tvseries?.imdb}(lmdb)</span>
                                   </div>
-                                  {/* <div className="d-flex align-items-center mt-2 mt-md-3" data-iq-gsap="onStart" data-iq-position-x="-200" data-iq-delay="-0.5">
-                                      <span className="badge badge-secondary p-2">20+</span>
-                                      <span className="ml-3">{movie?.duration}</span>
-                                  </div> */}
                               </div>
                               <p data-iq-gsap="onStart" data-iq-position-y="80" data-iq-delay="0.8">{tvseries?.description}
                               </p>
@@ -72,9 +74,6 @@ function TvSeriesDetail() {
                                           </div>
                                       ))}
                                   </div>
-                                  {/* <div className="text-primary title tag">
-                                      Tag: <span className="text-body">Action, Adventure, Horror</span>
-                                  </div> */}
                               </div>
                               <div className="d-flex align-items-center r-mb-23" data-iq-gsap="onStart" data-iq-position-y="80" data-iq-delay="0.8">
                                   <Link role="button" className="btn btn-hover" onClick={(e) => {
@@ -103,7 +102,7 @@ function TvSeriesDetail() {
                       </Row>
                   </div>
               </Container>
-              {/* {movie != null ? <ShowComments movieId={movie?.id} /> : ""} */}
+              {moreImage && moreImage.length > 4 ? <ImageSwiper images={moreImage} /> : <ImageList images={moreImage} />}
           </div>
       )
 }
